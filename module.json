@@ -1,0 +1,25 @@
+{
+  "name": "uvisor",
+  "version": "0.0.0",
+  "description": "Add security features to mbed",
+  "keywords": [
+    "security"
+  ],
+  "author": [
+    "Milosch Meriac <milosch.meriac@arm.com>",
+    "Alessandro Angelino <alessandro.angelino@arm.com>",
+  ],
+  "repository": {
+    "url": "git@github.com:ARMmbed/uvisor-bin.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/ARMmbed/uvisor-bin",
+  "licenses": [
+    {
+      "url": "https://spdx.org/licenses/Apache-2.0",
+      "type": "Apache-2.0"
+    }
+  ],
+  "dependencies": {},
+  "targetDependencies": {}
+}
