@@ -7,7 +7,7 @@
   ],
   "author": [
     "Milosch Meriac <milosch.meriac@arm.com>",
-    "Alessandro Angelino <alessandro.angelino@arm.com>",
+    "Alessandro Angelino <alessandro.angelino@arm.com>"
   ],
   "repository": {
     "url": "git@github.com:ARMmbed/uvisor-bin.git",
