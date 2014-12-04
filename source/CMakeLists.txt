@@ -5,7 +5,7 @@ set(UVISOR_DIR "MK64FN1M0XXX12")		# FRDM-K64F, GCC_ARM
 set(UVISOR_ASM "${UVISOR_DIR}/uvisor-GCC_ARM.s")
 enable_language(ASM)
 set_property(SOURCE ${UVISOR_ASM} PROPERTY LANGUAGE ASM)
-add_library(uvisor-bin
+add_library(uvisor-lib
     ${UVISOR_ASM}
 )
 
