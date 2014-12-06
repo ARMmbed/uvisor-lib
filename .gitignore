@@ -1,3 +1,7 @@
+# vim temporary files
+*.sw*
+
 # yotta build folders
+build
 yotta_modules
 yotta_targets
