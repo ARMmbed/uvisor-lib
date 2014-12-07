@@ -17,6 +17,8 @@ uvisor_config:
  .long __uvisor_data_src
  .long __uvisor_data_start
  .long __uvisor_data_end
+ .ĺong __uvisor_bss_start
+ .ĺong __uvisor_bss_end
  .long __uvisor_secure_start
  .long __uvisor_secure_end
  .long __uvisor_reserved_start
