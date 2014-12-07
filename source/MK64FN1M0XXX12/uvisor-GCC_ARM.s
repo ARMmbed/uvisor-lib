@@ -19,12 +19,12 @@ uvisor_config:
  .long __uvisor_data_end
  .long __uvisor_secure_start
  .long __uvisor_secure_end
+ .long __uvisor_reserved_start
+ .long __uvisor_reserved_end
 __uvisor_mode:
  .long 0
  .align 5
 .section .uvisor.bss.main,"awM",@nobits
- .align 5
-__uvisor_stack_start:
+__uvisor_reserved_start:
  .space 0x1000
- .align 5
-__uvisor_stack_end:
+__uvisor_reserved_end:
