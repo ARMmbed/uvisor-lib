@@ -14,14 +14,15 @@ uvisor_config:
  .long __uvisor_mode
  .long __uvisor_cfgtbl_start
  .long __uvisor_cfgtbl_end
- .long __uvisor_stack_start
- .long __uvisor_stack_end
+ .long __uvisor_data_src
+ .long __uvisor_data_start
+ .long __uvisor_data_end
  .long __uvisor_secure_start
  .long __uvisor_secure_end
 __uvisor_mode:
  .long 0
  .align 5
-.section .uvisor.data.main,"awM",@nobits
+.section .uvisor.bss.main,"awM",@nobits
  .align 5
 __uvisor_stack_start:
  .space 0x1000
