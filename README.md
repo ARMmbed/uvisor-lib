@@ -1,18 +1,18 @@
-# `uvisor-lib`
-`uvisor-lib` is a `yotta` module that provides a secure environment for modular
+# uvisor-lib
+uvisor-lib is a yotta module that provides a secure environment for modular
 applications on mbed and the APIs to interact with it.
 
 It consists of two main components:
 
-1. the `uvisor`, which sets up a protected environment where isolated
+1. the uVisor, which sets up a protected environment where isolated
    compartments are granted finely tuned permissions;
-2. APIs to interact with the `uvisor`.
+2. APIs to interact with the uVisor.
 
-If you are building your application with `yotta` on a supported platform, then
-you will be already running on top of the `uvisor`. At this stage of
+If you are building your application with yotta on a supported platform, then
+you will be already running on top of the uVisor. At this stage of
 development, though, it is disabled by default.
 
-To learn more about the `uvisor` refer to its
+To learn more about the uVisor refer to its
 [documentation](https://github.com/ARMmbed/uvisor).
 
 Supported platforms:
@@ -21,9 +21,9 @@ Supported platforms:
 The current release version is 0.1.2.
 
 ## HowTo
-To access the `uvisor-lib` features:
+To access the uvisor-lib features:
 
-- Add the module as a dependency to your `yotta` component in its `module.json`
+- Add the module as a dependency to your yotta component in its `module.json`
   file:
 ```json
   "dependencies": {
@@ -37,7 +37,7 @@ To access the `uvisor-lib` features:
 #include <uvisor-lib/uvisor-lib.h>
 ```
 
-## Interfacing the `uvisor`
+## Interfacing the uVisor
 
 ### APIs
 
@@ -61,11 +61,11 @@ UVISOR_BOX_CONFIG(const UvBoxAclItem *module_acl_list,
   </tr>
   <tr>
     <td rowspan="2">Parameters</td>
-    <td>`const UvBoxAclItem *module_acl_list`</td>
+    <td><pre>const UvBoxAclItem *module_acl_list<code></td>
     <td>List of ACLs for the module</td>
   </tr>
   <tr>
-    <td>`uint32_t module_stack_size`</td>
+    <td><pre>uint32_t module_stack_size<code></td>
     <td>Required stack size</td>
   </tr>
 </table>
@@ -137,7 +137,7 @@ UVISOR_SET_MODE(int uvisor_mode);
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">[temporary] Set mode for the `uvisor`</td>
+    <td colspan="2">[temporary] Set mode for the uVisor</td>
   </tr>
   <tr>
     <td>Type</td>
@@ -145,7 +145,7 @@ UVISOR_SET_MODE(int uvisor_mode);
   </tr>
   <tr>
     <td rowspan="3">Parameters</td>
-    <td rowspan="3">`int uvisor_mode`</td>
+    <td rowspan="3"><pre>int uvisor_mode<code></td>
     <td>0 = disabled [default]</td>
   </tr>
     <tr>
@@ -183,7 +183,7 @@ typedef struct
 
 ## Limitations
 
-For this release, `uvisor-lib` comes with the following restrictions:
+For this release, uvisor-lib comes with the following restrictions:
 
 - it is disabled by default. Use `UVISOR_SET_MODE(2);` to enable it;
 - it sets up the protected environment but does not enforce security (accesses
