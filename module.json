@@ -5,9 +5,15 @@
   "keywords": [
     "security"
   ],
-  "author": [
-    "Milosch Meriac <milosch.meriac@arm.com>",
-    "Alessandro Angelino <alessandro.angelino@arm.com>"
+  "author": {
+    "name":  "Milosch Meriac",
+    "email": "milosch.meriac@arm.com"
+  },
+  "contributors": [
+    {
+      "name":  "Alessandro Angelino",
+      "email": "alessandro.angelino@arm.com"
+    }
   ],
   "repository": {
     "url": "git@github.com:ARMmbed/uvisor-lib.git",
