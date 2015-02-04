@@ -1,17 +1,17 @@
 {
   "name": "uvisor-lib",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Add security features to mbed",
   "keywords": [
     "security"
   ],
   "author": {
-    "name":  "Milosch Meriac",
+    "name": "Milosch Meriac",
     "email": "milosch.meriac@arm.com"
   },
   "contributors": [
     {
-      "name":  "Alessandro Angelino",
+      "name": "Alessandro Angelino",
       "email": "alessandro.angelino@arm.com"
     }
   ],
