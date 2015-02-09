@@ -1,5 +1,5 @@
 MBED OS/SDK PARTNER LICENSE
-THIS LICENSE ("LICENSE") IS A LEGALLY-BINDING AGREEMENT, FOR THE USE OF THE SOFTWARE ACCOMPANYING THIS LICENSE, BETWEEN EITHER A SINGLE INDIVIDUAL OR SINGLE LEGAL ENTITY ("SIGNATORY ENTITY"), INCLUDING EACH SUBSIDIARY OF SUCH SIGNATORY ENTITY, AS APPLICABLE, ON WHOSE BEHALF YOU ARE LEGALLY AUTHORIZED TO SIGN AND ARM LIMITED ("ARM"). AS USED HEREIN "YOU" or "YOUR", SHALL MEAN SUCH SINGLE INDIVIDUAL OR SINGLE ENTITY( INCLUDING SUBSIDIARIES OF SUCH SINGLE ENTITY).  ARM IS ONLY WILLING TO LICENSE THE SOFTWARE TO YOU ON CONDITION THAT YOU ACCEPT ALL OF THE TERMS IN THIS LICENSE. BY CLICKING "I AGREE" OR BY INSTALLING OR OTHERWISE USING OR COPYING THE SOFTWARE YOU EXPRESSLY AGREE TO BE BOUND BY ALL OF THE TERMS OF THIS LICENSE. IF YOU DO NOT AGREE TO THE TERMS OF THIS LICENSE, YOU MAY NOT INSTALL, USE OR COPY THE SOFTWARE.
+THIS LICENSE ("LICENSE") IS A LEGALLY-BINDING AGREEMENT FOR THE USE OF THE SOFTWARE ACCOMPANYING THIS LICENSE, BETWEEN ARM LIMITED ("ARM") AND EITHER A SINGLE INDIVIDUAL OR SINGLE LEGAL ENTITY ("SIGNATORY ENTITY"), INCLUDING EACH SUBSIDIARY OF SUCH SIGNATORY ENTITY, AS APPLICABLE, ON WHOSE BEHALF YOU ARE LEGALLY AUTHORIZED TO SIGN. AS USED HEREIN "YOU" or "YOUR", SHALL MEAN SUCH SINGLE INDIVIDUAL OR SINGLE ENTITY( INCLUDING SUBSIDIARIES OF SUCH SINGLE ENTITY).  ARM IS ONLY WILLING TO LICENSE THE SOFTWARE TO YOU ON CONDITION THAT YOU ACCEPT ALL OF THE TERMS IN THIS LICENSE. BY CLICKING "I AGREE" OR BY INSTALLING OR OTHERWISE USING OR COPYING THE SOFTWARE YOU EXPRESSLY AGREE TO BE BOUND BY ALL OF THE TERMS OF THIS LICENSE. IF YOU DO NOT AGREE TO THE TERMS OF THIS LICENSE, YOU MAY NOT INSTALL, USE OR COPY THE SOFTWARE.
 You agree that ARM is licensing the "mbed SDK" (as defined below) to You, subject to the following terms and conditions:
 
 1.	Definitions
@@ -9,7 +9,7 @@ You agree that ARM is licensing the "mbed SDK" (as defined below) to You, subjec
 
 1.3	"Beta Deliverables" means those deliverables made available to You under this License and identified in the deliverable name as "Beta," where such Beta Deliverables are functionally complete but as reliability trials are on-going and such deliverables are not fully tested, residual defects or errors in operation, consistency and documentation may still be encountered.
 
-1.4	"Confidential Information" means: (i) the mbed SDK, and derivatives thereof (including any translation, modification, compilation, abridgement or other form in which the mbed SDK has been recast, transformed or adapted) and any trade secrets relating to the mbed SDK; (ii) any information designated in writing by either party, by appropriate legend, as confidential; (iii) any information which if first disclosed orally, is identified as confidential at the time of disclosure and is thereafter reduced to writing for confirmation and sent to the other party within thirty (30) days after its oral disclosure and designated, by appropriate legend, as confidential; (v) Results; and (v) the terms and conditions of this License.
+1.4	"Confidential Information" means: (i) the mbed SDK, and derivatives thereof (including any translation, modification, compilation, abridgement or other form in which the mbed SDK has been recast, transformed or adapted) and any trade secrets relating to the mbed SDK; (ii) any information designated in writing by either party, by appropriate legend, as confidential; (iii) any information which if first disclosed orally, is identified as confidential at the time of disclosure and is thereafter reduced to writing for confirmation and sent to the other party within thirty (30) days after its oral disclosure and designated, by appropriate legend, as confidential; (iv) Results; and (v) the terms and conditions of this License.
 
 1.5	"Contractor" shall mean only those individuals that: (i) need to access the mbed SDK and ARM Confidential Information for the purpose of enabling You to fulfill Your obligations under this License, (ii) are under the direct supervision and control of You, and (iii) are on-site at Your premise.
 
@@ -34,7 +34,6 @@ You agree that ARM is licensing the "mbed SDK" (as defined below) to You, subjec
 1.15	"Partner Product" means either or both: (i) a device containing an ARM processor which executes any version of mbed OS, other than a version that includes or is based on the Alpha Deliverables or Beta Deliverables; or (ii) a software or service using mbed Device Server.
 
 1.16	"Results" means any data resulting from Your use of mbed SDK and all direct and indirect derivatives thereof.
-
 
 1.17	"Subsidiary" means any company the majority of whose voting shares is now or hereafter owned or controlled, directly or indirectly, by a party hereto. A company shall be a Subsidiary only for the period during which such control exists.
 
@@ -61,9 +60,11 @@ You agree that ARM is licensing the "mbed SDK" (as defined below) to You, subjec
 
 (iii)	Your Partner Product retains mbed OS features that enable communication with mbed Device Server and other services provided via the mbed Developer Website, as applicable;
 
-(iv) 	You shall not use any of the mbed SDK or ARM Confidential Information to create a competing software ecosystem or any portion of such ecosystem; and
+(iv) 	You shall not use any of the mbed SDK or ARM Confidential Information to create a competing software ecosystem or any portion of such ecosystem;
 
-(v)	You shall reproduce and not remove or obscure any notice in the mbed SDK
+(v)	You shall reproduce and not remove or obscure any notice in the mbed SDK; and 
+
+(vi)	You shall submit to ARM, within thirty (30) days after the end of each calendar quarter, a report identifying the number of units of Partner Products distributed ("Tracking Reports"). The foregoing reporting requirement is inapplicable in the event you distribute less than 100 units of Partner Product during any calendar quarter. However, you shall comply with this subpart (vi) of Clause 2.2 once you distribute 100 or more units of Partner Product during any one calendar quarter or multiple consecutive calendar quarters. Tracking Reports must be submitted on mbed.org. 
 
 2.3	You agree that Your use of all software provided under this License is subject to this License only, regardless of whether any part of the mbed SDK is otherwise freely available under a separate license from  ARM (e.g. an open source license).
 
@@ -74,6 +75,9 @@ You agree that ARM is licensing the "mbed SDK" (as defined below) to You, subjec
 2.6	Except as expressly licensed in Clause 2.5, ARM acquires no right, title or interest in the Feedback or any Intellectual Property therein. Except as expressly provided herein, in no event shall the licenses granted in Clause 2.5 be construed as granting ARM expressly or by implication, estoppel or otherwise, licenses to any of Your technology other than the Feedback.
         Intercompany Matters
 2.7	Any termination of this License in accordance with the provisions of Clause 7.2 shall be effective in respect of the Signatory Entity and all Your Subsidiaries.  Any rights granted to any Subsidiary hereunder shall automatically terminate upon such Subsidiary ceasing to be a Subsidiary.  In the event that any Subsidiary of Yours is in breach of any of the terms of this License, the Signatory Entity shall hold harmless and indemnify ARM against all and any loss, liability, costs, damages, expenses (including the reasonable fees of lawyers and other professionals) suffered, as a result of or in connection with such breach.
+
+2.8	Audit Rights 
+	You agree that, upon (30) days' prior written notice, ARM or its agent shall have the right to conduct up to one (1) audit in any twelve (12) month period of Your relevant books and records to verify the information relating to the number of units of Partner Products distributed which you are obliged to report pursuant to the Tracking Reports in Section 2.2(vi).  Any such audit shall be conducted: (i) during normal business hours, and (ii) at ARM's sole expense.
 
 
 3.	Third Party Software
@@ -143,7 +147,7 @@ You hereby represent and warrant that You have the power to cause all Intellectu
 7.2	Without prejudice to any other right or remedy which may be available to it, either party shall be entitled to terminate this License immediately by giving written notice to the other.
 7.3	Unless otherwise agreed in writing by ARM, upon expiry or termination of this License the licenses granted to You under this License shall terminate and You shall, at ARM's option, either destroy or return to ARM any ARM Confidential Information, including any copies or derivatives (including any translation, modification, compilation, abridgement or other form in which the mbed SDK has been recast, transformed or adapted) thereof in its possession. Upon request from ARM, You shall furnish to ARM a certificate signed by Your duly authorised representative, that to the best of his or her knowledge, information and belief, after due enquiry, You have complied with provisions of this Clause 7.
 
-7.4	Upon expiry or termination of this License the provisions of Clauses 1, 2.4 - 2.7, 4 (to the extent any obligation remains outstanding), 5, 6, 7 and 8 shall survive.
+7.4	Upon expiry or termination of this License the provisions of Clauses 1, 2.4 - 2.8, 4 (to the extent any obligation remains outstanding), 5, 6, 7 and 8 shall survive.
 8.	General
 
 8.1	You shall not assign or otherwise transfer this License or any of its rights and obligations hereunder whether in whole or in part without the prior written consent of ARM.
@@ -152,7 +156,7 @@ You hereby represent and warrant that You have the power to cause all Intellectu
 
 8.3	This License constitutes the entire agreement between the parties with respect to the subject matter hereof, and supersedes and replaces all prior or contemporaneous understandings or agreements, written or oral, regarding the subject matter. No amendment to, or modification of, this License shall be binding unless in writing and signed by a duly authorised representative of both parties.
 
-8.4	All notices which are required to be given hereunder shall be in writing and shall be sent to the address of the recipient set out in the mbed partner agreement. Any such notice may be delivered personally, by commercial overnight courier or facsimile transmission which shall be followed by a hard copy and shall be deemed to have been served if by hand when delivered, if by commercial overnight courier 48 hours after deposit with such courier, and if by facsimile transmission when dispatched.	
+8.4	All notices which are required to be given hereunder shall be in writing and shall be sent to the address of the recipient set out in the mbed Partner Agreement. Any such notice may be delivered personally, by commercial overnight courier or facsimile transmission which shall be followed by a hard copy and shall be deemed to have been served if by hand when delivered, if by commercial overnight courier 48 hours after deposit with such courier, and if by facsimile transmission when dispatched.	
 
 8.5	Neither party shall be liable for any failure or delay in its performance under this License due to causes, including, but not limited to, acts of God, acts of civil or military authority, fires, epidemics, floods, earthquakes, riots, wars, sabotage, third party industrial disputes and governments actions, which are beyond its reasonable control; provided that the delayed party: (i) gives the other party written notice of such cause promptly, and in any event within fourteen (14) days of discovery thereof; and (ii) uses its reasonable efforts to correct such failure or delay in its performance. The delayed party's time for performance or cure under this Clause 8.5 shall be extended for a period equal to the duration of the cause.
 
@@ -162,7 +166,7 @@ You hereby represent and warrant that You have the power to cause all Intellectu
 
 8.8	The mbed SDK licensed under this License has a US export control classification of ECCN 5D002 and is authorized for License Exception ENC under Sections 740.17 of the U.S Export Administration Regulations ("EAR").  Pursuant to Section 742.15 of the EAR, Partner hereby agrees and certifies that, except pursuant to a license granted by the United States Department of Commerce Bureau of Industry and Security or as permitted pursuant to a License Exception under the EAR, Partner shall not export, re-export or release the mbed SDK to a national of a country outside the US or Canada.   For additional information about the EAR or Partner's obligations under those regulations, please refer to the U.S. Bureau of Industry and Security's website at http://www.bis.doc.gov.  In addition, Partner hereby agrees and certifies that Partner shall not breach any restriction, law, or regulation of the European Union or an individual Member State of the European Union that imposes on an exporter a burden equivalent to or greater than that imposed by the U.S. Bureau of Industry and Security Regulations, and agrees to submit to ARM any export-related form that may be required by US or UK export authorities.
 
-8.9	The mbed SDK provided under this License consist solely of commercial items.  You shall be responsible for ensuring that any provision of the mbed SDK  to the US Government in accordance with the terms of this License are provided with the rights and subject to restrictions described elsewhere herein. 
+8.9	The mbed SDK provided under this License consist solely of commercial items.  You shall be responsible for ensuring that any provision of the mbed SDK  to the US Government in accordance with the terms of this License are provided with the rights and subject to restrictions described herein. 
 
 8.10	Except as expressly stated in this License, the Contracts (Rights of Third Parties) Act 1999 and any legislation amending or replacing that Act shall not apply in relation to this License or any License, arrangement, understanding, liability or obligation arising under or in connection with this License and nothing in this License shall confer on any third party the right to enforce any provision of this License.
 
