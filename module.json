@@ -26,6 +26,8 @@
       "type": "Apache-2.0"
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "mbed": "ARMmbed/mbed-sdk"
+  },
   "targetDependencies": {}
 }
