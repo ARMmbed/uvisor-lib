@@ -19,8 +19,12 @@ set(UVISOR_DIR "MK64FN1M0XXX12")		# FRDM-K64F, GCC_ARM
 set(UVISOR_ASM "${UVISOR_DIR}/uvisor-GCC_ARM.s")
 enable_language(ASM)
 set_property(SOURCE ${UVISOR_ASM} PROPERTY LANGUAGE ASM)
+
+# library
 add_library(uvisor-lib
     ${UVISOR_ASM}
+    "bitband.cpp"
+    "interrupts.cpp"
 )
 
 # the INCBIN directive in the .s file looks 
