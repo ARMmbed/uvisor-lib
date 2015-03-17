@@ -251,24 +251,6 @@ void uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
 ---
 
 ```C
-void uvisor_let_isr(uint32_t irqn)
-```
-
-<table>
-  <tr>
-    <td>Description</td>
-    <td colspan="2">De-register an ISR for the currently active box</td>
-  </tr>
-  <tr>
-    <td rowspan="1">Parameters</td>
-    <td><pre>uint32_t irqn<code></td>
-    <td>IRQn</td>
-  </tr>
-</table>
-
----
-
-```C
 uint32_t uvisor_get_isr(uint32_t irqn)
 ```
 
@@ -291,7 +273,7 @@ uint32_t uvisor_get_isr(uint32_t irqn)
 ---
 
 ```C
-uint32_t uvisor_ena_irq(uint32_t irqn)
+uint32_t uvisor_enable_irq(uint32_t irqn)
 ```
 
 <table>
@@ -313,7 +295,7 @@ uint32_t uvisor_ena_irq(uint32_t irqn)
 ---
 
 ```C
-uint32_t uvisor_dis_irq(uint32_t irqn)
+uint32_t uvisor_disable_irq(uint32_t irqn)
 ```
 
 <table>
@@ -324,59 +306,6 @@ uint32_t uvisor_dis_irq(uint32_t irqn)
   <tr>
     <td>Notes</td>
     <td colspan="2">Equivalent to <pre>NVIC_DisableIRQ(irqn)<code></td>
-  </tr>
-  <tr>
-    <td rowspan="1">Parameters</td>
-    <td><pre>uint32_t irqn<code></td>
-    <td>IRQn</td>
-  </tr>
-</table>
-
----
-
-```C
-void uvisor_set_ena_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
-```
-
-<table>
-  <tr>
-    <td>Description</td>
-    <td colspan="2">Register an ISR to the currently active box and then enable
-                    its corresponding IRQn</td>
-  </tr>
-    <td>Notes</td>
-    <td colspan="3">Equivalent to <pre>NVIC_SetVector(irqn, vector); NVIC_EnableIRQ(irqn);<code></td>
-  </tr>
-  <tr>
-    <td rowspan="3">Parameters</td>
-    <td><pre>uint32_t irqn<code></td>
-    <td>IRQn</td>
-  </tr>
-  <tr>
-    <td><pre>uint32_t vector<code></td>
-    <td>Interrupt handler</td>
-  </tr>
-  <tr>
-    <td><pre>uint32_t flag<code></td>
-    <td>Permission flag (currently not implemented)</td>
-  </tr>
-</table>
-
----
-
-```C
-void uvisor_dis_let_isr(uint32_t irqn)
-```
-
-<table>
-  <tr>
-    <td>Description</td>
-    <td colspan="2">Disable IRQ for the currently active box and then
-                    de-register the corresponding ISR</td>
-  </tr>
-  </tr>
-    <td>Notes</td>
-    <td colspan="3">Equivalent to <pre>NVIC_DisableIRQ(irqn)<code></td>
   </tr>
   <tr>
     <td rowspan="1">Parameters</td>
