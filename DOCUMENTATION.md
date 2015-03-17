@@ -5,7 +5,7 @@ Here you can find detailed documentation for:
 1. [Configuration Macros](#configuration-macros), to configure a secure box and protect data and
    peripherals;
 2. [Secure Function Call](#secure-function-call), to execute code in the context of a secure box
-3. [Low Level APIs](#low-level-api), to access uVisor functions that are not available to
+3. [Low Level APIs](#low-level-apis), to access uVisor functions that are not available to
    unprivileged code (interrupts, restricted system registers).
 4. [Type Definitions](#type-definitions)
 
