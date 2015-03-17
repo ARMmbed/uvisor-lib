@@ -187,23 +187,14 @@ int some_function(void)
     ...
 
     uvisor_set_isr(MY_HANDLER_IRQn, (uint32_t) &my_handler);
-    uvisor_ena_irq(MY_HANDLER_IRQn);
+    uvisor_enable_irq(MY_HANDLER_IRQn);
 
     ...
 }
 ```
 
 After registration of an interrupt, its IRQn is bounded to the box that
-registered it until ownership is releaed:
-
-```C
-    ...
-    uvisor_let_isr(MY_HANDLER_IRQn);
-    ...
-```
-
-An interrupt can be enabled and disabled repeatedly without the need of
-registering and de-registering it all the time.
+registered it.
 
 Currently, interrupt ownership is exclusive, meaning that multiple boxes cannot
 register for the same interrupt. Registration works on a
