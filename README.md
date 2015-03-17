@@ -47,7 +47,7 @@ The next Sections will describe all these features in deeper detail.
 To configure a secure box:
 
 - Add the module as a dependency in `module.json`:
-```json
+```
   "dependencies": {
     "uvisor-lib": "ARMmbed/uvisor-lib#~0.1.7",
     "mbed": "ARMmbed/mbed-sdk",
@@ -220,4 +220,4 @@ For a detailed documentation of all macros and APIs available, please see
 For this release, uvisor-lib comes with the following restrictions:
 
 - it is disabled by default. Use `UVISOR_SET_MODE(2);` in the top level yotta
-  executable to enable it;
+  executable to enable it.
