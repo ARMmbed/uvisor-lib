@@ -2,14 +2,14 @@
 
 Here you can find detailed documentation for:
 
-1. Configuration macros, to configure a secure box and protect data and
+1. [Configuration Macros](#configuration-macros), to configure a secure box and protect data and
    peripherals;
-2. Secure function call, to execute code in the context of a secure box
-3. Low level APIs, to access uVisor functions that are not available to
-   privileged code (interrupts, restricted system registers).
-4. Type definitions
+2. [Secure Function Call](#secure-function-call), to execute code in the context of a secure box
+3. [Low Level APIs](#low-level-api), to access uVisor functions that are not available to
+   unprivileged code (interrupts, restricted system registers).
+4. [Type Definitions](#type-definitions)
 
-## Configuration macros
+## Configuration Macros
 
 ```C
 UVISOR_SECURE_CONST var_type var_name = var_value
@@ -66,7 +66,7 @@ UVISOR_BOX_CONFIG(box_name
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="3">Configures a secure box</td>
+    <td colspan="3">Secure box configuration</td>
   </tr>
   <tr>
     <td>Type</td>
@@ -74,7 +74,7 @@ UVISOR_BOX_CONFIG(box_name
   </tr>
   <tr>
     <td rowspan="3">Parameters</td>
-    <td></td>
+    <td><pre>box_name<code></td>
     <td>Secure box name</td>
   </tr>
   <tr>
@@ -107,6 +107,7 @@ UVISOR_BOX_CONFIG(my_box_name, g_box_acl, BOX_STACK_SIZE);
 
 Note: this macro is only needed temporarily (uVisor disabled by default) and
 will be removed in the future.
+
 Note: this macro must be used only once in the top level yotta executable.
 
 ```C
@@ -165,7 +166,7 @@ uint32_t secure_gateway(box_name,
   </tr>
   <tr>
     <td rowspan="6">Parameters</td>
-    <td></td>
+    <td><pre>box_name<code></td>
     <td>Secure box name</td>
   </tr>
   <tr>
@@ -230,11 +231,11 @@ void uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
     <td colspan="2">Register an ISR to the currently active box</td>
   </tr>
     <td>Notes</td>
-    <td colspan="3">Equivalent to NVIC_SetVector(irqn, vector)</td>
+    <td colspan="3">Equivalent to <pre>NVIC_SetVector(irqn, vector)<code></td>
   </tr>
   <tr>
     <td rowspan="3">Parameters</td>
-    <td>uint32_t irqn</td>
+    <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
   </tr>
   <tr>
@@ -260,7 +261,7 @@ void uvisor_let_isr(uint32_t irqn)
   </tr>
   <tr>
     <td rowspan="1">Parameters</td>
-    <td>uint32_t irqn</td>
+    <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
   </tr>
 </table>
@@ -277,12 +278,12 @@ uint32_t uvisor_get_isr(uint32_t irqn)
     <td colspan="2">Get the ISR registered for IRQn</td>
   </tr>
   <tr>
-    <td>Return value/td>
+    <td>Return value</td>
     <td colspan="2">The ISR registered for IRQn, if present; 0 otherwise</td>
   </tr>
   <tr>
     <td rowspan="1">Parameters</td>
-    <td>uint32_t irqn</td>
+    <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
   </tr>
 </table>
@@ -300,11 +301,11 @@ uint32_t uvisor_ena_irq(uint32_t irqn)
   </tr>
   <tr>
     <td>Notes</td>
-    <td colspan="2">Equivalent to NVIC_EnableIRQ(irqn)</td>
+    <td colspan="2">Equivalent to <pre>NVIC_EnableIRQ(irqn)<code></td>
   </tr>
   <tr>
     <td rowspan="1">Parameters</td>
-    <td>uint32_t irqn</td>
+    <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
   </tr>
 </table>
@@ -322,11 +323,11 @@ uint32_t uvisor_dis_irq(uint32_t irqn)
   </tr>
   <tr>
     <td>Notes</td>
-    <td colspan="2">Equivalent to NVIC_DisableIRQ(irqn)</td>
+    <td colspan="2">Equivalent to <pre>NVIC_DisableIRQ(irqn)<code></td>
   </tr>
   <tr>
     <td rowspan="1">Parameters</td>
-    <td>uint32_t irqn</td>
+    <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
   </tr>
 </table>
@@ -344,12 +345,11 @@ void uvisor_set_ena_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
                     its corresponding IRQn</td>
   </tr>
     <td>Notes</td>
-    <td colspan="3">Equivalent to <pre>NVIC_SetVector(irqn, vector)<code>
-                    followed by <pre>NVIC_EnableIRQ(irqn)</td>
+    <td colspan="3">Equivalent to <pre>NVIC_SetVector(irqn, vector); NVIC_EnableIRQ(irqn);<code></td>
   </tr>
   <tr>
     <td rowspan="3">Parameters</td>
-    <td>uint32_t irqn</td>
+    <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
   </tr>
   <tr>
@@ -365,7 +365,7 @@ void uvisor_set_ena_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
 ---
 
 ```C
-void uvisor_let_isr(uint32_t irqn)
+void uvisor_dis_let_isr(uint32_t irqn)
 ```
 
 <table>
@@ -374,9 +374,13 @@ void uvisor_let_isr(uint32_t irqn)
     <td colspan="2">Disable IRQ for the currently active box and then
                     de-register the corresponding ISR</td>
   </tr>
+  </tr>
+    <td>Notes</td>
+    <td colspan="3">Equivalent to <pre>NVIC_DisableIRQ(irqn)<code></td>
+  </tr>
   <tr>
     <td rowspan="1">Parameters</td>
-    <td>uint32_t irqn</td>
+    <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
   </tr>
 </table>
@@ -394,17 +398,17 @@ void uvisor_write_bitband(uint32_t addr, int32_t val)
                     access is not permitted</td>
   </tr>
   <tr>
-    <td rowspan="1">Parameters</td>
-    <td>uint32_t addr</td>
+    <td rowspan="2">Parameters</td>
+    <td><pre>uint32_t addr<code></td>
     <td>Bitband address</td>
   </tr>
   <tr>
-    <td>uint32_t val</td>
+    <td><pre>uint32_t val<code></td>
     <td>Value to write at bitband address</td>
   </tr>
 </table>
 
-## Type definitions
+## Type Definitions
 
 ```C
 typedef uint32_t UvisroBoxAcl;    /* permssions mask */
