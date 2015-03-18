@@ -48,5 +48,5 @@ __uvisor_mode:
  .align 5
 .section .uvisor.bss.main,"awM",@nobits
 __uvisor_reserved_start:
- .space 0x1000
+ .space 0x2000
 __uvisor_reserved_end:
