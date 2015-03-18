@@ -16,10 +16,10 @@
     }
   ],
   "repository": {
-    "url": "git@github.com:ARMmbed/uvisor-lib.git",
+    "url": "git@github.com:ARMmbed/uvisor-lib-private.git",
     "type": "git"
   },
-  "homepage": "https://github.com/ARMmbed/uvisor-lib",
+  "homepage": "https://github.com/ARMmbed/uvisor-lib-private",
   "licenses": [
     {
       "url": "https://spdx.org/licenses/Apache-2.0",
@@ -27,7 +27,7 @@
     }
   ],
   "dependencies": {
-    "mbed": "ARMmbed/mbed-sdk"
+    "mbed": "ARMmbed/mbed-sdk-private"
   },
   "targetDependencies": {}
 }
