@@ -13,7 +13,7 @@ you will be already running on top of the uVisor. At this stage of
 development, though, it is disabled by default.
 
 To learn more about the uVisor refer to its
-[documentation](https://github.com/ARMmbed/uvisor).
+[documentation](https://github.com/ARMmbed/uvisor-private).
 
 Supported platforms:
 - Freescale FRDM-K64F board (GCC ARM Embedded toolchain)
@@ -42,15 +42,14 @@ yours.
 
 The next Sections will describe all these features in deeper detail.
 
-## How to Configure a Secure Box
+## How to configure a secure box
 
 To configure a secure box:
 
 - Add the module as a dependency in `module.json`:
 ```
   "dependencies": {
-    "uvisor-lib": "ARMmbed/uvisor-lib#~0.1.7",
-    "mbed": "ARMmbed/mbed-sdk",
+    "uvisor-lib": "ARMmbed/uvisor-lib#~0.2.0",
     ...
   },
 ```
@@ -60,19 +59,19 @@ To configure a secure box:
 #include <uvisor-lib/uvisor-lib.h>
 ```
 
-- Protect your data with `UVISOR_SECURE_CONST` and `UVISOR_SECURE_BSS` (see
-  [here](#protect-your-data))
+- [Protect your data](#protect-your-data) with `UVISOR_SECURE_CONST` and
+  `UVISOR_SECURE_BSS`
 
-- Configure your secure box with `UVISOR_BOX_CONFIG(...)` (see
-  [here](#configure-the-secure-box))
+- [Configure your secure box](#configure-the-secure-box) with
+  `UVISOR_BOX_CONFIG(...)`
 
-- Use the secure gateway to ensure critical functions are executed from the
-  secure box context (see [here](#secure-function-call))
+- Use the [secure gateway](#secure-function-call) to ensure critical functions
+  are executed from the secure box context
 
-- Use the uvisor-lib APIs to access restricted features (interrupts, privileged
-  registers) (see [here](#low-level-apis))
+- Use the [uvisor-lib APIs](#low-level-apis) to access restricted features
+  (interrupts, privileged registers)
 
-### Protect Your Data
+### Protect your data
 
 You can secure data both in Flash and SRAM using dedicated macros:
 
@@ -89,7 +88,7 @@ performance and readability we suggest to group data in structs (one for Flash,
 one for SRAM) and then secure the whole structs singularly. It will be much
 faster for the uVisor to then ensure protection of a box context.
 
-### Configure the Secure Box
+### Configure your secure box
 
 Once restricted data as been made secure, you need to configure the secure box
 itself. To do so you need to specify its name and provide an Access Control
@@ -126,7 +125,7 @@ explicitly included in the secure box through the mechanism just described are
 automatically included in the context of the main box, unprotected from the
 rest of the code.
 
-### Secure Function Call
+### Secure function call
 
 Similarly to access to data and peripherals, code exectuion happens by default
 in the context of the main box. If you want to ensure that a function is
@@ -160,7 +159,7 @@ uint32_t secure_sum(uint32_t op1, uint32_t op2,
 }
 ```
 
-### Low Level APIs
+### Low level APIs
 
 Access to some system registers or features is only possible in privileged
 mode, so low level APIs are provided to interact with the uVisor to perform
@@ -201,10 +200,10 @@ register for the same interrupt. Registration works on a
 first-come-first-served basis. Execution of an interrupt handler is always
 handled in unprivileged mode in the context of the box that registered for it.
 
-## Even More Documentation?
+## Even more documentation?
 
-For a detailed documentation of all macros and APIs available, please see
-[here](DOCUMENTATION.md).
+For a detailed documentation of all macros and APIs available, please refer to
+the [APIs documentation](DOCUMENTATION.md).
 
 ## Limitations
 
