@@ -2,14 +2,15 @@
 
 Here you can find detailed documentation for:
 
-1. [Configuration Macros](#configuration-macros), to configure a secure box and protect data and
-   peripherals;
-2. [Secure Function Call](#secure-function-call), to execute code in the context of a secure box
-3. [Low Level APIs](#low-level-apis), to access uVisor functions that are not available to
-   unprivileged code (interrupts, restricted system registers).
-4. [Type Definitions](#type-definitions)
+1. [Configuration macros](#configuration-macros), to configure a secure box and
+   protect data and peripherals;
+2. [Secure function call](#secure-function-call), to execute code in the
+   context of a secure box
+3. [Low level APIs](#low-level-apis), to access uVisor functions that are not
+   available to unprivileged code (interrupts, restricted system registers).
+4. [Type definitions](#type-definitions)
 
-## Configuration Macros
+## Configuration macros
 
 ```C
 UVISOR_SECURE_CONST var_type var_name = var_value
@@ -144,7 +145,7 @@ Example:
 UVISOR_SET_MODE(2);
 ```
 
-## Secure Function Call
+## Secure function call
 
 ```C
 uint32_t secure_gateway(box_name,
@@ -212,7 +213,7 @@ uint32_t secure_sum(uint32_t op1, uint32_t op2,
 }
 ```
 
-## Low Level APIs
+## Low level APIs
 
 Currently the following low level operations are permitted:
 
@@ -337,7 +338,7 @@ void uvisor_write_bitband(uint32_t addr, int32_t val)
   </tr>
 </table>
 
-## Type Definitions
+## Type definitions
 
 ```C
 typedef uint32_t UvisroBoxAcl;    /* permssions mask */
