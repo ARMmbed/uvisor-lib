@@ -62,7 +62,7 @@ To configure a secure box:
 - [Protect your data](#protect-your-data) with `UVISOR_SECURE_CONST` and
   `UVISOR_SECURE_BSS`
 
-- [Configure your secure box](#configure-the-secure-box) with
+- [Configure your secure box](#configure-your-secure-box) with
   `UVISOR_BOX_CONFIG(...)`
 
 - Use the [secure gateway](#secure-function-call) to ensure critical functions
