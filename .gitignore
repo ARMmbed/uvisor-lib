@@ -5,3 +5,4 @@
 build
 yotta_modules
 yotta_targets
+.yotta.json
