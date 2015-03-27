@@ -1,5 +1,6 @@
 # vim temporary files
 *.sw*
+upload.tar.gz
 
 # yotta build folders
 build
