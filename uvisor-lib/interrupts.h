@@ -73,4 +73,30 @@ UVISOR_EXTERN uint32_t __uvisor_get_priority(uint32_t irqn);
         }                                                                      \
     })
 
+#define uvisor_set_priority(irqn, priority)                                    \
+    ({                                                                         \
+        if(__uvisor_mode == 0)                                                 \
+        {                                                                      \
+            NVIC_SetPriority(irqn, priority);                                  \
+        }                                                                      \
+        else                                                                   \
+        {                                                                      \
+            __uvisor_set_priority(irqn, priority);                             \
+        }                                                                      \
+    })
+
+#define uvisor_get_priority(irqn)                                              \
+    ({                                                                         \
+        uint32_t res;                                                          \
+        if(__uvisor_mode == 0)                                                 \
+        {                                                                      \
+            res = NVIC_GetPriority(irqn);                                      \
+        }                                                                      \
+        else                                                                   \
+        {                                                                      \
+            res =  __uvisor_get_priority(irqn);                                \
+        }                                                                      \
+        res;                                                                   \
+    })
+
 #endif/*__INTERRUPTS_H__*/
