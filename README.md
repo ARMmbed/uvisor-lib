@@ -18,7 +18,7 @@ To learn more about the uVisor refer to its
 Supported platforms:
 - Freescale FRDM-K64F board (GCC ARM Embedded toolchain)
 
-The current release version is 0.1.7.
+The current release version is 0.4.0.
 
 ## Introduction
 
@@ -46,7 +46,7 @@ The next Sections will describe all these features in deeper detail.
 
 To configure a secure box:
 
-- Add the module as a dependency in `module.json`:
+- Add uvisor-lib as a dependency in `module.json`:
 ```
   "dependencies": {
     "uvisor-lib": "ARMmbed/uvisor-lib#~0.2.0",
@@ -56,7 +56,7 @@ To configure a secure box:
 
 - Include its header file in your source code
 ```c
-#include <uvisor-lib/uvisor-lib.h>
+#include "uvisor-lib/uvisor-lib.h"
 ```
 
 - [Protect your data](#protect-your-data) with `UVISOR_SECURE_CONST` and
@@ -80,7 +80,7 @@ You can secure data both in Flash and SRAM using dedicated macros:
 UVISOR_SECURE_CONST char g_password[] = "password";
 
 /* create private global variable */
-UVISOR_SECURE_BSS char g_counter[];
+UVISOR_SECURE_BSS int g_counter;
 ```
 
 You might use these macros as many times as you want, but to increase
@@ -90,11 +90,11 @@ faster for the uVisor to then ensure protection of a box context.
 
 ### Configure your secure box
 
-Once restricted data as been made secure, you need to configure the secure box
-itself. To do so you need to specify its name and provide an Access Control
-List (ACL) specifying the data and peripherals for which you want to ensure
-restricted and exclusive access. You can also specify the size of the protected
-stack for the secure box.
+Once restricted data has been made secure, you need to configure the secure box
+itself. Specify its name and provide an Access Control List (ACL) indicating
+the data and peripherals for which you want to ensure restricted and exclusive
+access. You can also specify the size of the protected stack for the secure
+box.
 
 The access control list can be defined as follows:
 
@@ -102,12 +102,12 @@ The access control list can be defined as follows:
 /* create ACLs for the module */
 static const UvBoxAclItem g_box_acl[] = {
     {&g_password, sizeof(g_data), UVISOR_TACL_SECURE_CONST}, /* some data */
-    {&g_counter,  sizeof(g_data), UVISOR_TACL_SECURE_DATA},  /* some data */
+    {&g_counter,  sizeof(g_data), UVISOR_TACL_SECURE_BSS},   /* some data */
     {UART0,       sizeof(*UART0), UVISOR_TACL_PERIPHERAL},   /* some devices */
 };
 ```
 
-And the secure box finally configured:
+and the secure box can be finally configured:
 
 ```C
 /* required stack size */
@@ -144,20 +144,19 @@ call:
 ...
 
 /* the actual function */
-uint32_t __secure_sum(uint32_t op1, uint32_t op2,
-                      uint32_t op3, uint32_t op4)
+extern "C" uint32_t __secure_sum(uint32_t op1, uint32_t op2)
 {
-    return op1 + op2 + op3 + op4;
+    return op1 + op2;
 }
 
 /* the gateway to the secure function */
-uint32_t secure_sum(uint32_t op1, uint32_t op2,
-                    uint32_t op3, uint32_t op4)
+uint32_t secure_sum(uint32_t op1, uint32_t op2)
 {
-    return secure_gateway(my_box_name, __secure_sum,
-                          op1, op2, op3, op4);
+    return secure_gateway(my_box_name, __secure_sum, op1, op2);
 }
 ```
+
+The secure gateway may be called with a maximum of four 32bit arguments.
 
 ### Low level APIs
 
@@ -167,10 +166,10 @@ those accesses. Currently, only interrupt management is supported.
 
 #### Interrupt management
 
-Boxes can register for interrupts and gain exclusive access to the
-corresponding IRQn slot, so that they are the only one in charge of modifying
-it. To register an interrupt routine, you have to set the handler and enable
-the corresponding IRQn, as you would do with regular NVIC registers:
+A box can register for interrupts and gain exclusive access to the
+corresponding IRQn slot, so that it is the only one in charge of modifying it.
+To register an interrupt routine, you have to set a handler for it and enable
+the corresponding IRQn slot, as you would do with regular NVIC registers:
 
 ```C
 
