@@ -5,10 +5,10 @@ Here you can find detailed documentation for:
 1. [Configuration macros](#configuration-macros), to configure a secure box and
    protect data and peripherals;
 2. [Secure function call](#secure-function-call), to execute code in the
-   context of a secure box
+   context of a secure box;
 3. [Low level APIs](#low-level-apis), to access uVisor functions that are not
-   available to unprivileged code (interrupts, restricted system registers).
-4. [Type definitions](#type-definitions)
+   available to unprivileged code (interrupts, restricted system registers);
+4. [Type definitions](#type-definitions).
 
 ## Configuration macros
 
@@ -53,7 +53,7 @@ UVISOR_SECURE_BSS var_type var_name [= var_value]
 Example:
 ```C
 /* create private global variable */
-UVISOR_SECURE_BSS char g_counter[];
+UVISOR_SECURE_BSS int g_counter;
 ```
 
 ---
@@ -71,7 +71,7 @@ UVISOR_BOX_CONFIG(box_name
   </tr>
   <tr>
     <td>Type</td>
-    <td colspan="2">C/C++ pre-processor macro (object declaration)</td>
+    <td colspan="2">C/C++ pre-processor macro (pseudo-function)</td>
   </tr>
   <tr>
     <td rowspan="3">Parameters</td>
@@ -84,7 +84,7 @@ UVISOR_BOX_CONFIG(box_name
   </tr>
   <tr>
     <td><pre>uint32_t module_stack_size<code></td>
-    <td>Required stack size</td>
+    <td>Required stack size for the secure box</td>
   </tr>
 </table>
 
@@ -145,15 +145,63 @@ Example:
 UVISOR_SET_MODE(2);
 ```
 
+---
+
+Note: this macro is only needed temporarily (uVisor disabled by default) and
+will be removed in the future.
+
+Note: this macro must be used only once in the top level yotta executable.
+
+```C
+UVISOR_SET_MODE_ACL(int uvisor_mode, const UvBoxAcl *main_box_acl_list);
+```
+
+<table>
+  <tr>
+    <td>Description</td>
+    <td colspan="2">[temporary] Set mode for the uVisor and provide background
+                    ACLs for the main box
+    </td>
+  </tr>
+  <tr>
+    <td>Type</td>
+    <td colspan="3">C/C++ pre-processor macro (object declaration)</td>
+  </tr>
+  <tr>
+    <td rowspan="4">Parameters</td>
+    <td rowspan="3"><pre>int uvisor_mode<code></td>
+    <td>0 = disabled [default]</td>
+  </tr>
+    <tr>
+    <td>1 = permissive [n.a.] [currently same as enabled]</td>
+  </tr>
+  <tr>
+    <td>2 = enabled</td>
+  </tr>
+  <tr>
+    <td><pre>const UvBoxAclItem *main_box_acl_list<code></td>
+    <td>List of ACLs for the main box (background ACLs)</td>
+  </tr>
+</table>
+
+Example:
+```C
+#include <uvisor-lib/uvisor-lib.h>
+
+/* create background ACLs for the main box */
+static const UvBoxAclItem g_background_acl[] = {
+    {UART0,       sizeof(*UART0), UVISOR_TACL_PERIPHERAL},
+    {UART1,       sizeof(*UART1), UVISOR_TACL_PERIPHERAL},
+    {PIT,         sizeof(*PIT),   UVISOR_TACL_PERIPHERAL},
+};
+/* set uvisor mode (enable) */
+UVISOR_SET_MODE_ACL(2, g_background_acl);
+```
+
 ## Secure function call
 
 ```C
-uint32_t secure_gateway(box_name,
-                        uint32_t target_fn,
-                        uint32_t a0,
-                        uint32_t a1,
-                        uint32_t a2,
-                        uint32_t a3)
+uint32_t secure_gateway(box_name, uint32_t target_fn, ...)
 ```
 
 <table>
@@ -175,20 +223,8 @@ uint32_t secure_gateway(box_name,
     <td>Function to execute in the secure context</td>
   </tr>
   <tr>
-    <td><pre>uint32_t a0<code></td>
-    <td>First 32bit argument</td>
-  </tr>
-  <tr>
-    <td><pre>uint32_t a1<code></td>
-    <td>Third 32bit argument</td>
-  </tr>
-  <tr>
-    <td><pre>uint32_t a2<code></td>
-    <td>Second 32bit argument</td>
-  </tr>
-  <tr>
-    <td><pre>uint32_t a3<code></td>
-    <td>Forth 32bit argument</td>
+    <td><pre>...<code></td>
+    <td>A maximum of four 32bit arguments</td>
   </tr>
 </table>
 
@@ -198,18 +234,15 @@ Example:
 ...
 
 /* the actual function */
-uint32_t __secure_sum(uint32_t op1, uint32_t op2,
-                      uint32_t op3, uint32_t op4)
+extern "C" uint32_t __secure_sum(uint32_t op1, uint32_t op2)
 {
-    return op1 + op2 + op3 + op4;
+    return op1 + op2;op3 + op4;
 }
 
 /* the gateway to the secure function */
-uint32_t secure_sum(uint32_t op1, uint32_t op2,
-                    uint32_t op3, uint32_t op4)
+uint32_t secure_sum(uint32_t op1, uint32_t op2)
 {
-    return secure_gateway(my_box_name, __secure_sum,
-                          op1, op2, op3, op4);
+    return secure_gateway(my_box_name, __secure_sum, op1, op2)
 }
 ```
 
@@ -218,7 +251,7 @@ uint32_t secure_sum(uint32_t op1, uint32_t op2,
 Currently the following low level operations are permitted:
 
 1. Interrupt management
-2. Bitband access (temporary)
+2. [temporary] Bitband access
 
 ### Interrupt management
 
@@ -241,7 +274,8 @@ void uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
   </tr>
   <tr>
     <td><pre>uint32_t vector<code></td>
-    <td>Interrupt handler</td>
+    <td>Interrupt handler; if 0 the IRQn slot is de-registered for the current
+        box</td>
   </tr>
   <tr>
     <td><pre>uint32_t flag<code></td>
@@ -315,7 +349,56 @@ uint32_t uvisor_disable_irq(uint32_t irqn)
   </tr>
 </table>
 
-### Bitband access (temporary)
+---
+
+```C
+void uvisor_set_priority(uint32_t irqn, uint32_t priority)
+```
+
+<table>
+  <tr>
+    <td>Description</td>
+    <td colspan="2">Set priority level for IRQn</td>
+  </tr>
+  <tr>
+    <td>Notes</td>
+    <td colspan="2">Equivalent to <pre>NVIC_SetPriority(irqn, priority)<code>
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="2">Parameters</td>
+    <td><pre>uint32_t irqn<code></td>
+    <td>IRQn</td>
+  </tr>
+  <tr>
+    <td><pre>uint32_t priority<code></td>
+    <td>Priority level (minimum: 1)</td>
+  </tr>
+</table>
+
+---
+
+```C
+uint32_t uvisor_get_priority(uint32_t irqn)
+```
+
+<table>
+  <tr>
+    <td>Description</td>
+    <td colspan="2">Get the priority level of IRQn</td>
+  </tr>
+  <tr>
+    <td>Return value</td>
+    <td colspan="2">The priority level of IRQn, if available; 0 otherwise</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Parameters</td>
+    <td><pre>uint32_t irqn<code></td>
+    <td>IRQn</td>
+  </tr>
+</table>
+
+### [temporary] Bitband access
 
 ```C
 void uvisor_write_bitband(uint32_t addr, int32_t val)
