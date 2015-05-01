@@ -101,9 +101,9 @@ The access control list can be defined as follows:
 ```C
 /* create ACLs for the module */
 static const UvBoxAclItem g_box_acl[] = {
-    {&g_password, sizeof(g_data), UVISOR_TACL_SECURE_CONST}, /* some data */
-    {&g_counter,  sizeof(g_data), UVISOR_TACL_SECURE_BSS},   /* some data */
-    {UART0,       sizeof(*UART0), UVISOR_TACL_PERIPHERAL},   /* some devices */
+    {&g_password, sizeof(g_data),    UVISOR_TACL_SECURE_CONST}, /* const data */
+    {&g_counter,  sizeof(g_counter), UVISOR_TACL_SECURE_BSS},   /* bss   data */
+    {UART0,       sizeof(*UART0),    UVISOR_TACL_PERIPHERAL},   /* peripheral */
 };
 ```
 
