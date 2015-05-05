@@ -1,13 +1,13 @@
-# uvisor-lib API documentation
+# uvisor-lib API Documentation
 
 Here you can find detailed documentation for:
 
-1. [Configuration macros](#configuration-macros), to configure a secure box and protect data and peripherals;
-2. [Secure function call](#secure-function-call), to execute code in the context of a secure box;
-3. [Low level APIs](#low-level-apis), to access uVisor functions that are not available to unprivileged code (interrupts, restricted system registers);
+1. [Configuration macros](#configuration-macros), to configure a secure box and protect data and peripherals.
+2. [Secure function call](#secure-function-call), to execute code in the context of a secure box.
+3. [Low level APIs](#low-level-apis), to access uVisor functions that are not available to unprivileged code (interrupts, restricted system registers).
 4. [Type definitions](#type-definitions).
 
-## Configuration macros
+## Configuration Macros
 
 ```C
 UVISOR_SECURE_CONST var_type var_name = var_value
@@ -92,9 +92,9 @@ Example:
 
 /* create ACLs for the module */
 static const UvBoxAclItem g_box_acl[] = {
-    {&g_password, sizeof(g_data),    UVISOR_TACL_SECURE_CONST}, /* const data */
-    {&g_counter,  sizeof(g_counter), UVISOR_TACL_SECURE_BSS},   /* bss   data */
-    {UART0,       sizeof(*UART0),    UVISOR_TACL_PERIPHERAL},   /* peripheral */
+    {&g_password, sizeof(g_data), UVISOR_TACL_SECURE_CONST}, /* some data */
+    {&g_counter,  sizeof(g_data), UVISOR_TACL_SECURE_DATA},  /* some data */
+    {UART0,       sizeof(*UART0), UVISOR_TACL_PERIPHERAL},   /* some devices */
 };
 
 /* configure secure box compartment */
@@ -103,9 +103,11 @@ UVISOR_BOX_CONFIG(my_box_name, g_box_acl, BOX_STACK_SIZE);
 
 ---
 
-Note: this macro is only needed temporarily (uVisor disabled by default) and will be removed in the future.
+**Note:**
 
-Note: this macro must be used only once in the top level yotta executable.
+1. This macro is only needed temporarily (uVisor disabled by default) and will be removed in the future.
+
+2. This macro must be used only once in the top level yotta executable.
 
 ```C
 UVISOR_SET_MODE(int uvisor_mode);
@@ -143,9 +145,11 @@ UVISOR_SET_MODE(2);
 
 ---
 
-Note: this macro is only needed temporarily (uVisor disabled by default) and will be removed in the future.
+**Note:**
 
-Note: this macro must be used only once in the top level yotta executable.
+1. This macro is only needed temporarily (uVisor disabled by default) and will be removed in the future.
+
+2. This macro must be used only once in the top level yotta executable.
 
 ```C
 UVISOR_SET_MODE_ACL(int uvisor_mode, const UvBoxAcl *main_box_acl_list);
@@ -154,7 +158,9 @@ UVISOR_SET_MODE_ACL(int uvisor_mode, const UvBoxAcl *main_box_acl_list);
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">[temporary] Set mode for the uVisor and provide background ACLs for the main box</td>
+    <td colspan="2">[temporary] Set mode for the uVisor and provide background
+                    ACLs for the main box
+    </td>
   </tr>
   <tr>
     <td>Type</td>
@@ -191,7 +197,7 @@ static const UvBoxAclItem g_background_acl[] = {
 UVISOR_SET_MODE_ACL(2, g_background_acl);
 ```
 
-## Secure function call
+## Secure Function Call
 
 ```C
 uint32_t secure_gateway(box_name, uint32_t target_fn, ...)
@@ -239,14 +245,14 @@ uint32_t secure_sum(uint32_t op1, uint32_t op2)
 }
 ```
 
-## Low level APIs
+## Low Level APIs
 
 Currently the following low level operations are permitted:
 
-1. Interrupt management
-2. [temporary] Bitband access
+1. Interrupt management.
+2. [temporary] Bitband access.
 
-### Interrupt management
+### Interrupt Management
 
 ```C
 void uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
@@ -267,7 +273,8 @@ void uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
   </tr>
   <tr>
     <td><pre>uint32_t vector<code></td>
-    <td>Interrupt handler; if 0 the IRQn slot is de-registered for the current box</td>
+    <td>Interrupt handler; if 0 the IRQn slot is de-registered for the current
+        box</td>
   </tr>
   <tr>
     <td><pre>uint32_t flag<code></td>
@@ -390,7 +397,7 @@ uint32_t uvisor_get_priority(uint32_t irqn)
   </tr>
 </table>
 
-### [temporary] Bitband access
+### (Temporary) Bitband Access
 
 ```C
 void uvisor_write_bitband(uint32_t addr, int32_t val)
@@ -399,7 +406,8 @@ void uvisor_write_bitband(uint32_t addr, int32_t val)
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">[temporary] Write to a bitband address when unprivileged access is not permitted</td>
+    <td colspan="2">(Temporary) Write to a bitband address when unprivileged
+                    access is not permitted</td>
   </tr>
   <tr>
     <td rowspan="2">Parameters</td>
@@ -412,7 +420,7 @@ void uvisor_write_bitband(uint32_t addr, int32_t val)
   </tr>
 </table>
 
-## Type definitions
+## Type Definitions
 
 ```C
 typedef uint32_t UvisroBoxAcl;    /* permssions mask */
