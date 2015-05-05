@@ -1,19 +1,14 @@
 # uvisor-lib
-uvisor-lib is a yotta module that provides a secure environment for modular
-applications on mbed and the APIs to interact with it.
+uvisor-lib is a yotta module that provides a secure environment for modular applications on mbed and the APIs to interact with it.
 
 It consists of two main components:
 
-1. the uVisor binaries, which set up a protected environment where isolated
-   compartments are granted finely tuned permissions;
+1. the uVisor binaries, which set up a protected environment where isolated compartments are granted finely tuned permissions;
 2. APIs to interact with the uVisor.
 
-If you are building your application with yotta on a supported platform, then
-you will be already running on top of the uVisor. At this stage of
-development, though, it is disabled by default.
+If you are building your application with yotta on a supported platform, then you will be already running on top of the uVisor. At this stage of development, though, it is disabled by default.
 
-To learn more about the uVisor refer to its
-[documentation](https://github.com/ARMmbed/uvisor-private).
+To learn more about the uVisor refer to its [documentation](https://github.com/ARMmbed/uvisor-private).
 
 Supported platforms:
 - Freescale FRDM-K64F board (GCC ARM Embedded toolchain)
@@ -22,23 +17,13 @@ The current release version is 0.4.0.
 
 ## Introduction
 
-The security model of the uVisor is based on secure boxes. A *secure box* is a
-domain for which finely grained permissions are granted, protecting data and
-functions from the rest of the code.
+The security model of the uVisor is based on secure boxes. A *secure box* is a domain for which finely grained permissions are granted, protecting data and functions from the rest of the code.
 
-By default, each yotta module that is included in the build process of an mbed
-application ends up in a unique unsecure box, referred to as the *main box*.
-All code and data in the main box share the same level of permissions.
+By default, each yotta module that is included in the build process of an mbed application ends up in a unique unsecure box, referred to as the *main box*. All code and data in the main box share the same level of permissions.
 
-If you need to protect data or function execution you may want to configure a
-secure box. Secure boxes all run in unprivileged mode but are granted
-protection and isolation from other boxes.
+If you need to protect data or function execution you may want to configure a secure box. Secure boxes all run in unprivileged mode but are granted protection and isolation from other boxes.
 
-Access to protected resources is only possible when the context of the box they
-belong to is active. By default, the active context is the one of the main box.
-A special mechanism, called the *secure gateway*, allows you to switch context
-to your own secure box. You cannot switch context to a different box from
-yours.
+Access to protected resources is only possible when the context of the box they belong to is active. By default, the active context is the one of the main box. A special mechanism, called the *secure gateway*, allows you to switch context to your own secure box. You cannot switch context to a different box from yours.
 
 The next Sections will describe all these features in deeper detail.
 
@@ -59,17 +44,13 @@ To configure a secure box:
 #include "uvisor-lib/uvisor-lib.h"
 ```
 
-- [Protect your data](#protect-your-data) with `UVISOR_SECURE_CONST` and
-  `UVISOR_SECURE_BSS`
+- [Protect your data](#protect-your-data) with `UVISOR_SECURE_CONST` and `UVISOR_SECURE_BSS`
 
-- [Configure your secure box](#configure-your-secure-box) with
-  `UVISOR_BOX_CONFIG(...)`
+- [Configure your secure box](#configure-your-secure-box) with `UVISOR_BOX_CONFIG(...)`
 
-- Use the [secure gateway](#secure-function-call) to ensure critical functions
-  are executed from the secure box context
+- Use the [secure gateway](#secure-function-call) to ensure critical functions are executed from the secure box context
 
-- Use the [uvisor-lib APIs](#low-level-apis) to access restricted features
-  (interrupts, privileged registers)
+- Use the [uvisor-lib APIs](#low-level-apis) to access restricted features (interrupts, privileged registers)
 
 ### Protect your data
 
@@ -83,27 +64,20 @@ UVISOR_SECURE_CONST char g_password[] = "password";
 UVISOR_SECURE_BSS int g_counter;
 ```
 
-You might use these macros as many times as you want, but to increase
-performance and readability we suggest to group data in structs (one for Flash,
-one for SRAM) and then secure the whole structs singularly. It will be much
-faster for the uVisor to then ensure protection of a box context.
+You might use these macros as many times as you want, but to increase performance and readability we suggest to group data in structs (one for Flash, one for SRAM) and then secure the whole structs singularly. It will be much faster for the uVisor to then ensure protection of a box context.
 
 ### Configure your secure box
 
-Once restricted data has been made secure, you need to configure the secure box
-itself. Specify its name and provide an Access Control List (ACL) indicating
-the data and peripherals for which you want to ensure restricted and exclusive
-access. You can also specify the size of the protected stack for the secure
-box.
+Once restricted data has been made secure, you need to configure the secure box itself. Specify its name and provide an Access Control List (ACL) indicating the data and peripherals for which you want to ensure restricted and exclusive access. You can also specify the size of the protected stack for the secure box.
 
 The access control list can be defined as follows:
 
 ```C
 /* create ACLs for the module */
 static const UvBoxAclItem g_box_acl[] = {
-    {&g_password, sizeof(g_data), UVISOR_TACL_SECURE_CONST}, /* some data */
-    {&g_counter,  sizeof(g_data), UVISOR_TACL_SECURE_BSS},   /* some data */
-    {UART0,       sizeof(*UART0), UVISOR_TACL_PERIPHERAL},   /* some devices */
+    {&g_password, sizeof(g_data),    UVISOR_TACL_SECURE_CONST}, /* const data */
+    {&g_counter,  sizeof(g_counter), UVISOR_TACL_SECURE_BSS},   /* bss   data */
+    {UART0,       sizeof(*UART0),    UVISOR_TACL_PERIPHERAL},   /* peripheral */
 };
 ```
 
@@ -117,27 +91,15 @@ and the secure box can be finally configured:
 UVISOR_BOX_CONFIG(my_box_name, g_box_acl, BOX_STACK_SIZE);
 ```
 
-Please note that configuring a secure box in a yotta module does not mean that
-the whole module itself is a secure box. A secure box is a domain in which
-several restrictions apply, so choose carefully what to include in it. All
-peripherals, constants, variables and object instantiations that are not
-explicitly included in the secure box through the mechanism just described are
-automatically included in the context of the main box, unprotected from the
-rest of the code.
+Please note that configuring a secure box in a yotta module does not mean that the whole module itself is a secure box. A secure box is a domain in which several restrictions apply, so choose carefully what to include in it. All peripherals, constants, variables and object instantiations that are not explicitly included in the secure box through the mechanism just described are automatically included in the context of the main box, unprotected from the rest of the code.
 
 ### Secure function call
 
-Similarly to access to data and peripherals, code exectuion happens by default
-in the context of the main box. If you want to ensure that a function is
-executed in the context of your secure box, you need to use a secure gateway.
+Similarly to access to data and peripherals, code exectuion happens by default in the context of the main box. If you want to ensure that a function is executed in the context of your secure box, you need to use a secure gateway.
 
-The secure gateway transforms your function call in a gateway to the protected
-domain of your secure box. Without it, the direct execution of the target
-function would fail at some point, accessing resources which are reserved to a
-different context.
+The secure gateway transforms your function call in a gateway to the protected domain of your secure box. Without it, the direct execution of the target function would fail at some point, accessing resources which are reserved to a different context.
 
-We suggest to create a wrapper function that does the actual secure function
-call:
+We suggest to create a wrapper function that does the actual secure function call:
 
 ```C
 /* the box is configured here */
@@ -160,16 +122,11 @@ The secure gateway may be called with a maximum of four 32bit arguments.
 
 ### Low level APIs
 
-Access to some system registers or features is only possible in privileged
-mode, so low level APIs are provided to interact with the uVisor to perform
-those accesses. Currently, only interrupt management is supported.
+Access to some system registers or features is only possible in privileged mode, so low level APIs are provided to interact with the uVisor to perform those accesses. Currently, only interrupt management is supported.
 
 #### Interrupt management
 
-A box can register for interrupts and gain exclusive access to the
-corresponding IRQn slot, so that it is the only one in charge of modifying it.
-To register an interrupt routine, you have to set a handler for it and enable
-the corresponding IRQn slot, as you would do with regular NVIC registers:
+A box can register for interrupts and gain exclusive access to the corresponding IRQn slot, so that it is the only one in charge of modifying it. To register an interrupt routine, you have to set a handler for it and enable the corresponding IRQn slot, as you would do with regular NVIC registers:
 
 ```C
 
@@ -191,22 +148,16 @@ int some_function(void)
 }
 ```
 
-After registration of an interrupt, its IRQn is bounded to the box that
-registered it.
+After registration of an interrupt, its IRQn is bounded to the box that registered it.
 
-Currently, interrupt ownership is exclusive, meaning that multiple boxes cannot
-register for the same interrupt. Registration works on a
-first-come-first-served basis. Execution of an interrupt handler is always
-handled in unprivileged mode in the context of the box that registered for it.
+Currently, interrupt ownership is exclusive, meaning that multiple boxes cannot register for the same interrupt. Registration works on a first-come-first-served basis. Execution of an interrupt handler is always handled in unprivileged mode in the context of the box that registered for it.
 
 ## Even more documentation?
 
-For a detailed documentation of all macros and APIs available, please refer to
-the [APIs documentation](DOCUMENTATION.md).
+For a detailed documentation of all macros and APIs available, please refer to the [APIs documentation](DOCUMENTATION.md).
 
 ## Limitations
 
 For this release, uvisor-lib comes with the following restrictions:
 
-- it is disabled by default. Use `UVISOR_SET_MODE(2);` in the top level yotta
-  executable to enable it.
+- it is disabled by default. Use `UVISOR_SET_MODE(2);` in the top level yotta executable to enable it.
