@@ -2,12 +2,9 @@
 
 Here you can find detailed documentation for:
 
-1. [Configuration macros](#configuration-macros), to configure a secure box and
-   protect data and peripherals;
-2. [Secure function call](#secure-function-call), to execute code in the
-   context of a secure box;
-3. [Low level APIs](#low-level-apis), to access uVisor functions that are not
-   available to unprivileged code (interrupts, restricted system registers);
+1. [Configuration macros](#configuration-macros), to configure a secure box and protect data and peripherals;
+2. [Secure function call](#secure-function-call), to execute code in the context of a secure box;
+3. [Low level APIs](#low-level-apis), to access uVisor functions that are not available to unprivileged code (interrupts, restricted system registers);
 4. [Type definitions](#type-definitions).
 
 ## Configuration macros
@@ -95,9 +92,9 @@ Example:
 
 /* create ACLs for the module */
 static const UvBoxAclItem g_box_acl[] = {
-    {&g_password, sizeof(g_data), UVISOR_TACL_SECURE_CONST}, /* some data */
-    {&g_counter,  sizeof(g_data), UVISOR_TACL_SECURE_DATA},  /* some data */
-    {UART0,       sizeof(*UART0), UVISOR_TACL_PERIPHERAL},   /* some devices */
+    {&g_password, sizeof(g_data),    UVISOR_TACL_SECURE_CONST}, /* const data */
+    {&g_counter,  sizeof(g_counter), UVISOR_TACL_SECURE_BSS},   /* bss   data */
+    {UART0,       sizeof(*UART0),    UVISOR_TACL_PERIPHERAL},   /* peripheral */
 };
 
 /* configure secure box compartment */
@@ -106,8 +103,7 @@ UVISOR_BOX_CONFIG(my_box_name, g_box_acl, BOX_STACK_SIZE);
 
 ---
 
-Note: this macro is only needed temporarily (uVisor disabled by default) and
-will be removed in the future.
+Note: this macro is only needed temporarily (uVisor disabled by default) and will be removed in the future.
 
 Note: this macro must be used only once in the top level yotta executable.
 
@@ -147,8 +143,7 @@ UVISOR_SET_MODE(2);
 
 ---
 
-Note: this macro is only needed temporarily (uVisor disabled by default) and
-will be removed in the future.
+Note: this macro is only needed temporarily (uVisor disabled by default) and will be removed in the future.
 
 Note: this macro must be used only once in the top level yotta executable.
 
@@ -159,9 +154,7 @@ UVISOR_SET_MODE_ACL(int uvisor_mode, const UvBoxAcl *main_box_acl_list);
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">[temporary] Set mode for the uVisor and provide background
-                    ACLs for the main box
-    </td>
+    <td colspan="2">[temporary] Set mode for the uVisor and provide background ACLs for the main box</td>
   </tr>
   <tr>
     <td>Type</td>
@@ -274,8 +267,7 @@ void uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
   </tr>
   <tr>
     <td><pre>uint32_t vector<code></td>
-    <td>Interrupt handler; if 0 the IRQn slot is de-registered for the current
-        box</td>
+    <td>Interrupt handler; if 0 the IRQn slot is de-registered for the current box</td>
   </tr>
   <tr>
     <td><pre>uint32_t flag<code></td>
@@ -407,8 +399,7 @@ void uvisor_write_bitband(uint32_t addr, int32_t val)
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">[temporary] Write to a bitband address when unprivileged
-                    access is not permitted</td>
+    <td colspan="2">[temporary] Write to a bitband address when unprivileged access is not permitted</td>
   </tr>
   <tr>
     <td rowspan="2">Parameters</td>
