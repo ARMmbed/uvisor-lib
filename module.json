@@ -17,10 +17,10 @@
     }
   ],
   "repository": {
-    "url": "git@github.com:ARMmbed/uvisor-lib-private.git",
+    "url": "git@github.com:ARMmbed/uvisor-lib.git",
     "type": "git"
   },
-  "homepage": "https://github.com/ARMmbed/uvisor-lib-private",
+  "homepage": "https://github.com/ARMmbed/uvisor-lib",
   "licenses": [
     {
       "url": "https://spdx.org/licenses/Apache-2.0",
