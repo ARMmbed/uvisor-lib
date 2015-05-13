@@ -13,7 +13,7 @@
 ################################################################
 
 # select correct source for target/toolchain
-set(UVISOR_DIR "MK64FN1M0XXX12")		# FRDM-K64F, GCC_ARM
+set(UVISOR_DIR "MK64FN1M0XXX12")        # FRDM-K64F, GCC_ARM
 
 # instruct cmake to compile the .s file
 set(UVISOR_ASM "${UVISOR_DIR}/uvisor-GCC_ARM.s")
@@ -25,8 +25,8 @@ add_library(uvisor-lib
     ${UVISOR_ASM}
     "bitband.cpp"
     "interrupts.cpp"
+    "benchmark.cpp"
 )
 
-# the INCBIN directive in the .s file looks 
-# for the target bin in its own folder
+# the INCBIN directive in the .s file looks for the target bin in its own folder
 include_directories(${UVISOR_DIR}/)
