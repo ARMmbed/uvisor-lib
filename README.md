@@ -139,8 +139,8 @@ int some_function(void)
 {
     ...
 
-    uvisor_set_isr(MY_HANDLER_IRQn, (uint32_t) &my_handler);
-    uvisor_enable_irq(MY_HANDLER_IRQn);
+    uvisor_isr_set(MY_HANDLER_IRQn, (uint32_t) &my_handler);
+    uvisor_irq_enable(MY_HANDLER_IRQn);
 
     ...
 }
@@ -150,8 +150,8 @@ After registration of an interrupt, its IRQn is bounded to the box that register
 
 Please note:
 
-1. Currently, interrupt ownership is exclusive, meaning that multiple boxes cannot register for the same interrupt. 
-2. Registration works on a first-come-first-served basis. 
+1. Currently, interrupt ownership is exclusive, meaning that multiple boxes cannot register for the same interrupt.
+2. Registration works on a first-come-first-served basis.
 3. Execution of an interrupt handler is always handled in unprivileged mode in the context of the box that registered for it.
 
 ## Even More Documentation?

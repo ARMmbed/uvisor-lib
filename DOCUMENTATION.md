@@ -255,7 +255,7 @@ Currently the following low level operations are permitted:
 ### Interrupt Management
 
 ```C
-void uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
+void uvisor_isr_set(uint32_t irqn, uint32_t vector, uint32_t flag)
 ```
 
 <table>
@@ -285,7 +285,7 @@ void uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
 ---
 
 ```C
-uint32_t uvisor_get_isr(uint32_t irqn)
+uint32_t uvisor_isr_get(uint32_t irqn)
 ```
 
 <table>
@@ -307,7 +307,7 @@ uint32_t uvisor_get_isr(uint32_t irqn)
 ---
 
 ```C
-uint32_t uvisor_enable_irq(uint32_t irqn)
+uint32_t uvisor_irq_enable(uint32_t irqn)
 ```
 
 <table>
@@ -329,7 +329,7 @@ uint32_t uvisor_enable_irq(uint32_t irqn)
 ---
 
 ```C
-uint32_t uvisor_disable_irq(uint32_t irqn)
+uint32_t uvisor_irq_disable(uint32_t irqn)
 ```
 
 <table>
@@ -351,7 +351,7 @@ uint32_t uvisor_disable_irq(uint32_t irqn)
 ---
 
 ```C
-void uvisor_set_priority(uint32_t irqn, uint32_t priority)
+void uvisor_priority_set(uint32_t irqn, uint32_t priority)
 ```
 
 <table>
@@ -378,7 +378,7 @@ void uvisor_set_priority(uint32_t irqn, uint32_t priority)
 ---
 
 ```C
-uint32_t uvisor_get_priority(uint32_t irqn)
+uint32_t uvisor_priority_get(uint32_t irqn)
 ```
 
 <table>
