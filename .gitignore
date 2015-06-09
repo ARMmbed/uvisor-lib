@@ -1,9 +1,12 @@
 # vim temporary files
 *.sw*
-upload.tar.gz
 
-# yotta build folders
+# yotta files
 build
 yotta_modules
 yotta_targets
 .yotta.json
+upload.tar.gz
+
+# temporary files
+gdb.script
