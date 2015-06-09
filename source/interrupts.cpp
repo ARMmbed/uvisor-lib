@@ -13,7 +13,7 @@
 #include <mbed/mbed.h>
 #include <uvisor-lib/uvisor-lib.h>
 
-void __uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
+void __uvisor_isr_set(uint32_t irqn, uint32_t vector, uint32_t flag)
 {
     register uint32_t __r0 __asm__("r0") = irqn;
     register uint32_t __r1 __asm__("r1") = vector;
@@ -24,11 +24,11 @@ void __uvisor_set_isr(uint32_t irqn, uint32_t vector, uint32_t flag)
         : [r0]     "r" (__r0),
           [r1]     "r" (__r1),
           [r2]     "r" (__r2),
-          [svc_id] "i" (UVISOR_SVC_ID_SET_ISR)
+          [svc_id] "i" (UVISOR_SVC_ID_ISR_SET)
     );
 }
 
-uint32_t __uvisor_get_isr(uint32_t irqn)
+uint32_t __uvisor_isr_get(uint32_t irqn)
 {
     register uint32_t __r0  __asm__("r0") = irqn;
     register uint32_t __res __asm__("r0");
@@ -36,34 +36,34 @@ uint32_t __uvisor_get_isr(uint32_t irqn)
         "svc %[svc_id]\n"
         : [res]    "=r" (__res)
         : [r0]     "r"  (__r0),
-          [svc_id] "i"  (UVISOR_SVC_ID_GET_ISR)
+          [svc_id] "i"  (UVISOR_SVC_ID_ISR_GET)
     );
     return __res;
 }
 
-void __uvisor_enable_irq(uint32_t irqn)
+void __uvisor_irq_enable(uint32_t irqn)
 {
     register uint32_t __r0 __asm__("r0") = irqn;
     __asm__ volatile(
         "svc %[svc_id]\n"
         :
         : [r0]     "r" (__r0),
-          [svc_id] "i" (UVISOR_SVC_ID_ENABLE_IRQ)
+          [svc_id] "i" (UVISOR_SVC_ID_IRQ_ENABLE)
     );
 }
 
-void __uvisor_disable_irq(uint32_t irqn)
+void __uvisor_irq_disable(uint32_t irqn)
 {
     register uint32_t __r0 __asm__("r0") = irqn;
     __asm__ volatile(
         "svc %[svc_id]\n"
         :
         : [r0]     "r" (__r0),
-          [svc_id] "i" (UVISOR_SVC_ID_DISABLE_IRQ)
+          [svc_id] "i" (UVISOR_SVC_ID_IRQ_DISABLE)
     );
 }
 
-void __uvisor_set_priority(uint32_t irqn, uint32_t priority)
+void __uvisor_priority_set(uint32_t irqn, uint32_t priority)
 {
     register uint32_t __r0 __asm__("r0") = irqn;
     register uint32_t __r1 __asm__("r1") = priority;
@@ -72,11 +72,11 @@ void __uvisor_set_priority(uint32_t irqn, uint32_t priority)
         :
         : [r0]     "r" (__r0),
           [r1]     "r" (__r1),
-          [svc_id] "i" (UVISOR_SVC_ID_SET_PRIORITY)
+          [svc_id] "i" (UVISOR_SVC_ID_PRIORITY_SET)
     );
 }
 
-uint32_t __uvisor_get_priority(uint32_t irqn)
+uint32_t __uvisor_priority_get(uint32_t irqn)
 {
     register uint32_t __r0  __asm__("r0") = irqn;
     register uint32_t __res __asm__("r0");
@@ -84,7 +84,7 @@ uint32_t __uvisor_get_priority(uint32_t irqn)
         "svc %[svc_id]\n"
         : [res]    "=r" (__res)
         : [r0]     "r"  (__r0),
-          [svc_id] "i"  (UVISOR_SVC_ID_GET_PRIORITY)
+          [svc_id] "i"  (UVISOR_SVC_ID_PRIORITY_GET)
     );
     return __res;
 }
