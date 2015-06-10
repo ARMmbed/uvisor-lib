@@ -26,11 +26,14 @@ static const UvisorBoxAclItem g_main_acl[] = {
 UVISOR_SET_MODE_ACL(2, g_main_acl);
 
 #define TEST_IRQn 42
+#define TEST_VAL  1
+
 volatile int g_flag;
 
 void test_handler(void)
 {
-    g_flag++;
+    printf("TEST_IRQn triggered\n");
+    g_flag = TEST_VAL;
 }
 
 int main(void)
@@ -42,32 +45,42 @@ int main(void)
 
     g_flag = 0;
 
-    /* test setting a ISR */
+    /* set the ISR */
     uvisor_isr_set(TEST_IRQn, (uint32_t) &test_handler, 0);
     if(uvisor_isr_get(TEST_IRQn) != (uint32_t) &test_handler)
     {
         MBED_HOSTTEST_RESULT(0);
     }
+    printf("TEST_IRQn registered\n");
 
-    /* test enabling an IRQ */
+    /* enable and trigger the IRQ*/
+    uvisor_irq_pending_clr(TEST_IRQn);
     uvisor_irq_enable(TEST_IRQn);
+    printf("TEST_IRQn enabled\n");
+    printf("Triggering TEST_IRQn... ");
     uvisor_irq_pending_set(TEST_IRQn);
     __DSB();
     __ISB();
-    if(g_flag != 1)
+    if(g_flag != TEST_VAL)
     {
         MBED_HOSTTEST_RESULT(0);
     }
 
-    /* test disabling an IRQ */
+    /* disable the IRQ and try to trigger it again */
     uvisor_irq_disable(TEST_IRQn);
+    printf("TEST_IRQn disabled\n");
+    printf("Triggering TEST_IRQn... ");
+    uvisor_irq_pending_clr(TEST_IRQn);
+    g_flag = 0;
     uvisor_irq_pending_set(TEST_IRQn);
     __DSB();
     __ISB();
-    if(g_flag != 1)
+    if(g_flag != 0)
     {
         MBED_HOSTTEST_RESULT(0);
     }
+    uvisor_irq_pending_clr(TEST_IRQn);
+    printf("Not served [OK] [TEST_IRQn cleared]\n");
 
     /* if the test got here, everything is fine */
     MBED_HOSTTEST_RESULT(1);
