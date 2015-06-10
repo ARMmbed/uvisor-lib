@@ -63,12 +63,18 @@ endif
 # build targets
 #
 
-.PHONY: all setup test debug erase reset gdbserver clean
+.PHONY: all setup test single debug erase reset gdbserver clean
 
 all: test
 
 setup:
 	yotta target frdm-k64f-gcc
+
+single:
+ifndef T
+	$(error Specify single test to debug: make T=testX single)
+endif
+	mbedgt -c cp --target=$(TARGET) -n $(TEST)
 
 test:
 	mbedgt -c cp --target=$(TARGET)
