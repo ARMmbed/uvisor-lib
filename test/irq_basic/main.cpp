@@ -1,3 +1,15 @@
+/***************************************************************
+ * This confidential and  proprietary  software may be used only
+ * as authorised  by  a licensing  agreement  from  ARM  Limited
+ *
+ *             (C) COPYRIGHT 2013-2015 ARM Limited
+ *                      ALL RIGHTS RESERVED
+ *
+ *  The entire notice above must be reproduced on all authorised
+ *  copies and copies  may only be made to the  extent permitted
+ *  by a licensing agreement from ARM Limited.
+ *
+ ***************************************************************/
 #include "mbed/test_env.h"
 #include "uvisor-lib/uvisor-lib.h"
 
@@ -39,7 +51,7 @@ int main(void)
 
     /* test enabling an IRQ */
     uvisor_irq_enable(TEST_IRQn);
-    uvisor_irq_set_pending(TEST_IRQn);
+    uvisor_irq_pending_set(TEST_IRQn);
     __DSB();
     __ISB();
     if(g_flag != 1)
@@ -49,7 +61,7 @@ int main(void)
 
     /* test disabling an IRQ */
     uvisor_irq_disable(TEST_IRQn);
-    uvisor_irq_set_pending(TEST_IRQn);
+    uvisor_irq_pending_set(TEST_IRQn);
     __DSB();
     __ISB();
     if(g_flag != 1)
