@@ -351,7 +351,53 @@ uint32_t uvisor_irq_disable(uint32_t irqn)
 ---
 
 ```C
-void uvisor_priority_set(uint32_t irqn, uint32_t priority)
+void uvisor_irq_pending_clr(uint32_t irqn)
+```
+
+<table>
+  <tr>
+    <td>Description</td>
+    <td colspan="2">Clear pending status for IRQn</td>
+  </tr>
+  <tr>
+    <td>Notes</td>
+    <td colspan="2">Equivalent to <pre>NVIC_ClearPendingIRQ(irqn)<code>
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="2">Parameters</td>
+    <td><pre>uint32_t irqn<code></td>
+    <td>IRQn</td>
+  </tr>
+</table>
+
+---
+
+```C
+void uvisor_irq_pending_set(uint32_t irqn)
+```
+
+<table>
+  <tr>
+    <td>Description</td>
+    <td colspan="2">Set pending status for IRQn</td>
+  </tr>
+  <tr>
+    <td>Notes</td>
+    <td colspan="2">Equivalent to <pre>NVIC_SetPendingIRQ(irqn)<code>
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="2">Parameters</td>
+    <td><pre>uint32_t irqn<code></td>
+    <td>IRQn</td>
+  </tr>
+</table>
+
+---
+
+```C
+void uvisor_irq_priority_set(uint32_t irqn, uint32_t priority)
 ```
 
 <table>
@@ -378,7 +424,7 @@ void uvisor_priority_set(uint32_t irqn, uint32_t priority)
 ---
 
 ```C
-uint32_t uvisor_priority_get(uint32_t irqn)
+uint32_t uvisor_irq_priority_get(uint32_t irqn)
 ```
 
 <table>
@@ -408,6 +454,11 @@ void uvisor_write_bitband(uint32_t addr, int32_t val)
     <td>Description</td>
     <td colspan="2">(Temporary) Write to a bitband address when unprivileged
                     access is not permitted</td>
+  </tr>
+  <tr>
+    <td>Notes</td>
+    <td colspan="2">Access is only allowed to registers <pre>SIM->SCGCx<code>
+    </td>
   </tr>
   <tr>
     <td rowspan="2">Parameters</td>
