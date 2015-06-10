@@ -40,7 +40,7 @@ OBJDUMP:=$(PREFIX)objdump
 #
 ifneq ("$(T)","")
 	TEST:=$(PROJECT)-test-$(T)
-	TARGET_ELF:=./build/$(TARGET)/test/$(TEST)
+	TARGET_ELF:=../build/$(TARGET)/test/$(TEST)
 	TARGET_BIN:=$(TARGET_ELF).bin
 endif
 
@@ -50,11 +50,11 @@ endif
 include Makefile.scripts
 
 # check if uvisor symbol file can be read - add to symbols GDB config if present
-GDB_DEBUG_SYMBOLS_FILE1:=$(wildcard ../uvisor/k64f/uvisor/k64f_uvisor.elf)
+GDB_DEBUG_SYMBOLS_FILE1:=$(wildcard ../../uvisor/k64f/uvisor/k64f_uvisor.elf)
 ifneq ("$(GDB_DEBUG_SYMBOLS_FILE1)","")
 	GDB_DEBUG_UVISOR:=add-symbol-file $(GDB_DEBUG_SYMBOLS_FILE1) uvisor_init
 endif
-GDB_DEBUG_SYMBOLS_FILE2:=$(wildcard ../k64f/uvisor/k64f_uvisor.elf)
+GDB_DEBUG_SYMBOLS_FILE2:=$(wildcard ../../k64f/uvisor/k64f_uvisor.elf)
 ifneq ("$(GDB_DEBUG_SYMBOLS_FILE2)","")
 	GDB_DEBUG_UVISOR:=add-symbol-file $(GDB_DEBUG_SYMBOLS_FILE2) uvisor_init
 endif
@@ -68,27 +68,27 @@ endif
 all: test
 
 setup:
-	yotta target frdm-k64f-gcc
+	cd .. && yotta target frdm-k64f-gcc
 
 single:
 ifndef T
 	$(error Specify single test to debug: make T=testX single)
 endif
-	mbedgt -c cp --target=$(TARGET) -n $(TEST)
+	cd .. && mbedgt -c cp --target=$(TARGET) -n $(TEST)
 
 test:
-	mbedgt -c cp --target=$(TARGET)
+	cd .. && mbedgt -c cp --target=$(TARGET)
 
 debug: gdb.script
 ifndef T
 	$(error Specify single test to debug: make T=testX debug)
 endif
-	mbedgt --debug -O -c cp --target=$(TARGET) -n $(TEST)
+	cd .. && mbedgt --debug -O -c cp --target=$(TARGET) -n $(TEST)
 	$(OBJDUMP) -d $(TARGET_ELF) > $(TARGET_ELF).asm
 	@echo "$$__SCRIPT_FLASH" | $(JLINK) $(JLINK_PARAM)
 	@$(PREFIX)size $(TARGET_ELF)
 	$(GDB) -x $<
-	rm -f gdb.script
+	rm -f ../gdb.script
 
 erase:
 	@echo "$$__SCRIPT_ERASE" | $(JLINK) $(JLINK_PARAM)
@@ -103,5 +103,5 @@ gdbserver:
 	$(JLINK_SERVER) $(JLINK_PARAM) $(APP_JLINK_PARAM)
 
 clean: setup
-	rm -f gdb.script
+	rm -f ../gdb.script
 	yotta clean
