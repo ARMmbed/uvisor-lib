@@ -397,6 +397,28 @@ void uvisor_irq_pending_set(uint32_t irqn)
 ---
 
 ```C
+uint32_t uvisor_irq_pending_get(uint32_t irqn)
+```
+
+<table>
+  <tr>
+    <td>Description</td>
+    <td colspan="2">Get pending status for IRQn</td>
+  </tr>
+  <tr>
+    <td>Return value</td>
+    <td colspan="2">1 if IRQn is pending; 0 otherwise</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Parameters</td>
+    <td><pre>uint32_t irqn<code></td>
+    <td>IRQn</td>
+  </tr>
+</table>
+
+---
+
+```C
 void uvisor_irq_priority_set(uint32_t irqn, uint32_t priority)
 ```
 
