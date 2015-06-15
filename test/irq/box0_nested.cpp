@@ -11,20 +11,9 @@
  *
  ***************************************************************/
 #include "mbed/mbed.h"
-#include "mbed/test_env.h"
 #include "mbed-cpputest/CppUTest/TestHarness.h"
 #include "uvisor-lib/uvisor-lib.h"
 #include "common.h"
-
-#define TEST1_IRQn 42
-#define TEST1_PRIO 2
-#define TEST1_VAL  1
-
-#define TEST2_IRQn 43
-#define TEST2_PRIO 1
-#define TEST2_VAL  2
-
-#define DFLT_PRIO 1
 
 /* lowest priority ISR */
 void test1_handler(void)
