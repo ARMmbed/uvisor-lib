@@ -11,8 +11,6 @@
  *
  ***************************************************************/
 #include "mbed/mbed.h"
-#include "mbed/test_env.h"
-#include "mbed-cpputest/CppUTest/TestHarness.h"
 #include "uvisor-lib/uvisor-lib.h"
 #include "common.h"
 

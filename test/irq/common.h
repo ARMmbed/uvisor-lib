@@ -13,6 +13,16 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+#define TEST1_IRQn 42
+#define TEST1_PRIO 2
+#define TEST1_VAL  1
+
+#define TEST2_IRQn 43
+#define TEST2_PRIO 1
+#define TEST2_VAL  2
+
+#define DFLT_PRIO 1
+
 extern volatile int g_flag;
 
 #endif/*__COMMON_H__*/
