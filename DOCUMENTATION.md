@@ -262,10 +262,6 @@ void uvisor_isr_set(uint32_t irqn, uint32_t vector, uint32_t flag)
   <tr>
     <td>Description</td>
     <td colspan="2">Register an ISR to the currently active box</td>
-  </tr>
-    <td>Notes</td>
-    <td colspan="3">Equivalent to <pre>NVIC_SetVector(irqn, vector)<code></td>
-  </tr>
   <tr>
     <td rowspan="3">Parameters</td>
     <td><pre>uint32_t irqn<code></td>
@@ -307,17 +303,13 @@ uint32_t uvisor_isr_get(uint32_t irqn)
 ---
 
 ```C
-uint32_t uvisor_irq_enable(uint32_t irqn)
+void uvisor_irq_enable(uint32_t irqn)
 ```
 
 <table>
   <tr>
     <td>Description</td>
     <td colspan="2">Enable IRQn for the currently active box</td>
-  </tr>
-  <tr>
-    <td>Notes</td>
-    <td colspan="2">Equivalent to <pre>NVIC_EnableIRQ(irqn)<code></td>
   </tr>
   <tr>
     <td rowspan="1">Parameters</td>
@@ -329,17 +321,13 @@ uint32_t uvisor_irq_enable(uint32_t irqn)
 ---
 
 ```C
-uint32_t uvisor_irq_disable(uint32_t irqn)
+void uvisor_irq_disable(uint32_t irqn)
 ```
 
 <table>
   <tr>
     <td>Description</td>
     <td colspan="2">Disable IRQn for the currently active box</td>
-  </tr>
-  <tr>
-    <td>Notes</td>
-    <td colspan="2">Equivalent to <pre>NVIC_DisableIRQ(irqn)<code></td>
   </tr>
   <tr>
     <td rowspan="1">Parameters</td>
@@ -357,12 +345,7 @@ void uvisor_irq_pending_clr(uint32_t irqn)
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">Clear pending status for IRQn</td>
-  </tr>
-  <tr>
-    <td>Notes</td>
-    <td colspan="2">Equivalent to <pre>NVIC_ClearPendingIRQ(irqn)<code>
-    </td>
+    <td colspan="2">Clear pending status of IRQn</td>
   </tr>
   <tr>
     <td rowspan="2">Parameters</td>
@@ -380,12 +363,7 @@ void uvisor_irq_pending_set(uint32_t irqn)
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">Set pending status for IRQn</td>
-  </tr>
-  <tr>
-    <td>Notes</td>
-    <td colspan="2">Equivalent to <pre>NVIC_SetPendingIRQ(irqn)<code>
-    </td>
+    <td colspan="2">Set pending status of IRQn</td>
   </tr>
   <tr>
     <td rowspan="2">Parameters</td>
@@ -403,11 +381,7 @@ uint32_t uvisor_irq_pending_get(uint32_t irqn)
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">Get pending status for IRQn</td>
-  </tr>
-  <tr>
-    <td>Return value</td>
-    <td colspan="2">1 if IRQn is pending; 0 otherwise</td>
+    <td colspan="2">Get pending status of IRQn</td>
   </tr>
   <tr>
     <td rowspan="1">Parameters</td>
@@ -425,12 +399,7 @@ void uvisor_irq_priority_set(uint32_t irqn, uint32_t priority)
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">Set priority level for IRQn</td>
-  </tr>
-  <tr>
-    <td>Notes</td>
-    <td colspan="2">Equivalent to <pre>NVIC_SetPriority(irqn, priority)<code>
-    </td>
+    <td colspan="2">Set priority level of IRQn</td>
   </tr>
   <tr>
     <td rowspan="2">Parameters</td>
@@ -452,7 +421,7 @@ uint32_t uvisor_irq_priority_get(uint32_t irqn)
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="2">Get the priority level of IRQn</td>
+    <td colspan="2">Get priority level of IRQn</td>
   </tr>
   <tr>
     <td>Return value</td>
