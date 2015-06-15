@@ -1,0 +1,58 @@
+################################################################
+#
+#  This confidential and  proprietary  software may be used only
+#  as authorised  by  a licensing  agreement  from  ARM  Limited
+#
+#             (C) COPYRIGHT 2013-2015 ARM Limited
+#                    ALL RIGHTS RESERVED
+#
+#   The entire notice above must be reproduced on all authorised
+#   copies and copies  may only be made to the  extent permitted
+#   by a licensing agreement from ARM Limited.
+#
+################################################################
+
+#
+# inline debugging/flashing scripts
+#
+define __SCRIPT_GDB
+	target remote $(DEBUG_HOST)
+	monitor endian little
+	monitor reset
+	monitor halt
+	monitor semihosting enable
+	monitor speed 1000
+	monitor loadbin $(TARGET_BIN) 0
+	monitor flash device = $(CPU)
+	load $(TARGET_ELF)
+	file $(TARGET_ELF)
+	$(GDB_DEBUG_UVISOR)
+endef
+export __SCRIPT_GDB
+
+define __SCRIPT_FLASH
+	r
+	loadbin $(TARGET_BIN) 0
+	r
+	g
+	q
+endef
+export __SCRIPT_FLASH
+
+define __SCRIPT_ERASE
+	h
+	Sleep 100
+	unlock kinetis
+	Sleep 100
+	erase
+	q
+endef
+export __SCRIPT_ERASE
+
+define __SCRIPT_RESET
+	h
+	r
+	g
+	q
+endef
+export __SCRIPT_RESET
