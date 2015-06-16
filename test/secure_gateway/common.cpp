@@ -15,6 +15,10 @@
 #include "uvisor-lib/uvisor-lib.h"
 #include "common.h"
 
+/* TEST FUNCTIONS: these are meant to be executed as the target of a secure
+ * gateway; we cannot use overloading because it has to be a uniquely defined
+ * C function (limitation from the secure gateway) */
+
 UVISOR_EXTERN uint32_t __test_function0(void)
 {
     return TEST_RES0;

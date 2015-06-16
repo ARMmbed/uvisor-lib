@@ -16,6 +16,9 @@
 #include "common.h"
 #include "box1.h"
 
+/* simple tests to trigger a unique secure gateway from box 0 to box 1 with a
+ * variable number of arguments */
+
 TEST_GROUP(SecureGatewayBox0Box1)
 {
 };
