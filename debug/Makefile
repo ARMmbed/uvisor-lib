@@ -63,7 +63,7 @@ endif
 # build targets
 #
 
-.PHONY: all setup test single debug erase reset gdbserver clean
+.PHONY: all setup test single debug erase reset gdb.script gdbserver clean
 
 all: test
 
