@@ -17,33 +17,33 @@
 #include "box1.h"
 
 /* create ACLs for secret data section */
-static const UvisorBoxAclItem g_box0_acl[] = {
+static const UvisorBoxAclItem g_box1_acl[] = {
 };
 
 /* configure secure box compartnent */
-UVISOR_BOX_CONFIG(box0, g_box0_acl, UVISOR_BOX_STACK_SIZE);
+UVISOR_BOX_CONFIG(box1, g_box1_acl, UVISOR_BOX_STACK_SIZE);
 
 uint32_t box1_test_function(void)
 {
-    return secure_gateway(box0, __test_function0);
+    return secure_gateway(box1, __test_function0);
 }
 
 uint32_t box1_test_function(uint32_t a1)
 {
-    return secure_gateway(box0, __test_function1, a1);
+    return secure_gateway(box1, __test_function1, a1);
 }
 
 uint32_t box1_test_function(uint32_t a1,
                             uint32_t a2)
 {
-    return secure_gateway(box0, __test_function2, a1, a2);
+    return secure_gateway(box1, __test_function2, a1, a2);
 }
 
 uint32_t box1_test_function(uint32_t a1,
                             uint32_t a2,
                             uint32_t a3)
 {
-    return secure_gateway(box0, __test_function3, a1, a2, a3);
+    return secure_gateway(box1, __test_function3, a1, a2, a3);
 }
 
 uint32_t box1_test_function(uint32_t a1,
@@ -51,5 +51,5 @@ uint32_t box1_test_function(uint32_t a1,
                             uint32_t a3,
                             uint32_t a4)
 {
-    return secure_gateway(box0, __test_function4, a1, a2, a3, a4);
+    return secure_gateway(box1, __test_function4, a1, a2, a3, a4);
 }

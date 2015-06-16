@@ -24,7 +24,11 @@
 #define TEST_RES3 (uint32_t) (TEST_ARG1 + TEST_ARG2 + TEST_ARG3)
 #define TEST_RES4 (uint32_t) (TEST_ARG1 + TEST_ARG2 + TEST_ARG3 + TEST_ARG4)
 
-UVISOR_EXTERN uint32_t __test_function(uint32_t a1, uint32_t a2,
-                                       uint32_t a3, uint32_t a4);
+UVISOR_EXTERN uint32_t __test_function0(void);
+UVISOR_EXTERN uint32_t __test_function1(uint32_t a1);
+UVISOR_EXTERN uint32_t __test_function2(uint32_t a1, uint32_t a2);
+UVISOR_EXTERN uint32_t __test_function3(uint32_t a1, uint32_t a2, uint32_t a3);
+UVISOR_EXTERN uint32_t __test_function4(uint32_t a1, uint32_t a2, uint32_t a3,
+                                        uint32_t a4);
 
 #endif/*__COMMON_H__*/
