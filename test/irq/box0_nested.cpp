@@ -49,7 +49,7 @@ TEST_GROUP(IRQTestNested)
 {
 };
 
-TEST(IRQTestNested, box0_irq_nested_1)
+TEST(IRQTestNested, box0_irq_nested1)
 {
     g_flag = 0;
 
@@ -77,4 +77,9 @@ TEST(IRQTestNested, box0_irq_nested_1)
     uvisor_irq_disable(TEST2_IRQn);
     uvisor_irq_pending_clr(TEST1_IRQn);
     uvisor_irq_pending_clr(TEST2_IRQn);
+
+    /* release ownership of both ISRs */
+    uvisor_isr_set(TEST1_IRQn, 0, 0);
+    uvisor_isr_set(TEST2_IRQn, 0, 0);
+
 }

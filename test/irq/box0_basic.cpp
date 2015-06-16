@@ -32,19 +32,17 @@ TEST(IRQTestBasic, box0_isr_set_get)
     uvisor_isr_set(TEST1_IRQn, (uint32_t) &test_handler, 0);
     hdlr = uvisor_isr_get(TEST1_IRQn);
     CHECK_EQUAL((uint32_t) &test_handler, hdlr);
+
+    /* release ownership of ISR */
+    uvisor_isr_set(TEST1_IRQn, 0, 0);
 }
 
 TEST(IRQTestBasic, box0_irq_pending_clr_set_get)
 {
     uint32_t pending;
 
-    /* disable IRQ to make sure it does not get active */
-    uvisor_irq_disable(TEST1_IRQn);
-
-    /* clear pending IRQn, if any, and check clearing */
-    uvisor_irq_pending_clr(TEST1_IRQn);
-    pending = uvisor_irq_pending_get(TEST1_IRQn);
-    CHECK_EQUAL(0, pending);
+    /* set ISR but do not enable it */
+    uvisor_isr_set(TEST1_IRQn, (uint32_t) &test_handler, 0);
 
     g_flag = 0;
 
@@ -54,19 +52,23 @@ TEST(IRQTestBasic, box0_irq_pending_clr_set_get)
     __ISB();
     CHECK_EQUAL(0, g_flag);
 
-    /* check the pending status and clear it  */
+    /* check the pending status, clear it and check clearing */
     pending = uvisor_irq_pending_get(TEST1_IRQn);
     CHECK_EQUAL(1, pending);
     uvisor_irq_pending_clr(TEST1_IRQn);
+    pending = uvisor_irq_pending_get(TEST1_IRQn);
+    CHECK_EQUAL(0, pending);
+
+    /* release ownership of ISR */
+    uvisor_isr_set(TEST1_IRQn, 0, 0);
 }
 
 TEST(IRQTestBasic, box0_irq_ena_dis)
 {
-    g_flag = 0;
-
-    /* configure the ISR and clear IRQn */
+    /* set ISR */
     uvisor_isr_set(TEST1_IRQn, (uint32_t) &test_handler, 0);
-    uvisor_irq_pending_clr(TEST1_IRQn);
+
+    g_flag = 0;
 
     /* enable and trigger IRQn */
     uvisor_irq_enable(TEST1_IRQn);
@@ -84,17 +86,24 @@ TEST(IRQTestBasic, box0_irq_ena_dis)
     __ISB();
     CHECK_EQUAL(0, g_flag);
     uvisor_irq_pending_clr(TEST1_IRQn);
+
+    /* release ownership of ISR */
+    uvisor_isr_set(TEST1_IRQn, 0, 0);
 }
 
 TEST(IRQTestBasic, box0_irq_priority_set_get)
 {
     uint32_t priority;
 
+    /* set ISR */
+    uvisor_isr_set(TEST1_IRQn, (uint32_t) &test_handler, 0);
+
     /* set priority and check it has been set correctly */
     uvisor_irq_priority_set(TEST1_IRQn, TEST1_PRIO);
     priority = uvisor_irq_priority_get(TEST1_IRQn);
     CHECK_EQUAL(TEST1_PRIO, priority);
 
-    /* restore default priority */
+    /* reset priority and release ownership of ISR */
     uvisor_irq_priority_set(TEST1_IRQn, DFLT_PRIO);
+    uvisor_isr_set(TEST1_IRQn, 0, 0);
 }
