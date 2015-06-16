@@ -23,6 +23,9 @@ static const UvisorBoxAclItem g_box1_acl[] = {
 /* configure secure box compartnent */
 UVISOR_BOX_CONFIG(box1, g_box1_acl, UVISOR_BOX_STACK_SIZE);
 
+/* box secure function calls: for box 1 we overload the secure function call to
+ * test all possible arguments passing */
+
 uint32_t box1_test_function(void)
 {
     return secure_gateway(box1, __test_function0);
