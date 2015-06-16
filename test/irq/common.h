@@ -13,11 +13,11 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-#define TEST1_IRQn 42
+#define TEST1_IRQn 0
 #define TEST1_PRIO 2
 #define TEST1_VAL  1
 
-#define TEST2_IRQn 43
+#define TEST2_IRQn 1
 #define TEST2_PRIO 1
 #define TEST2_VAL  2
 
