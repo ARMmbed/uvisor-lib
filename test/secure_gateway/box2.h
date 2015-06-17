@@ -10,19 +10,9 @@
  *  by a licensing agreement from ARM Limited.
  *
  ***************************************************************/
-#ifndef __COMMON_H__
-#define __COMMON_H__
+#ifndef __BOX2_H__
+#define __BOX2_H__
 
-#define TEST1_IRQn 0
-#define TEST1_PRIO 2
-#define TEST1_VAL  1
+uint32_t box2_test_function(uint32_t a1, uint32_t a2, uint32_t a3, uint32_t a4);
 
-#define TEST2_IRQn 1
-#define TEST2_PRIO 1
-#define TEST2_VAL  2
-
-#define DFLT_PRIO 1
-
-extern volatile int g_flag;
-
-#endif/*__COMMON_H__*/
+#endif/*__BOX2_H__*/

@@ -10,19 +10,11 @@
  *  by a licensing agreement from ARM Limited.
  *
  ***************************************************************/
-#ifndef __COMMON_H__
-#define __COMMON_H__
+#ifndef __NESTING_PATTERNS_H__
+#define __NESTING_PATTERNS_H__
 
-#define TEST1_IRQn 0
-#define TEST1_PRIO 2
-#define TEST1_VAL  1
+extern const int g_nest_data[];
+extern const int g_box_data[][UVISOR_SVC_CONTEXT_MAX_DEPTH];
+extern const int g_nest_data_num;
 
-#define TEST2_IRQn 1
-#define TEST2_PRIO 1
-#define TEST2_VAL  2
-
-#define DFLT_PRIO 1
-
-extern volatile int g_flag;
-
-#endif/*__COMMON_H__*/
+#endif/*__NESTING_PATTERNS_H__*/

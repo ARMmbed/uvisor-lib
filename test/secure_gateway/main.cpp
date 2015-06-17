@@ -12,7 +12,6 @@
  ***************************************************************/
 #include "mbed/mbed.h"
 #include "uvisor-lib/uvisor-lib.h"
-#include "common.h"
 
 /* main box ACLs */
 static const UvisorBoxAclItem g_main_acl[] = {
@@ -25,5 +24,3 @@ static const UvisorBoxAclItem g_main_acl[] = {
 
 /* enable uvisor */
 UVISOR_SET_MODE_ACL(2, g_main_acl);
-
-volatile int g_flag;
