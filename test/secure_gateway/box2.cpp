@@ -13,17 +13,20 @@
 #include "mbed/mbed.h"
 #include "uvisor-lib/uvisor-lib.h"
 #include "common.h"
+#include "box2.h"
 
-/* main box ACLs */
-static const UvisorBoxAclItem g_main_acl[] = {
-    {MCG,                  sizeof(*MCG),       UVISOR_TACLDEF_PERIPH},
-    {UART0,                sizeof(*UART0),     UVISOR_TACLDEF_PERIPH},
-    {PIT,                  sizeof(*PIT),       UVISOR_TACLDEF_PERIPH},
-    {SIM,                  sizeof(*SIM),       UVISOR_TACLDEF_PERIPH},
-    {PORTB,                sizeof(*PORTB),     UVISOR_TACLDEF_PERIPH},
+/* create ACLs for secret data section */
+static const UvisorBoxAclItem g_box2_acl[] = {
 };
 
-/* enable uvisor */
-UVISOR_SET_MODE_ACL(2, g_main_acl);
+/* configure secure box compartnent */
+UVISOR_BOX_CONFIG(box2, g_box2_acl, UVISOR_BOX_STACK_SIZE);
 
-volatile int g_flag;
+/* box secure function call */
+uint32_t box2_test_function(uint32_t a1,
+                            uint32_t a2,
+                            uint32_t a3,
+                            uint32_t a4)
+{
+    return secure_gateway(box2, __test_function4, a1, a2, a3, a4);
+}
