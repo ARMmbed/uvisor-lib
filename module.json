@@ -28,7 +28,7 @@
     }
   ],
   "dependencies": {
-    "mbed": "*"
+    "mbed-core": "*"
   },
   "testDependencies": {
     "mbed-cpputest": "*"
