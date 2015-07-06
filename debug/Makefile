@@ -44,6 +44,15 @@ ifneq ("$(T)","")
 	TARGET_BIN:=$(TARGET_ELF).bin
 endif
 
+# tty
+OS := $(shell uname -s)
+ifeq ($(OS),Linux)
+	TTY:=/dev/ttyACM*
+endif
+ifeq ($(OS),Darwin)
+	TTY:=/dev/tty.usbmodemfa*
+endif
+
 #
 # add inline files for debugging / flashing
 #
@@ -77,6 +86,7 @@ endif
 	cd .. && mbedgt -c cp --target=$(TARGET) -n $(TEST)
 
 test:
+	stty -F $(TTY) sane
 	cd .. && mbedgt -c cp --target=$(TARGET)
 
 debug: gdb.script
