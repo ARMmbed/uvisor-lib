@@ -13,7 +13,13 @@
 ################################################################
 
 # select correct source for target/toolchain
-set(UVISOR_DIR "MK64FN1M0XXX12")        # FRDM-K64F, GCC_ARM
+if    (TARGET_LIKE_STM32F429I_DISCO_GCC)
+    set(UVISOR_DIR "STM32F429xx")           # STM32,     GCC_ARM
+elseif(TARGET_LIKE_FRDM_K64F_GCC)
+    set(UVISOR_DIR "MK64FN1M0XXX12")        # FRDM-K64F, GCC_ARM
+else()
+    message(FATAL_ERROR "Unsupported platform")
+endif()
 
 # instruct cmake to compile the .s file
 set(UVISOR_ASM "${UVISOR_DIR}/uvisor-GCC_ARM.s")
