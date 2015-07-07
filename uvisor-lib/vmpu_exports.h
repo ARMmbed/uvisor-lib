@@ -60,6 +60,7 @@
                                      UVISOR_TACL_SREAD          |\
                                      UVISOR_TACL_SWRITE)
 
+/* FIXME replace defines with hw-specific ones */
 #define UVISOR_TO_STR(x)            #x
 #define UVISOR_TO_STRING(x)         UVISOR_TO_STR(x)
 #define UVISOR_ARRAY_COUNT(x)       (sizeof(x)/sizeof(x[0]))
