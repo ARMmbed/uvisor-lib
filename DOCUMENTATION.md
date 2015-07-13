@@ -255,7 +255,7 @@ Currently the following low level operations are permitted:
 ### Interrupt Management
 
 ```C
-void uvisor_isr_set(uint32_t irqn, uint32_t vector, uint32_t flag)
+void vIRQ_SetVector(uint32_t irqn, uint32_t vector, uint32_t flag)
 ```
 
 <table>
@@ -281,7 +281,7 @@ void uvisor_isr_set(uint32_t irqn, uint32_t vector, uint32_t flag)
 ---
 
 ```C
-uint32_t uvisor_isr_get(uint32_t irqn)
+uint32_t vIRQ_GetVector(uint32_t irqn)
 ```
 
 <table>
@@ -303,7 +303,7 @@ uint32_t uvisor_isr_get(uint32_t irqn)
 ---
 
 ```C
-void uvisor_irq_enable(uint32_t irqn)
+void vIRQ_EnableIRQ(uint32_t irqn)
 ```
 
 <table>
@@ -321,7 +321,7 @@ void uvisor_irq_enable(uint32_t irqn)
 ---
 
 ```C
-void uvisor_irq_disable(uint32_t irqn)
+void vIRQ_DisableIRQ(uint32_t irqn)
 ```
 
 <table>
@@ -339,7 +339,7 @@ void uvisor_irq_disable(uint32_t irqn)
 ---
 
 ```C
-void uvisor_irq_pending_clr(uint32_t irqn)
+void vIRQ_ClearPendingIRQ(uint32_t irqn)
 ```
 
 <table>
@@ -357,7 +357,7 @@ void uvisor_irq_pending_clr(uint32_t irqn)
 ---
 
 ```C
-void uvisor_irq_pending_set(uint32_t irqn)
+void vIRQ_SetPendingIRQ(uint32_t irqn)
 ```
 
 <table>
@@ -375,7 +375,7 @@ void uvisor_irq_pending_set(uint32_t irqn)
 ---
 
 ```C
-uint32_t uvisor_irq_pending_get(uint32_t irqn)
+uint32_t vIRQ_GetPendingIRQ(uint32_t irqn)
 ```
 
 <table>
@@ -393,7 +393,7 @@ uint32_t uvisor_irq_pending_get(uint32_t irqn)
 ---
 
 ```C
-void uvisor_irq_priority_set(uint32_t irqn, uint32_t priority)
+void vIRQ_SetPriority(uint32_t irqn, uint32_t priority)
 ```
 
 <table>
@@ -415,7 +415,7 @@ void uvisor_irq_priority_set(uint32_t irqn, uint32_t priority)
 ---
 
 ```C
-uint32_t uvisor_irq_priority_get(uint32_t irqn)
+uint32_t vIRQ_GetPriority(uint32_t irqn)
 ```
 
 <table>
