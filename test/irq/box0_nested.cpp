@@ -21,7 +21,7 @@ void test1_handler(void)
     g_flag = TEST1_VAL;
 
     /* trigger TEST2_IRQn: expected to be served due to priorities */
-    uvisor_irq_pending_set(TEST2_IRQn);
+    vIRQ_SetPendingIRQ(TEST2_IRQn);
     __DSB();
     __ISB();
     CHECK_EQUAL(TEST2_VAL, g_flag);
@@ -36,11 +36,11 @@ void test2_handler(void)
 
     /* try to trigger TEST1_IRQn from within here: expected not to be triggered
      * due to priorities */
-    uvisor_irq_pending_set(TEST1_IRQn);
+    vIRQ_SetPendingIRQ(TEST1_IRQn);
     __DSB();
     __ISB();
     CHECK_EQUAL(TEST1_VAL, g_flag);
-    uvisor_irq_pending_clr(TEST1_IRQn);
+    vIRQ_ClearPendingIRQ(TEST1_IRQn);
 
     g_flag = TEST2_VAL;
 }
@@ -54,32 +54,32 @@ TEST(IRQTestNested, box0_irq_nested1)
     g_flag = 0;
 
     /* set ISRs */
-    uvisor_isr_set(TEST1_IRQn, (uint32_t) &test1_handler, 0);
-    uvisor_isr_set(TEST2_IRQn, (uint32_t) &test2_handler, 0);
+    vIRQ_SetVector(TEST1_IRQn, (uint32_t) &test1_handler, 0);
+    vIRQ_SetVector(TEST2_IRQn, (uint32_t) &test2_handler, 0);
 
     /* set priorities: TEST1_IRQn lowest */
-    uvisor_irq_priority_set(TEST1_IRQn, TEST1_PRIO);
-    uvisor_irq_priority_set(TEST2_IRQn, TEST2_PRIO);
+    vIRQ_SetPriority(TEST1_IRQn, TEST1_PRIO);
+    vIRQ_SetPriority(TEST2_IRQn, TEST2_PRIO);
 
     /* enable both IRQs and trigger TEST1_IRQn: in the end we expect TEST2_IRQn
      * is triggered in turn from within TEST1_IRQn */
-    uvisor_irq_pending_clr(TEST1_IRQn);
-    uvisor_irq_pending_clr(TEST2_IRQn);
-    uvisor_irq_enable(TEST1_IRQn);
-    uvisor_irq_enable(TEST2_IRQn);
-    uvisor_irq_pending_set(TEST1_IRQn);
+    vIRQ_ClearPendingIRQ(TEST1_IRQn);
+    vIRQ_ClearPendingIRQ(TEST2_IRQn);
+    vIRQ_EnableIRQ(TEST1_IRQn);
+    vIRQ_EnableIRQ(TEST2_IRQn);
+    vIRQ_SetPendingIRQ(TEST1_IRQn);
     __DSB();
     __ISB();
     CHECK_EQUAL(TEST2_VAL, g_flag);
 
     /* disable and clear both IRQn */
-    uvisor_irq_disable(TEST1_IRQn);
-    uvisor_irq_disable(TEST2_IRQn);
-    uvisor_irq_pending_clr(TEST1_IRQn);
-    uvisor_irq_pending_clr(TEST2_IRQn);
+    vIRQ_DisableIRQ(TEST1_IRQn);
+    vIRQ_DisableIRQ(TEST2_IRQn);
+    vIRQ_ClearPendingIRQ(TEST1_IRQn);
+    vIRQ_ClearPendingIRQ(TEST2_IRQn);
 
     /* release ownership of both ISRs */
-    uvisor_isr_set(TEST1_IRQn, 0, 0);
-    uvisor_isr_set(TEST2_IRQn, 0, 0);
+    vIRQ_SetVector(TEST1_IRQn, 0, 0);
+    vIRQ_SetVector(TEST2_IRQn, 0, 0);
 
 }
