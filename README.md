@@ -139,8 +139,8 @@ int some_function(void)
 {
     ...
 
-    uvisor_isr_set(MY_HANDLER_IRQn, (uint32_t) &my_handler);
-    uvisor_irq_enable(MY_HANDLER_IRQn);
+    vIRQ_SetVector(MY_HANDLER_IRQn, (uint32_t) &my_handler);
+    vIRQ_EnableIRQ(MY_HANDLER_IRQn);
 
     ...
 }
