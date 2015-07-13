@@ -255,6 +255,32 @@ Currently the following low level operations are permitted:
 ### Interrupt Management
 
 ```C
+void vIRQ_SetVectorX(uint32_t irqn, uint32_t vector, uint32_t flag)
+```
+
+<table>
+  <tr>
+    <td>Description</td>
+    <td colspan="2">Register an ISR to the currently active box, with the ability to specify permissions associated with the IRQn slot</td>
+  <tr>
+    <td rowspan="3">Parameters</td>
+    <td><pre>uint32_t irqn<code></td>
+    <td>IRQn</td>
+  </tr>
+  <tr>
+    <td><pre>uint32_t vector<code></td>
+    <td>Interrupt handler; if 0 the IRQn slot is de-registered for the current
+        box</td>
+  </tr>
+  <tr>
+    <td><pre>uint32_t flag<code></td>
+    <td>Permission flag (currently not implemented)</td>
+  </tr>
+</table>
+
+---
+
+```C
 void vIRQ_SetVector(uint32_t irqn, uint32_t vector, uint32_t flag)
 ```
 
@@ -277,6 +303,12 @@ void vIRQ_SetVector(uint32_t irqn, uint32_t vector, uint32_t flag)
     <td>Permission flag (currently not implemented)</td>
   </tr>
 </table>
+
+**Note:**
+
+1. Currently `vIRQ_SetVectorX` and `vIRQ_SetVector` are mapped to the same function because the argument `flag` is not yet used to determine the permissions associated with the IRQn slot
+
+2. `vIRQ_SetVector` is especially kept for backward compatibility with `NVIC_SetVector`
 
 ---
 
