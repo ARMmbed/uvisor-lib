@@ -54,8 +54,8 @@ TEST(IRQTestNested, box0_irq_nested1)
     g_flag = 0;
 
     /* set ISRs */
-    vIRQ_SetVector(TEST1_IRQn, (uint32_t) &test1_handler, 0);
-    vIRQ_SetVector(TEST2_IRQn, (uint32_t) &test2_handler, 0);
+    vIRQ_SetVectorX(TEST1_IRQn, (uint32_t) &test1_handler, 0);
+    vIRQ_SetVectorX(TEST2_IRQn, (uint32_t) &test2_handler, 0);
 
     /* set priorities: TEST1_IRQn lowest */
     vIRQ_SetPriority(TEST1_IRQn, TEST1_PRIO);
@@ -79,7 +79,7 @@ TEST(IRQTestNested, box0_irq_nested1)
     vIRQ_ClearPendingIRQ(TEST2_IRQn);
 
     /* release ownership of both ISRs */
-    vIRQ_SetVector(TEST1_IRQn, 0, 0);
-    vIRQ_SetVector(TEST2_IRQn, 0, 0);
+    vIRQ_SetVectorX(TEST1_IRQn, 0, 0);
+    vIRQ_SetVectorX(TEST2_IRQn, 0, 0);
 
 }
