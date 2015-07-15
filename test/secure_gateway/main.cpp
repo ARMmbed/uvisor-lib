@@ -12,15 +12,10 @@
  ***************************************************************/
 #include "mbed/mbed.h"
 #include "uvisor-lib/uvisor-lib.h"
+#include "main_acl.h"
 
 /* main box ACLs */
-static const UvisorBoxAclItem g_main_acl[] = {
-    {MCG,                  sizeof(*MCG),       UVISOR_TACLDEF_PERIPH},
-    {UART0,                sizeof(*UART0),     UVISOR_TACLDEF_PERIPH},
-    {PIT,                  sizeof(*PIT),       UVISOR_TACLDEF_PERIPH},
-    {SIM,                  sizeof(*SIM),       UVISOR_TACLDEF_PERIPH},
-    {PORTB,                sizeof(*PORTB),     UVISOR_TACLDEF_PERIPH},
-};
+MAIN_ACL(g_main_acl);
 
 /* enable uvisor */
 UVISOR_SET_MODE_ACL(2, g_main_acl);

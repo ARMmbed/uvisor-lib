@@ -13,8 +13,17 @@
 #ifndef __NESTING_PATTERNS_H__
 #define __NESTING_PATTERNS_H__
 
+/* the nesting depth is limited by uvisor if uvisor is supported for a given
+ * platform, otherwise it is arbitrary (secure gateways map to simple function
+ * calls) */
+#ifdef UVISOR_SVC_CONTEXT_MAX_DEPTH
+#define NESTING_MAX_DEPTH UVISOR_SVC_CONTEXT_MAX_DEPTH
+#else
+#define NESTING_MAX_DEPTH 0x10
+#endif
+
 extern const int g_nest_data[];
-extern const int g_box_data[][UVISOR_SVC_CONTEXT_MAX_DEPTH];
+extern const int g_box_data[][NESTING_MAX_DEPTH];
 extern const int g_nest_data_num;
 
 #endif/*__NESTING_PATTERNS_H__*/
