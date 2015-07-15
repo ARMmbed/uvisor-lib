@@ -27,7 +27,7 @@ const int g_nest_data[] = {
  * it means there are 5 levels of nesting (hence the corresponding g_nest_data
  * element will be 5) and the topmost function called is in box 1, then 3, 2,
  * etc.; each line is a different pattern */
-const int g_box_data[][UVISOR_SVC_CONTEXT_MAX_DEPTH] = {
+const int g_box_data[][NESTING_MAX_DEPTH] = {
     {1, 3, 4, 2},
     {1, 3, 4, 3, 2},
     {1, 2},

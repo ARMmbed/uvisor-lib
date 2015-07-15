@@ -26,7 +26,7 @@ int g_nest;
 
 /* nested function call pattern: holds the sequence of box ids in the nesting
  * pattern */
-int g_box[UVISOR_SVC_CONTEXT_MAX_DEPTH];
+int g_box[NESTING_MAX_DEPTH];
 
 TEST_GROUP(SecureGatewayBox0BoxN)
 {
@@ -135,7 +135,7 @@ TEST(SecureGatewayBox0BoxN, box0_boxN_4args)
         /* copy nesting pattern for this iteration; copy is not needed in this
          * particular case but will be useful, for example, if testing dynamic
          * patterns in the future */
-        memcpy(g_box, g_box_data[i], sizeof(int) * UVISOR_SVC_CONTEXT_MAX_DEPTH);
+        memcpy(g_box, g_box_data[i], sizeof(int) * NESTING_MAX_DEPTH);
 
         /* nesting counter */
         g_nest = g_nest_data[i];
