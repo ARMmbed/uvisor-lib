@@ -10,12 +10,26 @@
  *  by a licensing agreement from ARM Limited.
  *
  ***************************************************************/
-#include "mbed/mbed.h"
-#include "uvisor-lib/uvisor-lib.h"
-#include "main_acl.h"
+#ifndef __BOXN_ACL_H__
+#define __BOXN_ACL_H__
 
-/* main box ACLs */
-MAIN_ACL(g_main_acl);
+#if   defined(TARGET_LIKE_FRDM_K64F_GCC)
 
-/* enable uvisor */
-UVISOR_SET_MODE_ACL(UVISOR_ENABLED, g_main_acl);
+#define BOXN_ACL(acl_list_name) \
+    static const UvisorBoxAclItem acl_list_name[] = {      \
+    }
+
+#elif defined(TARGET_LIKE_STM32F429I_DISCO_GCC)
+
+#define BOXN_ACL(acl_list_name) \
+    static const UvisorBoxAclItem acl_list_name[] = {      \
+    }
+
+#else
+
+#define BOXN_ACL(acl_list_name) \
+    static const UvisorBoxAclItem acl_list_name[] = {}
+
+#endif
+
+#endif/*__BOXN_ACL_H__*/

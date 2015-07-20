@@ -14,11 +14,11 @@
 #include "mbed-cpputest/CppUTest/TestHarness.h"
 #include "uvisor-lib/uvisor-lib.h"
 #include "common.h"
+#include "boxN_acl.h"
 #include "box1.h"
 
 /* create ACLs for secret data section */
-static const UvisorBoxAclItem g_box1_acl[] = {
-};
+BOXN_ACL(g_box1_acl);
 
 /* configure secure box compartnent */
 UVISOR_BOX_CONFIG(box1, g_box1_acl, UVISOR_BOX_STACK_SIZE);

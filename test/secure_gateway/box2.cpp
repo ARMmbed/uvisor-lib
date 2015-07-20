@@ -13,11 +13,11 @@
 #include "mbed/mbed.h"
 #include "uvisor-lib/uvisor-lib.h"
 #include "common.h"
+#include "boxN_acl.h"
 #include "box2.h"
 
 /* create ACLs for secret data section */
-static const UvisorBoxAclItem g_box2_acl[] = {
-};
+BOXN_ACL(g_box2_acl);
 
 /* configure secure box compartnent */
 UVISOR_BOX_CONFIG(box2, g_box2_acl, UVISOR_BOX_STACK_SIZE);

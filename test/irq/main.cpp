@@ -19,6 +19,6 @@
 MAIN_ACL(g_main_acl);
 
 /* enable uvisor */
-UVISOR_SET_MODE_ACL(2, g_main_acl);
+UVISOR_SET_MODE_ACL(UVISOR_ENABLED, g_main_acl);
 
 volatile int g_flag;
