@@ -2,7 +2,7 @@
  * This confidential and  proprietary  software may be used only
  * as authorised  by  a licensing  agreement  from  ARM  Limited
  *
- *             (C) COPYRIGHT 2013-2014 ARM Limited
+ *             (C) COPYRIGHT 2013-2015 ARM Limited
  *                      ALL RIGHTS RESERVED
  *
  *  The entire notice above must be reproduced on all authorised
@@ -20,6 +20,7 @@
  ***************************************************************/
 .globl uvisor_init
 .globl uvisor_config
+.globl uvisor_box_context
 .type uvisor_init, %function
 .weak __uvisor_mode
 .section .uvisor.main, "x"
@@ -46,6 +47,9 @@ uvisor_config:
 __uvisor_mode:
     .long 0
     .align 5
+.section .bss,"awM",@nobits
+uvisor_box_context:
+    .long 0
 .section .uvisor.bss.main,"awM",@nobits
 __uvisor_reserved_start:
     .space 0x2000
