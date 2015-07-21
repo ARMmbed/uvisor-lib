@@ -20,7 +20,7 @@
  ***************************************************************/
 .globl uvisor_init
 .globl uvisor_config
-.globl uvisor_box_context
+.globl uvisor_ctx
 .type uvisor_init, %function
 .weak __uvisor_mode
 .section .uvisor.main, "x"
@@ -44,11 +44,13 @@ uvisor_config:
     .long __uvisor_secure_end
     .long __uvisor_reserved_start
     .long __uvisor_reserved_end
+    .long __uvisor_box_context
 __uvisor_mode:
     .long 0
     .align 5
-.section .bss,"awM",@nobits
-uvisor_box_context:
+.section .bss
+__uvisor_box_context:
+uvisor_ctx:
     .long 0
 .section .uvisor.bss.main,"awM",@nobits
 __uvisor_reserved_start:
