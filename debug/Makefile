@@ -14,9 +14,17 @@
 
 PROJECT=uvisor-lib
 PREFIX:=arm-none-eabi-
-ARCH:=MK64F
-CPU:=$(ARCH)N1M0XXX12
-TARGET:=frdm-k64f-gcc
+
+ifeq ("$(ARCH)","MK64F")
+	CPU:=$(ARCH)N1M0XXX12
+	YT_TARGET:=frdm-k64f-gcc
+	GDB_TARGET:=k64f
+else
+	ARCH:=STM32F
+	CPU:=$(ARCH)429ZI
+	YT_TARGET:=stm32f429i-disco-gcc
+	GDB_TARGET:=stm32f4
+endif
 
 #
 # flash firmware image using segger JLink
@@ -40,7 +48,7 @@ OBJDUMP:=$(PREFIX)objdump
 #
 ifneq ("$(T)","")
 	TEST:=$(PROJECT)-test-$(T)
-	TARGET_ELF:=../build/$(TARGET)/test/$(TEST)
+	TARGET_ELF:=../build/$(YT_TARGET)/test/$(TEST)
 	TARGET_BIN:=$(TARGET_ELF).bin
 endif
 
@@ -83,17 +91,17 @@ single:
 ifndef T
 	$(error Specify single test to debug: make T=testX single)
 endif
-	cd .. && mbedgt -c cp --target=$(TARGET) -n $(TEST)
+	cd .. && mbedgt -c cp --target=$(YT_TARGET) -n $(TEST)
 
 test:
 	stty -F $(TTY) sane
-	cd .. && mbedgt -c cp --target=$(TARGET)
+	cd .. && mbedgt -c cp --target=$(YT_TARGET)
 
 debug: gdb.script
 ifndef T
 	$(error Specify single test to debug: make T=testX debug)
 endif
-	cd .. && mbedgt --debug -O -c cp --target=$(TARGET) -n $(TEST)
+	cd .. && mbedgt --debug -O -c cp --target=$(YT_TARGET) -n $(TEST)
 	$(OBJDUMP) -d $(TARGET_ELF) > $(TARGET_ELF).asm
 	@echo "$$__SCRIPT_FLASH" | $(JLINK) $(JLINK_PARAM)
 	@$(PREFIX)size $(TARGET_ELF)
