@@ -38,7 +38,6 @@ if(UVISOR_PRESENT)
     # library
     add_library(uvisor-lib
         ${UVISOR_ASM}
-        "bitband.cpp"
         "interrupts.cpp"
         "benchmark.cpp"
     )
