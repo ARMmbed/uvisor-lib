@@ -38,6 +38,7 @@ if(UVISOR_PRESENT)
     # library
     add_library(uvisor-lib
         ${UVISOR_ASM}
+        "error.cpp"
         "interrupts.cpp"
         "benchmark.cpp"
     )
