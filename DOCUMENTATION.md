@@ -10,6 +10,37 @@ Here you can find detailed documentation for:
 ## Configuration Macros
 
 ```C
+UVISOR_SECURE_DATA var_type var_name = var_value
+```
+
+<table>
+  <tr>
+    <td>Description</td>
+    <td colspan="2">Initialised variables are made private for the module</td>
+  </tr>
+  <tr>
+    <td>Type</td>
+    <td colspan="3">C/C++ pre-processor macro (attribute)</td>
+  </tr>
+</table>
+
+Example:
+```C
+#include "uvisor-lib/uvisor-lib.h"
+
+/* create private global initialised variable */
+UVISOR_SECURE_DATA char g_state[] = INITIAL_STATE;
+```
+
+**Note:**
+
+1. Protection of single objects is discouraged; consider using the private box context instead;
+
+2. This macro is only available on the Freescale FRDM-K64F board.
+
+---
+
+```C
 UVISOR_SECURE_CONST var_type var_name = var_value
 ```
 
@@ -26,14 +57,22 @@ UVISOR_SECURE_CONST var_type var_name = var_value
 
 Example:
 ```C
+#include "uvisor-lib/uvisor-lib.h"
+
 /* create private global constant */
 UVISOR_SECURE_CONST char g_password[] = "password";
 ```
 
+**Note:**
+
+1. Protection of single objects is discouraged; consider using the private box context instead;
+
+2. This macro is only available on the Freescale FRDM-K64F board.
+
 ---
 
 ```C
-UVISOR_SECURE_BSS var_type var_name [= var_value]
+UVISOR_SECURE_BSS var_type var_name;
 ```
 
 <table>
@@ -49,16 +88,23 @@ UVISOR_SECURE_BSS var_type var_name [= var_value]
 
 Example:
 ```C
+#include "uvisor-lib/uvisor-lib.h"
+
 /* create private global variable */
 UVISOR_SECURE_BSS int g_counter;
 ```
+
+**Note:**
+
+1. Protection of single objects is discouraged; consider using the private box context instead;
 
 ---
 
 ```C
 UVISOR_BOX_CONFIG(box_name
                   const UvBoxAclItem *module_acl_list,
-                  uint32_t module_stack_size)
+                  uint32_t module_stack_size,
+                  [struct __your_context])
 ```
 
 <table>
@@ -71,7 +117,7 @@ UVISOR_BOX_CONFIG(box_name
     <td colspan="2">C/C++ pre-processor macro (pseudo-function)</td>
   </tr>
   <tr>
-    <td rowspan="3">Parameters</td>
+    <td rowspan="4">Parameters</td>
     <td><pre>box_name<code></td>
     <td>Secure box name</td>
   </tr>
@@ -83,31 +129,38 @@ UVISOR_BOX_CONFIG(box_name
     <td><pre>uint32_t module_stack_size<code></td>
     <td>Required stack size for the secure box</td>
   </tr>
+  <tr>
+    <td><pre>struct __your_context<code></td>
+    <td>[optional] Type definition of the struct hosting the box context data</td>
+  </tr>
 </table>
 
 Example:
 ```C
+#include "uvisor-lib/uvisor-lib.h"
+
 /* required stack size */
 #define BOX_STACK_SIZE 0x100
 
+/* define box context */
+typedef struct {
+    uint8_t secret[SECRET_SIZE];
+    bool initialized;
+    State_t current_state
+} BoxContext;
+
 /* create ACLs for the module */
 static const UvBoxAclItem g_box_acl[] = {
-    {&g_password, sizeof(g_data), UVISOR_TACL_SECURE_CONST}, /* some data */
-    {&g_counter,  sizeof(g_data), UVISOR_TACL_SECURE_DATA},  /* some data */
-    {UART0,       sizeof(*UART0), UVISOR_TACL_PERIPHERAL},   /* some devices */
+    {PORTB,  sizeof(*PORTB),  UVISOR_TACLDEF_PERIPH},
+    {RTC,    sizeof(*RTC),    UVISOR_TACLDEF_PERIPH},
+    {LPTMR0, sizeof(*LPTMR0), UVISOR_TACLDEF_PERIPH},
 };
 
 /* configure secure box compartment */
-UVISOR_BOX_CONFIG(my_box_name, g_box_acl, BOX_STACK_SIZE);
+UVISOR_BOX_CONFIG(my_box_name, g_box_acl, BOX_STACK_SIZE, BoxContext);
 ```
 
 ---
-
-**Note:**
-
-1. This macro is only needed temporarily (uVisor disabled by default) and will be removed in the future.
-
-2. This macro must be used only once in the top level yotta executable.
 
 ```C
 UVISOR_SET_MODE(int uvisor_mode);
@@ -137,19 +190,19 @@ UVISOR_SET_MODE(int uvisor_mode);
 
 Example:
 ```C
-#include <uvisor-lib/uvisor-lib.h>
+#include "uvisor-lib/uvisor-lib.h"
 
-/* set uvisor mode (enable) */
-UVISOR_SET_MODE(2);
+/* set uvisor mode */
+UVISOR_SET_MODE(UVISOR_ENABLED);
 ```
-
----
 
 **Note:**
 
 1. This macro is only needed temporarily (uVisor disabled by default) and will be removed in the future.
 
 2. This macro must be used only once in the top level yotta executable.
+
+---
 
 ```C
 UVISOR_SET_MODE_ACL(int uvisor_mode, const UvBoxAcl *main_box_acl_list);
@@ -185,7 +238,7 @@ UVISOR_SET_MODE_ACL(int uvisor_mode, const UvBoxAcl *main_box_acl_list);
 
 Example:
 ```C
-#include <uvisor-lib/uvisor-lib.h>
+#include "uvisor-lib/uvisor-lib.h"
 
 /* create background ACLs for the main box */
 static const UvBoxAclItem g_background_acl[] = {
@@ -193,9 +246,16 @@ static const UvBoxAclItem g_background_acl[] = {
     {UART1,       sizeof(*UART1), UVISOR_TACL_PERIPHERAL},
     {PIT,         sizeof(*PIT),   UVISOR_TACL_PERIPHERAL},
 };
-/* set uvisor mode (enable) */
-UVISOR_SET_MODE_ACL(2, g_background_acl);
+
+/* set uvisor mode */
+UVISOR_SET_MODE_ACL(UVISOR_ENABLED, g_background_acl);
 ```
+
+**Note:**
+
+1. This macro is only needed temporarily (uVisor disabled by default) and will be removed in the future.
+
+2. This macro must be used only once in the top level yotta executable.
 
 ## Secure Function Call
 
@@ -250,7 +310,6 @@ uint32_t secure_sum(uint32_t op1, uint32_t op2)
 Currently the following low level operations are permitted:
 
 1. Interrupt management.
-2. [temporary] Bitband access.
 
 ### Interrupt Management
 
@@ -463,34 +522,6 @@ uint32_t vIRQ_GetPriority(uint32_t irqn)
     <td rowspan="1">Parameters</td>
     <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
-  </tr>
-</table>
-
-### (Temporary) Bitband Access
-
-```C
-void uvisor_write_bitband(uint32_t addr, int32_t val)
-```
-
-<table>
-  <tr>
-    <td>Description</td>
-    <td colspan="2">(Temporary) Write to a bitband address when unprivileged
-                    access is not permitted</td>
-  </tr>
-  <tr>
-    <td>Notes</td>
-    <td colspan="2">Access is only allowed to registers <pre>SIM->SCGCx<code>
-    </td>
-  </tr>
-  <tr>
-    <td rowspan="2">Parameters</td>
-    <td><pre>uint32_t addr<code></td>
-    <td>Bitband address</td>
-  </tr>
-  <tr>
-    <td><pre>uint32_t val<code></td>
-    <td>Value to write at bitband address</td>
   </tr>
 </table>
 
