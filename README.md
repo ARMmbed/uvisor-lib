@@ -58,7 +58,7 @@ To configure a secure box:
 
 Resources can be both memory assets (SRAM, secure storage) and memory-mapped peripherals.
 
-If you want to secure data/variables in SRAM, you can use what we call the *box context*, a private memroy section that can be optionally coupled to the secure box. The box context generally provides 1KB of memory, and can be populated with a struct that encapsulates all your private resources:
+If you want to secure data/variables in SRAM, you can use what we call the *box context*, a private memory section that can be optionally coupled to the secure box. The box context generally provides 1KB of memory, and can be populated with a struct that encapsulates all your private resources:
 
 ```C
 typedef struct {
