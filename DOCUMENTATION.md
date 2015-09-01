@@ -6,6 +6,7 @@ Here you can find detailed documentation for:
 2. [Secure function call](#secure-function-call), to execute code in the context of a secure box.
 3. [Low level APIs](#low-level-apis), to access uVisor functions that are not available to unprivileged code (interrupts, restricted system registers).
 4. [Type definitions](#type-definitions).
+5. [Error patterns](#error-patterns).
 
 ## Configuration Macros
 
@@ -541,3 +542,16 @@ typedef struct
     UvisorBoxAcl acl;           /* permissions for the protected area */
 } UvisorBoxAclItem;
 ```
+## Error Patterns
+
+|RED LED blinks         | Error code |
+|-----------------------|------------|
+| `PERMISSION_DENIED`   | 1          |
+| `SANITY_CHECK_FAILED` | 2          |
+| `NOT_IMPLEMENTED`     | 3          |
+| `NOT_ALLOWED`         | 4          |
+| `FAULT_MEMMANAGE`     | 5          |
+| `FAULT_BUS`           | 6          |
+| `FAULT_USAGE`         | 7          |
+| `FAULT_HARD`          | 8          |
+| `FAULT_DEBUG`         | 9          |
