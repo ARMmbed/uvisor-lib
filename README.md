@@ -180,6 +180,41 @@ For detailed documentation of all available macros and APIs, please refer to the
 
 We designed an example, called [uvisor-helloworld](https://github.com/ARMmbed/uvisor-helloworld), that shows how to configure and use a secure box.
 
+## Debugging
+
+Failures and faults captured by the uVisor will trigger a system halt. For some specific faults the uVisor will enable an LED blinking pattern which is specific to the error encountered. Please refer to the [APIs documentation](DOCUMENTATION.md) for a complete list of the available blinking patterns.
+
+Further debugging messages are silenced by default. If you want to enable them, you need to build a new version of uvisor-lib starting from the uVisor source code, with the debug option enabled. All messages are always printed through the semihosting interface, hence a debugger must be connected to the board to observe them. Make sure you have the latest [uVisor source code](https://github.com/ARMmbed/uvisor) and proceede as follows:
+
+```bash
+# assuming this is your code tree:
+# ~/code/
+#   |
+#   `- my_application/
+#   |
+#   `- uvisor/
+#      |
+#      `- release/
+#      |
+#      `- k64f/uvisor/
+#      |
+#      `- stm32f4/uvisor/
+
+# cd to uvisor (using k64f in this example)
+cd ~/code/uvisor/k64f/uvisor
+
+# build a debug release
+make OPT= clean release
+
+# link the newly created release to yotta
+cd ~/code/uvisor/release
+yotta link
+
+# link your project to the newly created release
+cd ~/code/my_application
+yotta link uvisor-lib
+```
+
 ## Limitations
 
 For this release, uvisor-lib comes with the following restrictions:
