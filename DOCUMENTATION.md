@@ -544,14 +544,14 @@ typedef struct
 ```
 ## Error Patterns
 
-|RED LED blinks         | Error code |
-|-----------------------|------------|
-| `PERMISSION_DENIED`   | 1          |
-| `SANITY_CHECK_FAILED` | 2          |
-| `NOT_IMPLEMENTED`     | 3          |
-| `NOT_ALLOWED`         | 4          |
-| `FAULT_MEMMANAGE`     | 5          |
-| `FAULT_BUS`           | 6          |
-| `FAULT_USAGE`         | 7          |
-| `FAULT_HARD`          | 8          |
-| `FAULT_DEBUG`         | 9          |
+| Error reason          | RED LED blinks |
+|-----------------------|----------------|
+| `PERMISSION_DENIED`   | 1              |
+| `SANITY_CHECK_FAILED` | 2              |
+| `NOT_IMPLEMENTED`     | 3              |
+| `NOT_ALLOWED`         | 4              |
+| `FAULT_MEMMANAGE`     | 5              |
+| `FAULT_BUS`           | 6              |
+| `FAULT_USAGE`         | 7              |
+| `FAULT_HARD`          | 8              |
+| `FAULT_DEBUG`         | 9              |
