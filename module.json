@@ -29,8 +29,5 @@
   "dependencies": {
     "mbed-drivers": "*"
   },
-  "testDependencies": {
-    "cpputest": "*"
-  },
   "targetDependencies": {}
 }
