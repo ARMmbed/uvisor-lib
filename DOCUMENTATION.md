@@ -341,7 +341,7 @@ void vIRQ_SetVectorX(uint32_t irqn, uint32_t vector, uint32_t flag)
 ---
 
 ```C
-void vIRQ_SetVector(uint32_t irqn, uint32_t vector, uint32_t flag)
+void vIRQ_SetVector(uint32_t irqn, uint32_t vector)
 ```
 
 <table>
@@ -349,7 +349,7 @@ void vIRQ_SetVector(uint32_t irqn, uint32_t vector, uint32_t flag)
     <td>Description</td>
     <td colspan="2">Register an ISR to the currently active box</td>
   <tr>
-    <td rowspan="3">Parameters</td>
+    <td rowspan="2">Parameters</td>
     <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
   </tr>
@@ -357,10 +357,6 @@ void vIRQ_SetVector(uint32_t irqn, uint32_t vector, uint32_t flag)
     <td><pre>uint32_t vector<code></td>
     <td>Interrupt handler; if 0 the IRQn slot is de-registered for the current
         box</td>
-  </tr>
-  <tr>
-    <td><pre>uint32_t flag<code></td>
-    <td>Permission flag (currently not implemented)</td>
   </tr>
 </table>
 
