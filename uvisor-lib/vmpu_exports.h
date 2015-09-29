@@ -79,9 +79,6 @@
                                      UVISOR_TACL_SREAD          |\
                                      UVISOR_TACL_SWRITE)
 
-#define UVISOR_TO_STR(x)            #x
-#define UVISOR_TO_STRING(x)         UVISOR_TO_STR(x)
-#define UVISOR_ARRAY_COUNT(x)       (sizeof(x)/sizeof(x[0]))
 #define UVISOR_PAD32(x)             (32 - (sizeof(x) & ~0x1FUL))
 #define UVISOR_BOX_MAGIC            0x42CFB66FUL
 #define UVISOR_BOX_VERSION          100
@@ -151,14 +148,7 @@ typedef struct
 
 static inline int vmpu_bits(uint32_t size)
 {
-    int bits=0;
-    /* find highest bit */
-    while(size)
-    {
-        size>>=1;
-        bits++;
-    }
-    return bits;
+    return 32 - __builtin_clz(size);
 }
 
 #endif/*__VMPU_EXPORTS_H__*/
