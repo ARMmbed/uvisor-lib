@@ -38,17 +38,20 @@ uvisor_config:
     .long 0x2FE539A6
     .long 0
     .long __uvisor_mode
-    .long __uvisor_cfgtbl_start
-    .long __uvisor_cfgtbl_end
-    .long __uvisor_data_src
-    .long __uvisor_data_start
-    .long __uvisor_data_end
     .long __uvisor_bss_start
     .long __uvisor_bss_end
+    .long __uvisor_bss_main_start
+    .long __uvisor_bss_main_end
+    .long __uvisor_bss_boxes_start
+    .long __uvisor_bss_boxes_end
+    .long __uvisor_main_start
+    .long __uvisor_main_end
     .long __uvisor_secure_start
     .long __uvisor_secure_end
-    .long __uvisor_reserved_start
-    .long __uvisor_reserved_end
+    .long __uvisor_cfgtbl_start
+    .long __uvisor_cfgtbl_end
+    .long __uvisor_cfgtbl_ptr_start
+    .long __uvisor_cfgtbl_ptr_end
     .long __uvisor_box_context
 __uvisor_mode:
     .long 0
@@ -57,7 +60,5 @@ __uvisor_mode:
 __uvisor_box_context:
 uvisor_ctx:
     .long 0
-.section .uvisor.bss.main,"awM",@nobits
-__uvisor_reserved_start:
+.section .keep.uvisor.bss.main,"awM",@nobits
     .space 0x2000
-__uvisor_reserved_end:

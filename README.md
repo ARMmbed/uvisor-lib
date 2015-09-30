@@ -54,7 +54,7 @@ To configure a secure box:
 #include "uvisor-lib/uvisor-lib.h"
 ```
 
-- [Protect your resources](#protect-your-data), using Access Control Lists (ACLs) and the private *box context*.
+- [Protect your resources](#protect-your-resources), using Access Control Lists (ACLs) and the private *box context*.
 
 - Use the [secure gateway](#secure-function-call) to ensure critical functions are executed from the context of the secure box.
 
@@ -95,7 +95,7 @@ static const UvisorBoxAclItem g_box_acl[] = {
     {PORTB,  sizeof(*PORTB),  UVISOR_TACLDEF_PERIPH},
     {RTC,    sizeof(*RTC),    UVISOR_TACLDEF_PERIPH},
     {LPTMR0, sizeof(*LPTMR0), UVISOR_TACLDEF_PERIPH},
-    }
+}
 ```
 
 Now that all your reseources are set-up for protection, you only need to group them together to configure the secure box, also specifying the name of the box and the required stack size.
