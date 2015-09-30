@@ -18,23 +18,17 @@
 ###########################################################################
 
 # select correct source for target/toolchain
-set(UVISOR_PRESENT true)
+set(UVISOR_PRESENT false)
 if     (TARGET_LIKE_FRDM_K64F)
     if(TARGET_LIKE_GCC)
+        set(UVISOR_PRESENT true)
         set(UVISOR_DIR "MK64FN1M0XXX12")        # FRDM-K64F
     endif()
 elseif(TARGET_LIKE_STM32F429I_DISCO)
     if(TARGET_LIKE_GCC)
+        set(UVISOR_PRESENT true)
         set(UVISOR_DIR "STM32F429xx")           # STM32F429I
     endif()
-else()
-    message(WARNING
-"\n         *******************************************************************
-         * WARNING (uvisor-lib): unsupported platform; your code will still
-         *                       work but no security feature is provided;
-         *                       UVISOR_DISABLED is set by default
-         *******************************************************************")
-    set(UVISOR_PRESENT false)
 endif()
 
 # select source files depending on platform (supported/unsupported)
@@ -46,6 +40,12 @@ if(UVISOR_PRESENT)
         "benchmark.cpp"
     )
 else()
+    message(WARNING
+"\n         *******************************************************************
+         * WARNING (uvisor-lib): unsupported platform; your code will still
+         *                       work but no security feature is provided;
+         *                       UVISOR_DISABLED is set by default
+         *******************************************************************")
     add_library(uvisor-lib
         "unsupported.cpp"
     )
