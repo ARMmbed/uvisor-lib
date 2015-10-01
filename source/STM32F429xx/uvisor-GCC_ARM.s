@@ -32,7 +32,6 @@
     .thumb
     .thumb_func
 uvisor_init:
-    .align 5
     .incbin "uvisor-STM32F429xx.box"
 uvisor_config:
     .long 0x2FE539A6
@@ -55,10 +54,9 @@ uvisor_config:
     .long __uvisor_box_context
 __uvisor_mode:
     .long 0
-    .align 5
 .section .bss
 __uvisor_box_context:
 uvisor_ctx:
     .long 0
-.section .keep.uvisor.bss.main,"awM",@nobits
+.section .keep.uvisor.bss.main, "awM", @nobits
     .space 0x2000
