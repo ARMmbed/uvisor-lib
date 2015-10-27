@@ -39,12 +39,11 @@ UVISOR_EXTERN const uint32_t __uvisor_mode;
 #define UVISOR_SET_MODE_ACL_COUNT(mode, acl_list, acl_list_count) \
     UVISOR_EXTERN const uint32_t __uvisor_mode = UVISOR_DISABLED; \
     static const void *main_acl = acl_list; \
-    const __attribute__((section(".keep.uvisor.cfgtbl_ptr_first"), aligned(4))) volatile void *main_cfg_ptr = &main_acl;
+    extern const __attribute__((section(".keep.uvisor.cfgtbl_ptr_first"), aligned(4))) void * const main_cfg_ptr = &main_acl;
 
 #define __UVISOR_BOX_CONFIG_NOCONTEXT(box_name, acl_list, stack_size) \
     static const void *box_acl_ ## box_name = acl_list; \
-    const __attribute__((section(".keep.uvisor.cfgtbl_ptr"), aligned(4))) volatile void *box_name ## _cfg_ptr = \
-        &box_acl_ ## box_name;
+    extern const __attribute__((section(".keep.uvisor.cfgtbl_ptr"), aligned(4))) void * const box_name ## _cfg_ptr = &box_acl_ ## box_name;
 
 #define __UVISOR_BOX_CONFIG_CONTEXT(box_name, acl_list, stack_size, context_type) \
     context_type box_ctx_ ## box_name; \
@@ -70,6 +69,52 @@ UVISOR_EXTERN const uint32_t __uvisor_mode;
 #define vIRQ_GetPendingIRQ(irqn)            NVIC_GetPendingIRQ((IRQn_Type) (irqn))
 #define vIRQ_SetPriority(irqn, priority)    NVIC_SetPriority((IRQn_Type) (irqn), (uint32_t) (priority))
 #define vIRQ_GetPriority(irqn)              NVIC_GetPriority((IRQn_Type) (irqn))
+
+/* uvisor-lib/register_gateway.h */
+
+static inline UVISOR_FORCEINLINE uint32_t uvisor_read(uint32_t addr)
+{
+    return *((uint32_t *) addr);
+}
+
+static inline UVISOR_FORCEINLINE uint32_t uvisor_read(uint32_t addr, uint32_t op, uint32_t mask)
+{
+    switch(op)
+    {
+        case UVISOR_OP_NOP:
+            return uvisor_read(addr);
+        case UVISOR_OP_AND:
+            return *((uint32_t *) addr) & mask;
+        case UVISOR_OP_OR:
+            return *((uint32_t *) addr) | mask;
+        case UVISOR_OP_XOR:
+            return *((uint32_t *) addr) ^ mask;
+        default:
+            /* FIXME */
+    }
+}
+
+static inline UVISOR_FORCEINLINE void uvisor_write(uint32_t addr, uint32_t val)
+{
+    *((uint32_t *) addr) = val;
+}
+
+static inline UVISOR_FORCEINLINE void uvisor_write(uint32_t addr, uint32_t val, uint32_t op, uint32_t mask)
+{
+    switch(op)
+    {
+        case UVISOR_OP_NOP:
+            uvisor_write(addr, val);
+        case UVISOR_OP_AND:
+            *((uint32_t *) addr) &= val | ~mask;
+        case UVISOR_OP_OR:
+            *((uint32_t *) addr) |= val & mask;
+        case UVISOR_OP_XOR:
+            *((uint32_t *) addr) ^= val & mask;
+        default:
+            /* FIXME */
+    }
+}
 
 /* uvisor-lib/secure_access.h */
 
