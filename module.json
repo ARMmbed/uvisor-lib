@@ -1,6 +1,6 @@
 {
   "name": "uvisor-lib",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Add security features to mbed",
   "keywords": [
     "security"
