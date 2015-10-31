@@ -16,6 +16,8 @@
  */
 #include "uvisor-lib/uvisor-lib.h"
 
+#ifdef YOTTA_CFG_UVISOR_PRESENT
+
 void vIRQ_SetVectorX(uint32_t irqn, uint32_t vector, uint32_t flag)
 {
     if(__uvisor_mode == 0) {
@@ -136,3 +138,6 @@ int vIRQ_GetLevel(void)
         return UVISOR_SVC(UVISOR_SVC_ID_IRQ_LEVEL_GET, "");
     }
 }
+
+#endif
+
