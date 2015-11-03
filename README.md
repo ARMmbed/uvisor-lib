@@ -44,7 +44,7 @@ To configure a secure box:
 - Add uvisor-lib as a dependency in `module.json`:
 ```
   "dependencies": {
-    "uvisor-lib": "ARMmbed/uvisor-lib#~0.7.0",
+    "uvisor-lib": "^1.0.0",
     ...
   },
 ```
