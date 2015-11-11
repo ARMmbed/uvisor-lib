@@ -219,4 +219,4 @@ yotta link uvisor-lib
 
 For this release, uvisor-lib comes with the following restrictions:
 
-- It is disabled by default. Use `UVISOR_SET_MODE(2);` in the top level yotta executable to enable it.
+- It is disabled by default. Use `UVISOR_SET_MODE(UVISOR_ENABLED);` in the top level yotta executable to enable it.

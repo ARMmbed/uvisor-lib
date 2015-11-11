@@ -11,97 +11,6 @@ Here you can find detailed documentation for:
 ## Configuration Macros
 
 ```C
-UVISOR_SECURE_DATA var_type var_name = var_value
-```
-
-<table>
-  <tr>
-    <td>Description</td>
-    <td colspan="2">Initialised variables are made private for the module</td>
-  </tr>
-  <tr>
-    <td>Type</td>
-    <td colspan="3">C/C++ pre-processor macro (attribute)</td>
-  </tr>
-</table>
-
-Example:
-```C
-#include "uvisor-lib/uvisor-lib.h"
-
-/* create private global initialised variable */
-UVISOR_SECURE_DATA char g_state[] = INITIAL_STATE;
-```
-
-**Note:**
-
-1. Protection of single objects is discouraged; consider using the private box context instead;
-
-2. This macro is only available on the Freescale FRDM-K64F board.
-
----
-
-```C
-UVISOR_SECURE_CONST var_type var_name = var_value
-```
-
-<table>
-  <tr>
-    <td>Description</td>
-    <td colspan="2">Data in Flash is made private for the module</td>
-  </tr>
-  <tr>
-    <td>Type</td>
-    <td colspan="3">C/C++ pre-processor macro (attribute)</td>
-  </tr>
-</table>
-
-Example:
-```C
-#include "uvisor-lib/uvisor-lib.h"
-
-/* create private global constant */
-UVISOR_SECURE_CONST char g_password[] = "password";
-```
-
-**Note:**
-
-1. Protection of single objects is discouraged; consider using the private box context instead;
-
-2. This macro is only available on the Freescale FRDM-K64F board.
-
----
-
-```C
-UVISOR_SECURE_BSS var_type var_name;
-```
-
-<table>
-  <tr>
-    <td>Description</td>
-    <td colspan="2">Data in the BSS (SRAM) is made private for the module</td>
-  </tr>
-  <tr>
-    <td>Type</td>
-    <td colspan="3">C/C++ pre-processor macro (attribute)</td>
-  </tr>
-</table>
-
-Example:
-```C
-#include "uvisor-lib/uvisor-lib.h"
-
-/* create private global variable */
-UVISOR_SECURE_BSS int g_counter;
-```
-
-**Note:**
-
-1. Protection of single objects is discouraged; consider using the private box context instead;
-
----
-
-```C
 UVISOR_BOX_CONFIG(box_name
                   const UvBoxAclItem *module_acl_list,
                   uint32_t module_stack_size,
@@ -111,7 +20,7 @@ UVISOR_BOX_CONFIG(box_name
 <table>
   <tr>
     <td>Description</td>
-    <td colspan="3">Secure box configuration</td>
+    <td colspan="2">Secure box configuration</td>
   </tr>
   <tr>
     <td>Type</td>
@@ -164,7 +73,7 @@ UVISOR_BOX_CONFIG(my_box_name, g_box_acl, BOX_STACK_SIZE, BoxContext);
 ---
 
 ```C
-UVISOR_SET_MODE(int uvisor_mode);
+UVISOR_SET_MODE(uvisor_mode);
 ```
 
 <table>
@@ -174,18 +83,18 @@ UVISOR_SET_MODE(int uvisor_mode);
   </tr>
   <tr>
     <td>Type</td>
-    <td colspan="3">C/C++ pre-processor macro (object declaration)</td>
+    <td colspan="2">C/C++ pre-processor macro (object declaration)</td>
   </tr>
   <tr>
     <td rowspan="3">Parameters</td>
-    <td rowspan="3"><pre>int uvisor_mode<code></td>
-    <td>0 = disabled [default]</td>
+    <td rowspan="3"><pre>uvisor_mode<code></td>
+    <td><pre>UVISOR_DISABLED<code> = disabled [default]</td>
   </tr>
     <tr>
-    <td>1 = permissive [n.a.] [currently same as enabled]</td>
+    <td><pre>UVISOR_PERMISSIVE<code> = permissive [currently n.a.]</td>
   </tr>
   <tr>
-    <td>2 = enabled</td>
+    <td><pre>UVISOR_ENABLED<code> = enabled</td>
   </tr>
 </table>
 
@@ -206,7 +115,7 @@ UVISOR_SET_MODE(UVISOR_ENABLED);
 ---
 
 ```C
-UVISOR_SET_MODE_ACL(int uvisor_mode, const UvBoxAcl *main_box_acl_list);
+UVISOR_SET_MODE_ACL(uvisor_mode, const UvBoxAcl *main_box_acl_list);
 ```
 
 <table>
@@ -218,19 +127,18 @@ UVISOR_SET_MODE_ACL(int uvisor_mode, const UvBoxAcl *main_box_acl_list);
   </tr>
   <tr>
     <td>Type</td>
-    <td colspan="3">C/C++ pre-processor macro (object declaration)</td>
+    <td colspan="2">C/C++ pre-processor macro (object declaration)</td>
   </tr>
   <tr>
     <td rowspan="4">Parameters</td>
-    <td rowspan="3"><pre>int uvisor_mode<code></td>
-    <td>0 = disabled [default]</td>
+    <td rowspan="3"><pre>uvisor_mode<code></td>
+    <td><pre>UVISOR_DISABLED<code> = disabled [default]</td>
   </tr>
     <tr>
-    <td>1 = permissive [n.a.] [currently same as enabled]</td>
+    <td><pre>UVISOR_PERMISSIVE<code> = permissive [currently n.a.]</td>
   </tr>
   <tr>
-    <td>2 = enabled</td>
-  </tr>
+    <td><pre>UVISOR_ENABLED<code> = enabled</td>
   <tr>
     <td><pre>const UvBoxAclItem *main_box_acl_list<code></td>
     <td>List of ACLs for the main box (background ACLs)</td>
@@ -271,10 +179,14 @@ uint32_t secure_gateway(box_name, uint32_t target_fn, ...)
   </tr>
   <tr>
     <td>Type</td>
-    <td colspan="3">C/C++ pre-processor macro (pseudo-function)</td>
+    <td colspan="2">C/C++ pre-processor macro (pseudo-function)</td>
   </tr>
   <tr>
-    <td rowspan="6">Parameters</td>
+    <td>Return value</td>
+    <td colspan="2">[optional] A maximum of one 32bit value</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Parameters</td>
     <td><pre>box_name<code></td>
     <td>Secure box name</td>
   </tr>
@@ -519,6 +431,23 @@ uint32_t vIRQ_GetPriority(uint32_t irqn)
     <td rowspan="1">Parameters</td>
     <td><pre>uint32_t irqn<code></td>
     <td>IRQn</td>
+  </tr>
+</table>
+
+---
+
+```C
+int vIRQ_GetLevel(void)
+```
+
+<table>
+  <tr>
+    <td>Description</td>
+    <td colspan="2">Get level of currently active IRQn, if any</td>
+  </tr>
+  <tr>
+    <td>Return value</td>
+    <td colspan="2">The priority level of the currently active IRQn, if any; -1 otherwise</td>
   </tr>
 </table>
 
