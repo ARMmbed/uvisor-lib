@@ -41,11 +41,11 @@ if(UVISOR_PRESENT)
     )
 else()
     message(WARNING
-"\n         *******************************************************************
-         * WARNING (uvisor-lib): unsupported platform; your code will still
-         *                       work but no security feature is provided;
-         *                       UVISOR_DISABLED is set by default
-         *******************************************************************")
+"\n         *********************************************************************
+         * WARNING (uvisor-lib): unsupported platform; your code will still  *
+         *                       work but no security feature is provided;   *
+         *                       UVISOR_DISABLED is set by default           *
+         *********************************************************************")
     add_library(uvisor-lib
         "unsupported.cpp"
     )
