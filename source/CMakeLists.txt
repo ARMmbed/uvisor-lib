@@ -41,12 +41,29 @@ if(UVISOR_PRESENT)
     )
 else()
     message(WARNING
-"\n         *******************************************************************
-         * WARNING (uvisor-lib): unsupported platform; your code will still
-         *                       work but no security feature is provided;
-         *                       UVISOR_DISABLED is set by default
-         *******************************************************************")
+"\n         *********************************************************************
+         * WARNING (uvisor-lib): unsupported platform; your code will still  *
+         *                       work but no security feature is provided;   *
+         *                       UVISOR_DISABLED is set by default           *
+         *********************************************************************")
     add_library(uvisor-lib
         "unsupported.cpp"
     )
+
+    # check that the yotta config option has not been mistakenly changed
+    if((DEFINED YOTTA_CFG_UVISOR_PRESENT) AND ("${YOTTA_CFG_UVISOR_PRESENT}" STREQUAL "1"))
+        message(FATAL_ERROR
+"\n         *********************************************************************
+         * ERROR   (uvisor-lib): this is an unsupported platform, but        *
+         *                             yotta config \"uvisor.present\"         *
+         *                       is set to 1; please contact the target      *
+         *                       owner to set it to 0 while uVisor is not    *
+         *                       officially supported.                       *
+         *                       You can apply the config option as a        *
+         *                       temporary fix in your executable:           *
+         *                                                                   *
+         *                yotta --config='{\"uvisor\":{\"present\": 0}}' build   *
+         *                                                                   *
+         *********************************************************************")
+    endif()
 endif()
