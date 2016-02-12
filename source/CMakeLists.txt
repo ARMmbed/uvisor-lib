@@ -17,27 +17,35 @@
 #
 ###########################################################################
 
-# select correct source for target/toolchain
-set(UVISOR_PRESENT false)
-if     (TARGET_LIKE_FRDM_K64F)
-    if(TARGET_LIKE_GCC)
-        set(UVISOR_PRESENT true)
-        set(UVISOR_DIR "MK64FN1M0XXX12")        # FRDM-K64F
+# Determine the uVisor binary based on the target.
+# Note: We currently only support the GCC toolchain.
+set(UVISOR_SUPPORTED false)
+if(TARGET_LIKE_GCC)
+    # Pick the correct folder based on the target family.
+    if(TARGET_LIKE_KINETIS_K64_GCC)
+        set(UVISOR_FAMILY "kinetis")
+    elseif(TARGET_LIKE_STM32)
+        set(UVISOR_FAMILY "stm32")
     endif()
-elseif(TARGET_LIKE_STM32F429I_DISCO)
-    if(TARGET_LIKE_GCC)
-        set(UVISOR_PRESENT true)
-        set(UVISOR_DIR "STM32F429xx")           # STM32F429I
+
+    # Infer path to binary.
+    # The included file defines UVISOR_CONFIGURATION.
+    include(${UVISOR_FAMILY}/get_configuration.cmake)
+    if(NOT ("${UVISOR_CONFIGURATION}" STREQUAL ""))
+        set(UVISOR_SUPPORTED true)
+        set(UVISOR_BINARY "${UVISOR_FAMILY}/uvisor_${UVISOR_CONFIGURATION}.o")
     endif()
 endif()
 
-# select source files depending on platform (supported/unsupported)
-if(UVISOR_PRESENT)
+# Build all files if uVisor is supported, otherwise throw a warning and only
+# build unsupported.cpp.
+if(UVISOR_SUPPORTED)
+    # uvisor-lib source files
+    file(GLOB UVISOR_SRC "*.cpp")
+
     add_library(uvisor-lib
-        "${UVISOR_DIR}/uvisor.o"
-        "error.cpp"
-        "interrupts.cpp"
-        "benchmark.cpp"
+        ${UVISOR_BINARY}
+        ${UVISOR_SRC}
     )
 else()
     message(WARNING
