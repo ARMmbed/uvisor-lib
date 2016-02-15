@@ -35,6 +35,7 @@ endif()
 if(UVISOR_PRESENT)
     add_library(uvisor-lib
         "${UVISOR_DIR}/uvisor.o"
+        "disabled.cpp"
         "error.cpp"
         "interrupts.cpp"
         "benchmark.cpp"
