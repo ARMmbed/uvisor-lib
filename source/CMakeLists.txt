@@ -22,7 +22,7 @@
 set(UVISOR_SUPPORTED false)
 if(TARGET_LIKE_GCC)
     # Pick the correct folder based on the target family.
-    if(TARGET_LIKE_KINETIS_K64_GCC)
+    if(TARGET_LIKE_KINETIS)
         set(UVISOR_FAMILY "kinetis")
     elseif(TARGET_LIKE_STM32)
         set(UVISOR_FAMILY "stm32")
