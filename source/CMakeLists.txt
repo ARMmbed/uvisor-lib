@@ -17,6 +17,13 @@
 #
 ###########################################################################
 
+# Detect yotta build mode.
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    set(UVISOR_MODE "debug")
+else()
+    set(UVISOR_MODE "release")
+endif()
+
 # Determine the uVisor binary based on the target.
 # Note: We currently only support the GCC toolchain.
 set(UVISOR_SUPPORTED false)
@@ -33,7 +40,7 @@ if(TARGET_LIKE_GCC)
     include(${UVISOR_FAMILY}/get_configuration.cmake)
     if(NOT ("${UVISOR_CONFIGURATION}" STREQUAL ""))
         set(UVISOR_SUPPORTED true)
-        set(UVISOR_BINARY "${UVISOR_FAMILY}/${UVISOR_CONFIGURATION}.o")
+        set(UVISOR_BINARY "${UVISOR_FAMILY}/${UVISOR_MODE}/${UVISOR_CONFIGURATION}.o")
     endif()
 endif()
 
