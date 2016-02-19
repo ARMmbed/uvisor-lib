@@ -33,7 +33,7 @@ if(TARGET_LIKE_GCC)
     include(${UVISOR_FAMILY}/get_configuration.cmake)
     if(NOT ("${UVISOR_CONFIGURATION}" STREQUAL ""))
         set(UVISOR_SUPPORTED true)
-        set(UVISOR_BINARY "${UVISOR_FAMILY}/uvisor_${UVISOR_CONFIGURATION}.o")
+        set(UVISOR_BINARY "${UVISOR_FAMILY}/${UVISOR_CONFIGURATION}.o")
     endif()
 endif()
 
