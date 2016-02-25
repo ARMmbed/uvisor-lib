@@ -33,6 +33,8 @@ if(TARGET_LIKE_GCC)
         set(UVISOR_FAMILY "kinetis")
     elseif(TARGET_LIKE_STM32)
         set(UVISOR_FAMILY "stm32")
+    elseif(TARGET_LIKE_EFM32)
+        set(UVISOR_FAMILY "efm32")
     endif()
 
     # Infer path to binary.
