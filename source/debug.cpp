@@ -14,13 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __UVISOR_LIB_ERROR_H__
-#define __UVISOR_LIB_ERROR_H__
+#include "uvisor-lib/uvisor-lib.h"
 
-#define UVISOR_ERROR_INVALID_BOX_ID (-2)
-#define UVISOR_ERROR_BUFFER_TOO_SMALL (-3)
-#define UVISOR_ERROR_BOX_NAMESPACE_ANONYMOUS (-4)
-
-UVISOR_EXTERN void uvisor_error(THaltUserError reason);
-
-#endif /* __UVISOR_LIB_ERROR_H__ */
+UVISOR_EXTERN void uvisor_debug_init(const TUvisorDebugDriver * const driver)
+{
+    UVISOR_SVC(UVISOR_SVC_ID_DEBUG_REGISTER_BOX, "", (uint32_t) driver);
+}
