@@ -36,7 +36,7 @@ extern uint32_t vIRQ_GetPendingIRQ(uint32_t irqn);
 extern void vIRQ_SetPriority(uint32_t irqn, uint32_t priority);
 extern uint32_t vIRQ_GetPriority(uint32_t irqn);
 
-#if YOTTA_CFG_UVISOR_PRESENT == 1 && !defined(UVISOR_NO_HOOKS)
+#if defined(YOTTA_CFG_UVISOR_PRESENT) && YOTTA_CFG_UVISOR_PRESENT == 1 && !defined(UVISOR_NO_HOOKS)
 
 /* Re-definition of NVIC APIs supported by uVisor */
 #define NVIC_ClearPendingIRQ(irqn)       vIRQ_ClearPendingIRQ((uint32_t) (irqn))
@@ -49,6 +49,6 @@ extern uint32_t vIRQ_GetPriority(uint32_t irqn);
 #define NVIC_EnableIRQ(irqn)             vIRQ_EnableIRQ((uint32_t) (irqn))
 #define NVIC_DisableIRQ(irqn)            vIRQ_DisableIRQ((uint32_t) (irqn))
 
-#endif /* YOTTA_CFG_UVISOR_PRESENT == 1 && !defined(UVISOR_NO_HOOKS) */
+#endif /* defined(YOTTA_CFG_UVISOR_PRESENT) && YOTTA_CFG_UVISOR_PRESENT == 1 && !defined(UVISOR_NO_HOOKS) */
 
 #endif /* __UVISOR_LIB_OVERRIDE_H__ */
