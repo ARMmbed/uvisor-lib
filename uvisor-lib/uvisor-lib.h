@@ -17,37 +17,38 @@
 #ifndef __UVISOR_LIB_UVISOR_LIB_H__
 #define __UVISOR_LIB_UVISOR_LIB_H__
 
-#include <stdint.h>
+/* This file includes all the uVisor library header files at once.
+ * Some files are included depending on the whether uVisor is supported on the
+ * target or not. */
 
-/* needed for NVIC symbols */
-#include "cmsis-core/cmsis_nvic.h"
+/* Note: uvisor-lib/override.h should never be included automatically, but only
+ *       when needed to explicitly override symbols in a source file. See the
+ *       file's comments for further information. */
 
-/* these header files are included independently from the platform */
-#include "uvisor-lib/debug_exports.h"
-#include "uvisor-lib/uvisor_exports.h"
-#include "uvisor-lib/vmpu_exports.h"
-#include "uvisor-lib/halt_exports.h"
-#include "uvisor-lib/svc_exports.h"
-#include "uvisor-lib/svc_gw_exports.h"
-#include "uvisor-lib/unvic_exports.h"
+#if defined(YOTTA_CFG_UVISOR_PRESENT) && YOTTA_CFG_UVISOR_PRESENT == 1
 
-/* conditionally included header files */
-#if YOTTA_CFG_UVISOR_PRESENT == 1
+#include "uvisor/api/inc/benchmark.h"
+#include "uvisor/api/inc/box_config.h"
+#include "uvisor/api/inc/debug.h"
+#include "uvisor/api/inc/disabled.h"
+#include "uvisor/api/inc/error.h"
+#include "uvisor/api/inc/interrupts.h"
+#include "uvisor/api/inc/register_gateway.h"
+#include "uvisor/api/inc/secure_access.h"
+#include "uvisor/api/inc/secure_gateway.h"
 
-#include "uvisor-lib/benchmark.h"
-#include "uvisor-lib/box_config.h"
-#include "uvisor-lib/debug.h"
-#include "uvisor-lib/disabled.h"
-#include "uvisor-lib/error.h"
-#include "uvisor-lib/interrupts.h"
-#include "uvisor-lib/register_gateway.h"
-#include "uvisor-lib/secure_access.h"
-#include "uvisor-lib/secure_gateway.h"
-
-#else /* YOTTA_CFG_UVISOR_PRESENT == 1 */
+#else /* defined(YOTTA_CFG_UVISOR_PRESENT) && YOTTA_CFG_UVISOR_PRESENT == 1 */
 
 #include "uvisor-lib/unsupported.h"
 
-#endif /* YOTTA_CFG_UVISOR_PRESENT == 1 */
+#endif /* defined(YOTTA_CFG_UVISOR_PRESENT) && YOTTA_CFG_UVISOR_PRESENT == 1 */
+
+#include "uvisor/api/inc/debug_exports.h"
+#include "uvisor/api/inc/halt_exports.h"
+#include "uvisor/api/inc/svc_exports.h"
+#include "uvisor/api/inc/svc_gw_exports.h"
+#include "uvisor/api/inc/unvic_exports.h"
+#include "uvisor/api/inc/uvisor_exports.h"
+#include "uvisor/api/inc/vmpu_exports.h"
 
 #endif /* __UVISOR_LIB_UVISOR_LIB_H__ */
