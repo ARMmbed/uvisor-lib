@@ -14,21 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __DEBUG_EXPORTS_H__
-#define __DEBUG_EXPORTS_H__
+#ifndef __UVISOR_LIB_DEBUG_EXPORTS_H__
+#define __UVISOR_LIB_DEBUG_EXPORTS_H__
 
-#include "uvisor_exports.h"
-#include <stdint.h>
+#warning "Deprecated: Do not include uvisor-lib/debug_exports.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/debug_exports.h"
 
-/* Debug box driver -- Version 0
- * A constant instance of this struct must be instantiated by the unprivileged
- * code to setup a debug box.*/
-typedef struct TUvisorDebugDriver {
-    uint32_t (*get_version)(void);
-    void (*halt_error)(int);
-} TUvisorDebugDriver;
-
-/* Number of handlers in the debug box driver */
-#define DEBUG_BOX_HANDLERS_NUMBER (sizeof(TUvisorDebugDriver) / sizeof(void *))
-
-#endif /* __DEBUG_EXPORTS_H__ */
+#endif /* __UVISOR_LIB_DEBUG_EXPORTS_H__ */

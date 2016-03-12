@@ -14,16 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __UNVIC_EXPORTS_H__
-#define __UNVIC_EXPORTS_H__
+#ifndef __UVISOR_LIB_UNVIC_EXPORTS_H__
+#define __UVISOR_LIB_UNVIC_EXPORTS_H__
 
-/* this value refers to the minimum allowable priority in the physical NVIC
- * module, but not in the virtualised one (vIRQ) */
-#define __UVISOR_NVIC_MIN_PRIORITY ((uint32_t) 1)
+#warning "Deprecated: Do not include uvisor-lib/unvic_exports.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/unvic_exports.h"
 
-/* this is the maximum priority allowed for the vIRQ module */
-/* users of uVisor APIs can use this to determine the maximum level of
- * priorities available to them */
-#define UVISOR_VIRQ_MAX_PRIORITY ((uint32_t) (1 << __NVIC_PRIO_BITS) - 1 - __UVISOR_NVIC_MIN_PRIORITY)
-
-#endif/*__UNVIC_EXPORTS_H__*/
+#endif /* __UVISOR_LIB_UNVIC_EXPORTS_H__ */

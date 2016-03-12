@@ -17,36 +17,7 @@
 #ifndef __UVISOR_LIB_SECURE_GATEWAY_H__
 #define __UVISOR_LIB_SECURE_GATEWAY_H__
 
-/* secure gateway metadata */
-#if defined(__CC_ARM)
-
-/* TODO/FIXME */
-
-#elif defined(__GNUC__)
-
-#define __UVISOR_SECURE_GATEWAY_METADATA(dst_box, dst_fn) \
-    "b.n skip_args%=\n" \
-    ".word " UVISOR_TO_STRING(UVISOR_SVC_GW_MAGIC) "\n" \
-    ".word " UVISOR_TO_STRING(dst_fn) "\n" \
-    ".word " UVISOR_TO_STRING(dst_box) "_cfg_ptr\n" \
-    "skip_args%=:\n"
-
-#endif /* __CC_ARM or __GNUC__ */
-
-/* secure gateway */
-#define secure_gateway(dst_box, dst_fn, ...) \
-    ({ \
-        uint32_t res; \
-        if (__uvisor_mode != UVISOR_DISABLED) { \
-            res = UVISOR_SVC(UVISOR_SVC_ID_SECURE_GATEWAY(UVISOR_MACRO_NARGS(__VA_ARGS__)), \
-                             __UVISOR_SECURE_GATEWAY_METADATA(dst_box, dst_fn), ##__VA_ARGS__); \
-        } \
-        else { \
-            uvisor_disabled_switch_in((const uint32_t *) &dst_box ## _cfg_ptr); \
-            res = UVISOR_FUNCTION_CALL(dst_fn, ##__VA_ARGS__); \
-            uvisor_disabled_switch_out(); \
-        } \
-        res; \
-    })
+#warning "Deprecated: Do not include uvisor-lib/secure_gateway.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/secure_gateway.h"
 
 #endif /* __UVISOR_LIB_SECURE_GATEWAY_H__ */

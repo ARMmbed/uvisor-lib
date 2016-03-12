@@ -17,6 +17,7 @@
 #ifndef __UVISOR_LIB_DEBUG_H__
 #define __UVISOR_LIB_DEBUG_H__
 
-UVISOR_EXTERN void uvisor_debug_init(const TUvisorDebugDriver * const driver);
+#warning "Deprecated: Do not include uvisor-lib/debug.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/debug.h"
 
 #endif /* __UVISOR_LIB_DEBUG_H__ */
