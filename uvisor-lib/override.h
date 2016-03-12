@@ -14,15 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/* note: only include this header file if you need to use code in which you do not
- * want to rename NVIC APIs into vIRQ APIs; it must be included directly in the
- * source file and as the last header file; inclusion is protected by a guard which
- * is dependent on the YOTTA_CFG_UVISOR_PRESENT symbol (set in the target) and the
- * UVISOR_NO_HOOKS symbol (defined by uVisor) */
-
 #ifndef __UVISOR_LIB_OVERRIDE_H__
 #define __UVISOR_LIB_OVERRIDE_H__
+
+/* Note: Only include this header file if you need to use code in which you do
+ * not want to rename NVIC APIs into vIRQ APIs. It must be included directly in
+ * the source file and as the last header file. Inclusion is protected by a
+ * guard which is dependent on the YOTTA_CFG_UVISOR_PRESENT symbol (set in the
+ * target) and the UVISOR_NO_HOOKS symbol (defined by uVisor) */
 
 #include <stdint.h>
 
@@ -39,7 +38,7 @@ extern uint32_t vIRQ_GetPriority(uint32_t irqn);
 
 #if YOTTA_CFG_UVISOR_PRESENT == 1 && !defined(UVISOR_NO_HOOKS)
 
-/* re-definition of NVIC APIs supported by uVisor */
+/* Re-definition of NVIC APIs supported by uVisor */
 #define NVIC_ClearPendingIRQ(irqn)       vIRQ_ClearPendingIRQ((uint32_t) (irqn))
 #define NVIC_SetPendingIRQ(irqn)         vIRQ_SetPendingIRQ((uint32_t) (irqn))
 #define NVIC_GetPendingIRQ(irqn)         vIRQ_GetPendingIRQ((uint32_t) (irqn))
