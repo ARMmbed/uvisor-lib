@@ -26,6 +26,9 @@
       "type": "Apache-2.0"
     }
   ],
+  "extraIncludes": [
+      "uvisor"
+  ],
   "dependencies": {},
   "targetDependencies": {}
 }
