@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, ARM Limited, All Rights Reserved
+ * Copyright (c) 2015-2016, ARM Limited, All Rights Reserved
  * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -17,11 +17,11 @@
 #ifndef __UVISOR_LIB_UNSUPPORTED_H__
 #define __UVISOR_LIB_UNSUPPORTED_H__
 
-/* uvisor hook for unsupported platforms */
+/* uVisor hook for unsupported platforms */
 UVISOR_EXTERN void uvisor_init(void);
 
 /*******************************************************************************
- * re-definitions from:
+ * Re-definitions from:
  ******************************************************************************/
 
 /* uvisor-lib/box-config.h */
@@ -83,7 +83,7 @@ UVISOR_EXTERN const uint32_t __uvisor_mode;
 #define UVISOR_OP_OR        0x2
 #define UVISOR_OP_XOR       0x3
 
-/* default mask for whole register operatins */
+/* Default mask for whole register operatins */
 #define __UVISOR_OP_DEFAULT_MASK 0x0
 
 static inline UVISOR_FORCEINLINE uint32_t uvisor_read(uint32_t addr, uint32_t op, uint32_t mask)
@@ -129,15 +129,15 @@ static inline UVISOR_FORCEINLINE void uvisor_write(uint32_t addr, uint32_t val, 
 
 /* uvisor-lib/secure_access.h */
 
-/* the conditional statement will be optimised away since the compiler already
- * knows the sizeof(type) */
+/* The conditional statement will be optimised away since the compiler already
+ * knows the sizeof(type). */
 #define ADDRESS_READ(type, addr) \
     (sizeof(type) == 4 ? uvisor_read32((volatile uint32_t *) (addr)) : \
      sizeof(type) == 2 ? uvisor_read16((volatile uint16_t *) (addr)) : \
      sizeof(type) == 1 ? uvisor_read8((volatile uint8_t *) (addr)) : 0)
 
-/* the switch statement will be optimised away since the compiler already knows
- * the sizeof(type) */
+/* The switch statement will be optimised away since the compiler already knows
+ * the sizeof(type). */
 #define ADDRESS_WRITE(type, addr, val) \
     { \
         switch(sizeof(type)) \
