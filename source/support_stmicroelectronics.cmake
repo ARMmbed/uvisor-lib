@@ -1,6 +1,6 @@
 ###########################################################################
 #
-#  Copyright 2016 Silicon Laboratories, Inc.
+#  Copyright (c) 2013-2016, ARM Limited, All Rights Reserved
 #  SPDX-License-Identifier: Apache-2.0
 #
 #  Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -17,10 +17,10 @@
 #
 ###########################################################################
 
-if(TARGET_LIKE_EFM32 AND YOTTA_CFG_UVISOR_PRESENT)
-	if(TARGET_LIKE_CORTEX_M3)
-		set(UVISOR_CONFIGURATION "configuration_efm32_m3_p1")
-	elseif(TARGET_LIKE_CORTEX_M4)
-		set(UVISOR_CONFIGURATION "configuration_efm32_m4_p1")
-	endif()
+# STMicroelectronics STM32
+if(TARGET_LIKE_STM32)
+    set(UVISOR_FAMILY "stm32")
+    if(TARGET_LIKE_STM32F429ZI OR TARGET_LIKE_STM32F429XI)
+        set(UVISOR_CONFIGURATION "configuration_stm32_m4_0x10000000_0x0")
+    endif()
 endif()

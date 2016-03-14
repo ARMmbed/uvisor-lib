@@ -17,10 +17,7 @@
 #ifndef __UVISOR_LIB_DISABLED_H__
 #define __UVISOR_LIB_DISABLED_H__
 
-UVISOR_EXTERN void uvisor_disabled_switch_in(const uint32_t *dst_box_cfgtbl_ptr);
-UVISOR_EXTERN void uvisor_disabled_switch_out(void);
-
-UVISOR_EXTERN void uvisor_disabled_set_vector(uint32_t irqn, uint32_t vector);
-UVISOR_EXTERN uint32_t uvisor_disabled_get_vector(uint32_t irqn);
+#warning "Deprecated: Do not include uvisor-lib/disabled.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/disabled.h"
 
 #endif /* __UVISOR_LIB_DISABLED_H__ */

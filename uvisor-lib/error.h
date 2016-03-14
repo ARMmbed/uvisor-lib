@@ -17,10 +17,7 @@
 #ifndef __UVISOR_LIB_ERROR_H__
 #define __UVISOR_LIB_ERROR_H__
 
-#define UVISOR_ERROR_INVALID_BOX_ID (-2)
-#define UVISOR_ERROR_BUFFER_TOO_SMALL (-3)
-#define UVISOR_ERROR_BOX_NAMESPACE_ANONYMOUS (-4)
-
-UVISOR_EXTERN void uvisor_error(THaltUserError reason);
+#warning "Deprecated: Do not include uvisor-lib/error.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/error.h"
 
 #endif /* __UVISOR_LIB_ERROR_H__ */

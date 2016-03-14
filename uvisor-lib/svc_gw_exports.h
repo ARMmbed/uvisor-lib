@@ -14,9 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __SVC_GW_EXPORTS_H__
-#define __SVC_GW_EXPORTS_H__
+#ifndef __UVISOR_LIB_SVC_GW_EXPORTS_H__
+#define __UVISOR_LIB_SVC_GW_EXPORTS_H__
 
-#define UVISOR_SVC_GW_MAGIC  0xABCDABCD /* FIXME update with correct magic */
+#warning "Deprecated: Do not include uvisor-lib/svc_gw_exports.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/svc_gw_exports.h"
 
-#endif/*__SVC_GW_EXPORTS_H__*/
+#endif /* __UVISOR_LIB_SVC_GW_EXPORTS_H__ */

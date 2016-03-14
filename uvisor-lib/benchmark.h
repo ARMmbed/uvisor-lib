@@ -17,8 +17,7 @@
 #ifndef __UVISOR_LIB_BENCHMARK_H__
 #define __UVISOR_LIB_BENCHMARK_H__
 
-UVISOR_EXTERN void uvisor_benchmark_configure(void);
-UVISOR_EXTERN void uvisor_benchmark_start(void);
-UVISOR_EXTERN uint32_t uvisor_benchmark_stop(void);
+#warning "Deprecated: Do not include uvisor-lib/benchmark.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/benchmark.h"
 
 #endif /* __UVISOR_LIB_BENCHMARK_H__ */

@@ -17,57 +17,51 @@
 #
 ###########################################################################
 
-# Detect yotta build mode.
+# uVisor paths
+set(UVISOR_ROOT "${CMAKE_CURRENT_LIST_DIR}/../uvisor")
+set(UVISOR_API_LIB "${UVISOR_ROOT}/api/lib")
+
+# Detect the yotta build mode.
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     set(UVISOR_MODE "debug")
 else()
     set(UVISOR_MODE "release")
 endif()
 
-# Determine the uVisor binary based on the target.
-# Note: We currently only support the GCC toolchain.
-set(UVISOR_SUPPORTED false)
-if(TARGET_LIKE_GCC)
-    # Pick the correct folder based on the target family.
-    if(TARGET_LIKE_KINETIS)
-        set(UVISOR_FAMILY "kinetis")
-    elseif(TARGET_LIKE_STM32)
-        set(UVISOR_FAMILY "stm32")
-    elseif(TARGET_LIKE_EFM32)
-        set(UVISOR_FAMILY "efm32")
-    endif()
+# Determine the uVisor configuration based on the target.
+# The included files define UVISOR_CONFIGURATION, if any.
+file(GLOB UVISOR_LIB_SUPPORT_FILES "${CMAKE_CURRENT_LIST_DIR}/support_*.cmake")
+foreach(SUPPORT_FILE ${UVISOR_LIB_SUPPORT_FILES})
+    include("${SUPPORT_FILE}")
+endforeach(SUPPORT_FILE)
 
-    # Infer path to binary.
-    # The included file defines UVISOR_CONFIGURATION.
-    include(${UVISOR_FAMILY}/get_configuration.cmake)
-    if(NOT ("${UVISOR_CONFIGURATION}" STREQUAL ""))
-        set(UVISOR_SUPPORTED true)
-        set(UVISOR_BINARY "${UVISOR_FAMILY}/${UVISOR_MODE}/${UVISOR_CONFIGURATION}.o")
-    endif()
+# Determine UVISOR_SUPPORTED.
+# Even if a target claims that uVisor is supported (YOTTA_CFG_UVISOR_PRESENT),
+# we still need to check that the uVisor code-base actually supports the target
+# family.
+# Note: Currently we only support targets built with GCC.
+if(YOTTA_CFG_UVISOR_PRESENT AND UVISOR_CONFIGURATION AND TARGET_LIKE_GCC)
+    set(UVISOR_SUPPORTED true)
+else()
+    set(UVISOR_SUPPORTED false)
 endif()
 
-# Build all files if uVisor is supported, otherwise throw a warning and only
-# build unsupported.cpp.
 if(UVISOR_SUPPORTED)
-    # uvisor-lib source files
-    file(GLOB UVISOR_SRC "*.cpp")
-
-    add_library(uvisor-lib
-        ${UVISOR_BINARY}
-        ${UVISOR_SRC}
-    )
+    add_library(uvisor-lib)
+    target_link_libraries(uvisor-lib ${UVISOR_API_LIB}/${UVISOR_FAMILY}/${UVISOR_MODE}/${UVISOR_CONFIGURATION}.a)
 else()
+    # uvisor-lib source files
+    file(GLOB UVISOR_LIB_SRC "${CMAKE_CURRENT_LIST_DIR}/*.c")
+    add_library(uvisor-lib ${UVISOR_LIB_SRC})
+
     message(WARNING
 "\n         *********************************************************************
          * WARNING (uvisor-lib): unsupported platform; your code will still  *
          *                       work but no security feature is provided;   *
          *                       UVISOR_DISABLED is set by default           *
          *********************************************************************")
-    add_library(uvisor-lib
-        "unsupported.cpp"
-    )
 
-    # check that the yotta config option has not been mistakenly changed
+    # Check that the yotta config option has not been mistakenly changed.
     if((DEFINED YOTTA_CFG_UVISOR_PRESENT) AND ("${YOTTA_CFG_UVISOR_PRESENT}" STREQUAL "1"))
         message(FATAL_ERROR
 "\n         *********************************************************************
@@ -84,3 +78,7 @@ else()
          *********************************************************************")
     endif()
 endif()
+
+# This is needed as this library does not specify any source file when the
+# target supports uVisor.
+set_target_properties(uvisor-lib PROPERTIES LINKER_LANGUAGE C)

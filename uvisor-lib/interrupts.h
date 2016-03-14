@@ -17,16 +17,7 @@
 #ifndef __UVISOR_LIB_INTERRUPTS_H__
 #define __UVISOR_LIB_INTERRUPTS_H__
 
-UVISOR_EXTERN void vIRQ_SetVectorX(uint32_t irqn, uint32_t vector, uint32_t flag);
-UVISOR_EXTERN void vIRQ_SetVector(uint32_t irqn, uint32_t vector);
-UVISOR_EXTERN uint32_t vIRQ_GetVector(uint32_t irqn);
-UVISOR_EXTERN void vIRQ_EnableIRQ(uint32_t irqn);
-UVISOR_EXTERN void vIRQ_DisableIRQ(uint32_t irqn);
-UVISOR_EXTERN void vIRQ_ClearPendingIRQ(uint32_t irqn);
-UVISOR_EXTERN void vIRQ_SetPendingIRQ(uint32_t irqn);
-UVISOR_EXTERN uint32_t vIRQ_GetPendingIRQ(uint32_t irqn);
-UVISOR_EXTERN void vIRQ_SetPriority(uint32_t irqn, uint32_t priority);
-UVISOR_EXTERN uint32_t vIRQ_GetPriority(uint32_t irqn);
-UVISOR_EXTERN int vIRQ_GetLevel(void);
+#warning "Deprecated: Do not include uvisor-lib/interrupts.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/interrupts.h"
 
 #endif /* __UVISOR_LIB_INTERRUPTS_H__ */

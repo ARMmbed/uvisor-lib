@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, ARM Limited, All Rights Reserved
+ * Copyright (c) 2015-2016, ARM Limited, All Rights Reserved
  * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -14,20 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 #include "uvisor-lib/uvisor-lib.h"
 
-int uvisor_box_id_self(void)
+/* uVisor hook for unsupported platforms */
+UVISOR_EXTERN void __attribute__((section(".uvisor.main"))) uvisor_init(void)
 {
-    return UVISOR_SVC(UVISOR_SVC_ID_BOX_ID_SELF, "");
-}
-
-int uvisor_box_id_caller(void)
-{
-    return UVISOR_SVC(UVISOR_SVC_ID_BOX_ID_CALLER, "");
-}
-
-int uvisor_box_namespace(int box_id, char *box_namespace, size_t length)
-{
-    return UVISOR_SVC(UVISOR_SVC_ID_BOX_NAMESPACE_FROM_ID, "", box_id, box_namespace, length);
+    return;
 }

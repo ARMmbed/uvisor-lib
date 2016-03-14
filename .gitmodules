@@ -1,0 +1,3 @@
+[submodule "uvisor"]
+	path = uvisor
+	url = git@github.com:ARMmbed/uvisor.git

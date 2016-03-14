@@ -1,6 +1,6 @@
 ###########################################################################
 #
-#  Copyright (c) 2016, ARM Limited, All Rights Reserved
+#  Copyright 2016 Silicon Laboratories, Inc.
 #  SPDX-License-Identifier: Apache-2.0
 #
 #  Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -17,6 +17,12 @@
 #
 ###########################################################################
 
-if(TARGET_LIKE_MK64FN1M0VMD12)
-    set(UVISOR_CONFIGURATION "configuration_kinetis_m4_0x1fff0000")
+# Silicon Labs EFM32
+if(TARGET_LIKE_EFM32)
+    set(UVISOR_FAMILY "efm32")
+    if(TARGET_LIKE_CORTEX_M3)
+        set(UVISOR_CONFIGURATION "configuration_efm32_m3_p1")
+    elseif(TARGET_LIKE_CORTEX_M4)
+        set(UVISOR_CONFIGURATION "configuration_efm32_m4_p1")
+    endif()
 endif()

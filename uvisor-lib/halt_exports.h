@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __HALT_EXPORTS_H__
-#define __HALT_EXPORTS_H__
+#ifndef __UVISOR_LIB_HALT_EXPORTS_H__
+#define __UVISOR_LIB_HALT_EXPORTS_H__
 
-typedef enum {
-    USER_NOT_ALLOWED = 1,
-} THaltUserError;
+#warning "Deprecated: Do not include uvisor-lib/halt_exports.h directly. Instead, include uvisor-lib/uvisor-lib.h."
+#include "uvisor/api/inc/halt_exports.h"
 
-#endif/*__HALT_EXPORTS_H__*/
+#endif /* __UVISOR_LIB_HALT_EXPORTS_H__ */

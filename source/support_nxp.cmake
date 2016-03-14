@@ -1,6 +1,6 @@
 ###########################################################################
 #
-#  Copyright (c) 2016, ARM Limited, All Rights Reserved
+#  Copyright (c) 2013-2016, ARM Limited, All Rights Reserved
 #  SPDX-License-Identifier: Apache-2.0
 #
 #  Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -17,6 +17,10 @@
 #
 ###########################################################################
 
-if(TARGET_LIKE_STM32F429ZI OR TARGET_LIKE_STM32F429XI)
-    set(UVISOR_CONFIGURATION "configuration_stm32_m4_0x10000000_0x0")
+# NXP Kinetis
+if(TARGET_LIKE_KINETIS)
+    set(UVISOR_FAMILY "kinetis")
+    if(TARGET_LIKE_MK64FN1M0VMD12)
+        set(UVISOR_CONFIGURATION "configuration_kinetis_m4_0x1fff0000")
+    endif()
 endif()
