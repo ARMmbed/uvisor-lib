@@ -3,10 +3,10 @@
 Here you can find detailed documentation for:
 
 1. [Configuration macros](#configuration-macros), to configure a secure box and protect data and peripherals.
-2. [Secure function calls](#secure-function-call), to execute code in the context of a secure box.
-3. [Low level APIs](#low-level-apis), to access uVisor functions that are not available to unprivileged code (interrupts, restricted system registers).
-4. [Type definitions](#type-definitions).
-5. [Error codes](#error-codes).
+1. [Secure function calls](#secure-function-call), to execute code in the context of a secure box.
+1. [Low level APIs](#low-level-apis), to access uVisor functions that are not available to unprivileged code (interrupts, restricted system registers).
+1. [Type definitions](#type-definitions).
+1. [Error codes](#error-codes).
 
 ## Configuration macros
 
