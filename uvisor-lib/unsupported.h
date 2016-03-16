@@ -66,7 +66,6 @@ UVISOR_EXTERN const uint32_t __uvisor_mode;
 
 /* uvisor-lib/interrupts.h */
 
-#define vIRQ_SetVectorX(irqn, vector, flag) NVIC_SetVector((IRQn_Type) (irqn), (uint32_t) (vector))
 #define vIRQ_SetVector(irqn, vector)        NVIC_SetVector((IRQn_Type) (irqn), (uint32_t) (vector))
 #define vIRQ_GetVector(irqn)                NVIC_GetVector((IRQn_Type) (irqn))
 #define vIRQ_EnableIRQ(irqn)                NVIC_EnableIRQ((IRQn_Type) (irqn))

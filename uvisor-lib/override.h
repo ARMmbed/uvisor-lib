@@ -25,7 +25,6 @@
 
 #include <stdint.h>
 
-extern void vIRQ_SetVectorX(uint32_t irqn, uint32_t vector, uint32_t flag);
 extern void vIRQ_SetVector(uint32_t irqn, uint32_t vector);
 extern uint32_t vIRQ_GetVector(uint32_t irqn);
 extern void vIRQ_EnableIRQ(uint32_t irqn);
