@@ -20,6 +20,7 @@
 # uVisor paths
 set(UVISOR_ROOT "${CMAKE_CURRENT_LIST_DIR}/../uvisor")
 set(UVISOR_API_LIB "${UVISOR_ROOT}/api/lib")
+set(UVISOR_API_SRC "${UVISOR_ROOT}/api/src")
 
 # Detect the yotta build mode.
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
@@ -50,9 +51,8 @@ if(UVISOR_SUPPORTED)
     add_library(uvisor-lib)
     target_link_libraries(uvisor-lib ${UVISOR_API_LIB}/${UVISOR_FAMILY}/${UVISOR_MODE}/${UVISOR_CONFIGURATION}.a)
 else()
-    # uvisor-lib source files
-    file(GLOB UVISOR_LIB_SRC "${CMAKE_CURRENT_LIST_DIR}/*.c")
-    add_library(uvisor-lib ${UVISOR_LIB_SRC})
+    # Build unsupported.c
+    add_library(uvisor-lib ${UVISOR_API_SRC}/unsupported.c)
 
     message(WARNING
 "\n         *********************************************************************

@@ -17,38 +17,31 @@
 #ifndef __UVISOR_LIB_UVISOR_LIB_H__
 #define __UVISOR_LIB_UVISOR_LIB_H__
 
-/* This file includes all the uVisor library header files at once.
- * Some files are included depending on the whether uVisor is supported on the
- * target or not. */
-
-/* Note: uvisor-lib/override.h should never be included automatically, but only
- *       when needed to explicitly override symbols in a source file. See the
- *       file's comments for further information. */
+/* This file translates yotta-specific pre-processor symbols into
+ * uVisor-specific ones. Then the main uvisor-lib.h file is included. */
 
 #if defined(YOTTA_CFG_UVISOR_PRESENT) && YOTTA_CFG_UVISOR_PRESENT == 1
 
-#include "uvisor/api/inc/benchmark.h"
-#include "uvisor/api/inc/box_config.h"
-#include "uvisor/api/inc/debug.h"
-#include "uvisor/api/inc/disabled.h"
-#include "uvisor/api/inc/error.h"
-#include "uvisor/api/inc/interrupts.h"
-#include "uvisor/api/inc/register_gateway.h"
-#include "uvisor/api/inc/secure_access.h"
-#include "uvisor/api/inc/secure_gateway.h"
+#define UVISOR_PRESENT 1
+
+/* Specify the MPU architecture */
+#if defined(TARGET_LIKE_ARMV7_M)
+
+#if defined(TARGET_LIKE_KINETIS)
+#define ARCH_MPU_KINETIS
+#else
+#define ARCH_MPU_ARMv7M
+#endif
+
+#endif /* defined(TARGET_LIKE_ARMV7_M) */
 
 #else /* defined(YOTTA_CFG_UVISOR_PRESENT) && YOTTA_CFG_UVISOR_PRESENT == 1 */
 
-#include "uvisor-lib/unsupported.h"
+/* There is no need to specify any other symbol if uVisor is unsupported. */
+#define UVISOR_PRESENT 0
 
-#endif /* defined(YOTTA_CFG_UVISOR_PRESENT) && YOTTA_CFG_UVISOR_PRESENT == 1 */
+#endif /* define(YOTTA_CFG_UVISOR_PRESENT) && YOTTA_CFG_UVISOR_PRESENT == 1 */
 
-#include "uvisor/api/inc/debug_exports.h"
-#include "uvisor/api/inc/halt_exports.h"
-#include "uvisor/api/inc/svc_exports.h"
-#include "uvisor/api/inc/svc_gw_exports.h"
-#include "uvisor/api/inc/unvic_exports.h"
-#include "uvisor/api/inc/uvisor_exports.h"
-#include "uvisor/api/inc/vmpu_exports.h"
+#include "uvisor/api/inc/uvisor-lib.h"
 
 #endif /* __UVISOR_LIB_UVISOR_LIB_H__ */
