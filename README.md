@@ -1,3 +1,5 @@
+> **This library is deprecated and kept for historic purposed: please refer to the [main repository](https://github.com/ARMmbed/uvisor) for more information**.
+
 # The `uvisor-lib` library
 
 This is a yotta module that provides a packaged version of uVisor for use in ARM mbed OS.
